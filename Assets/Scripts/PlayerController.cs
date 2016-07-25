@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
 
 	public Tags.tags speedometerTag;
 	public float defaultSpeed = 5f;
-	public float xAxisMinSpeed = 1f;
-	public float xAxisMaxSpeed = 10f;
+	public float minSpeed = 1f;
+	public float maxSpeed = 10f;
 	[Range(0, 1)]
 	public float speedXOnYRatio = 0.5f;
 
@@ -61,9 +61,9 @@ public class PlayerController : MonoBehaviour
 
 		currentSpeed = Mathf.Clamp
 		(
-			currentSpeed + deltaMousePosition / Screen.width * xAxisMaxSpeed,
-			xAxisMinSpeed,
-			xAxisMaxSpeed
+			currentSpeed + deltaMousePosition / Screen.width * maxSpeed,
+			minSpeed,
+			maxSpeed
 		);
 
 		if (transform.position.x > (rightBorder - borderOffset))
@@ -79,9 +79,9 @@ public class PlayerController : MonoBehaviour
 
 		transform.Translate
 		(
-			(currentDirection == Direction.Right ? Vector3.right : Vector3.left) * Time.deltaTime * currentSpeed * speedXOnYRatio
+			(currentDirection == Direction.Right ? Vector3.right : Vector3.left) * Time.deltaTime * currentSpeed * speedXOnYRatio * Mathf.Clamp(1 - Mathf.Abs(transform.position.x) / rightBorder, 0.35f, 1f)
 		);
 
-		speedometer.value = (currentSpeed - xAxisMinSpeed) / (xAxisMaxSpeed - xAxisMinSpeed);
+		speedometer.value = (currentSpeed - minSpeed) / (maxSpeed - minSpeed);
 	}
 }

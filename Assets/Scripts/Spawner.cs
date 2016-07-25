@@ -7,11 +7,13 @@ public class Spawner : MonoBehaviour
 	float caveBackgroundHeight;
 	string caveBackgroundName;
 
+	public float offset;
+
 	// Use this for initialization
 	void Start()
 	{
 		caveBacground = GameObject.FindGameObjectWithTag(caveBackgroundTag.ToString());
-		caveBackgroundHeight = caveBacground.GetComponent<MeshRenderer>().bounds.size.y;
+		caveBackgroundHeight = caveBacground.GetComponent<MeshRenderer>().bounds.size.y - offset;
 		caveBackgroundName = caveBacground.name;
 	}
 
