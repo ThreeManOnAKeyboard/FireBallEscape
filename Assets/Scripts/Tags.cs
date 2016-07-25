@@ -1,8 +1,10 @@
 ﻿public class Tags
 {
-    public enum tags
-    {
-        Player = 1,
-        Background = 2
-    };
+	public enum tags
+	{
+		Player,
+		Background,
+		Speedometer,
+		Drop
+	};
 }
