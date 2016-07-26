@@ -6,7 +6,7 @@ public class DropController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == playerTag.ToString())
+        if (col.gameObject.tag == playerTag.ToString())
         {
             print("hero damaged");
         }
