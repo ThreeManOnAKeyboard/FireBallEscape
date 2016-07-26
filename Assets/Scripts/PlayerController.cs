@@ -3,13 +3,16 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    enum Direction
+    private int health;
+    public int Health { get { return health; } set { health = value; } }
+
+    private enum Direction
     {
         Right,
         Left
     }
 
-    Direction currentDirection = Direction.Right;
+    private Direction currentDirection = Direction.Right;
 
     public Tags.tags speedometerTag;
     public float defaultSpeed = 5f;
