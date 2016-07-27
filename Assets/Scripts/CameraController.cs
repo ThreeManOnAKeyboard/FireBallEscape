@@ -20,6 +20,8 @@ public class CameraController : MonoBehaviour
         float distance = (followedObject.position - Camera.main.transform.position).z;
         leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance)).x;
         rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance)).x;
+
+		print (leftBorder);
     }
 
     // Update is called once per frame
