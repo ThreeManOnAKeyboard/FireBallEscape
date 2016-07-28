@@ -45,14 +45,14 @@ public class PlayerController : MonoBehaviour
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
 		if (Input.GetMouseButton(0))
 		{
-			deltaTouchPosition = Input.mousePosition.x - lastTouchPosition;
+			deltaTouchPosition = Input.mousePosition.y - lastTouchPosition;
 		}
 		else
 		{
 			deltaTouchPosition = 0;
 		}
 
-		lastTouchPosition = Input.mousePosition.x;
+		lastTouchPosition = Input.mousePosition.y;
 #elif UNITY_ANDROID
 		if (Input.touchCount > 0)
 		{
@@ -60,12 +60,12 @@ public class PlayerController : MonoBehaviour
 
 			if (currentTouch.phase == TouchPhase.Began)
 			{
-				lastTouchPosition = currentTouch.position.x;
+				lastTouchPosition = currentTouch.position.y;
 			}
 			else
 			{
-				deltaTouchPosition = currentTouch.position.x - lastTouchPosition;
-				lastTouchPosition = currentTouch.position.x;
+				deltaTouchPosition = currentTouch.position.y - lastTouchPosition;
+				lastTouchPosition = currentTouch.position.y;
 			}
 		}
 		else
