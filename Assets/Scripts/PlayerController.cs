@@ -3,79 +3,105 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    private int health;
-    public int Health { get { return health; } set { health = value; } }
+	private int health = 5;
 
-    private enum Direction
-    {
-        Right,
-        Left
-    }
+	private enum Direction
+	{
+		Right,
+		Left
+	}
 
-    private Direction currentDirection = Direction.Right;
+	private Direction currentDirection = Direction.Right;
 
-    public Tags.tags speedometerTag;
-    public float defaultSpeed = 5f;
-    public float minSpeed = 1f;
-    public float maxSpeed = 10f;
-    [Range(0, 1)]
-    public float speedXOnYRatio = 0.5f;
+	public Tags.tags speedometerTag;
+	public float defaultSpeed = 5f;
+	public float minSpeed = 1f;
+	public float maxSpeed = 10f;
+	[Range(0, 1)]
+	public float speedXOnYRatio = 0.5f;
+	public int minHealth;
+	public int maxHealth;
 
-    public float borderOffset;
+	public float borderOffset;
 
-    private float currentSpeed;
+	private float currentSpeed;
 
-    private Slider speedometer;
+	private Slider speedometer;
 
-    // TEMP TRASH
-    private float lastMousePosition;
-    private float deltaMousePosition;
+	private float lastTouchPosition;
+	private float deltaTouchPosition;
 
-    // Use this for initialization
-    void Start()
-    {
-        currentSpeed = defaultSpeed;
+	// Use this for initialization
+	void Start()
+	{
+		currentSpeed = defaultSpeed;
 
-        speedometer = GameObject.FindGameObjectWithTag(speedometerTag.ToString()).GetComponent<Slider>();
-    }
+		speedometer = GameObject.FindGameObjectWithTag(speedometerTag.ToString()).GetComponent<Slider>();
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            deltaMousePosition = Input.mousePosition.x - lastMousePosition;
-        }
-        else
-        {
-            deltaMousePosition = 0;
-        }
+	// Update is called once per frame
+	void Update()
+	{
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+		if (Input.GetMouseButton(0))
+		{
+			deltaTouchPosition = Input.mousePosition.x - lastTouchPosition;
+		}
+		else
+		{
+			deltaTouchPosition = 0;
+		}
 
-        lastMousePosition = Input.mousePosition.x;
+		lastTouchPosition = Input.mousePosition.x;
+#elif UNITY_ANDROID
+		if (Input.touchCount > 0)
+		{
+			Touch currentTouch = Input.GetTouch(0);
 
-        currentSpeed = Mathf.Clamp
-        (
-            currentSpeed + deltaMousePosition / Screen.width * maxSpeed,
-            minSpeed,
-            maxSpeed
-        );
+			if (currentTouch.phase == TouchPhase.Began)
+			{
+				lastTouchPosition = currentTouch.position.x;
+			}
+			else
+			{
+				deltaTouchPosition = currentTouch.position.x - lastTouchPosition;
+				lastTouchPosition = currentTouch.position.x;
+			}
+		}
+		else
+		{
+			deltaTouchPosition = 0;
+		}
+#endif
 
-        if (transform.position.x > (CameraController.rightBorder - borderOffset))
-        {
-            currentDirection = Direction.Left;
-        }
-        else if (transform.position.x < (CameraController.leftBorder + borderOffset))
-        {
-            currentDirection = Direction.Right;
-        }
+		currentSpeed = Mathf.Clamp
+		(
+			currentSpeed + deltaTouchPosition / Screen.width * maxSpeed,
+			minSpeed,
+			maxSpeed
+		);
 
-        transform.Translate(Vector3.up * currentSpeed * Time.deltaTime * (1 - speedXOnYRatio));
+		if (transform.position.x > (CameraController.rightBorder - borderOffset))
+		{
+			currentDirection = Direction.Left;
+		}
+		else if (transform.position.x < (CameraController.leftBorder + borderOffset))
+		{
+			currentDirection = Direction.Right;
+		}
 
-        transform.Translate
-        (
-            (currentDirection == Direction.Right ? Vector3.right : Vector3.left) * Time.deltaTime * currentSpeed * speedXOnYRatio * Mathf.Clamp(1 - Mathf.Abs(transform.position.x) / CameraController.rightBorder, 0.35f, 1f)
-        );
+		transform.Translate(Vector3.up * currentSpeed * Time.deltaTime * (1 - speedXOnYRatio));
 
-        speedometer.value = (currentSpeed - minSpeed) / (maxSpeed - minSpeed);
-    }
+		transform.Translate
+		(
+			(currentDirection == Direction.Right ? Vector3.right : Vector3.left) * Time.deltaTime * currentSpeed * speedXOnYRatio * Mathf.Clamp(1 - Mathf.Abs(transform.position.x) / CameraController.rightBorder, 0.35f, 1f)
+		);
+
+		speedometer.value = (currentSpeed - minSpeed) / (maxSpeed - minSpeed);
+	}
+
+	public void AlterHealth(int amount)
+	{
+		health = Mathf.Clamp(health + amount, minHealth, maxHealth);
+	}
 }
