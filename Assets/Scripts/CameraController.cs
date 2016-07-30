@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
 	public Tags.tags playerTag;
 	public Tags.tags backgroundTag;
 
-	Transform followedObject;
+	Transform target;
 
 	public float followSpeed;
 	public float yPositionOffset;
@@ -24,8 +24,8 @@ public class CameraController : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		followedObject = GameObject.FindGameObjectWithTag(playerTag.ToString()).transform;
-		float distance = (followedObject.position - Camera.main.transform.position).z;
+		target = GameObject.FindGameObjectWithTag(playerTag.ToString()).transform;
+		float distance = (target.position - Camera.main.transform.position).z;
 		leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance)).x;
 		rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance)).x;
 	}
@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
 		transform.position = new Vector3
 		(
 			transform.position.x,
-			Mathf.Lerp(transform.position.y, followedObject.position.y + yPositionOffset, Time.deltaTime * followSpeed),
+			Mathf.Lerp(transform.position.y, target.position.y + yPositionOffset, Time.deltaTime * followSpeed),
 			transform.position.z
 		);
 	}
