@@ -40,4 +40,9 @@ public class CameraController : MonoBehaviour
 			transform.position.z
 		);
 	}
+
+	public void EnableApplyRootMotion()
+	{
+		GetComponent<Animator>().applyRootMotion = true;
+	}
 }
