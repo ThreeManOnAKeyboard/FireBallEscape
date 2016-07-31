@@ -48,8 +48,8 @@ public class CameraController : MonoBehaviour
 		GetComponent<Animator>().applyRootMotion = true;
 	}
 
-	public void SetBlurIterations(int value)
+	public void SetDownSample(int value)
 	{
-		GetComponent<BlurOptimized>().blurIterations = value;
+		GetComponent<BlurOptimized>().downsample = value;
 	}
 }
