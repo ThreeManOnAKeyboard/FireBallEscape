@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityStandardAssets.ImageEffects;
 
 public class CameraController : MonoBehaviour
 {
@@ -8,7 +10,7 @@ public class CameraController : MonoBehaviour
 	public Tags.tags playerTag;
 	public Tags.tags backgroundTag;
 
-	Transform target;
+	private Transform target;
 
 	public float followSpeed;
 	public float yPositionOffset;
@@ -44,5 +46,10 @@ public class CameraController : MonoBehaviour
 	public void EnableApplyRootMotion()
 	{
 		GetComponent<Animator>().applyRootMotion = true;
+	}
+
+	public void SetBlurIterations(int value)
+	{
+		GetComponent<BlurOptimized>().blurIterations = value;
 	}
 }
