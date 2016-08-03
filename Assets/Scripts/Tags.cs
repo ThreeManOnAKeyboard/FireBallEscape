@@ -6,6 +6,7 @@
 		Background,
 		Speedometer,
 		Drop,
-		MainCamera
+		MainCamera,
+		GameUI
 	};
 }

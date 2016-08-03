@@ -32,7 +32,7 @@ public class ZigZagMovement : MonoBehaviour
 	{
 		currentSpeed = defaultSpeed;
 
-		speedometer = GameObject.FindGameObjectWithTag(speedometerTag.ToString()).GetComponent<Slider>();
+		//speedometer = GameObject.FindGameObjectWithTag(speedometerTag.ToString()).GetComponent<Slider>();
 	}
 
 	// Update is called once per frame
@@ -86,13 +86,16 @@ public class ZigZagMovement : MonoBehaviour
 			currentDirection = Direction.Right;
 		}
 
-		transform.Translate(Vector3.up * currentSpeed * Time.deltaTime * (1 - speedXOnYRatio));
+		transform.Translate(Vector2.up * currentSpeed * Time.deltaTime * (1 - speedXOnYRatio));
 
-		transform.Translate
-		(
-			(currentDirection == Direction.Right ? Vector3.right : Vector3.left) * Time.deltaTime * currentSpeed * speedXOnYRatio * Mathf.Clamp(1 - Mathf.Abs(transform.position.x) / CameraController.rightBorder, 0.35f, 1f)
-		);
+		if (CameraController.rightBorder != 0f)
+		{
+			transform.Translate
+			(
+				(currentDirection == Direction.Right ? Vector2.right : Vector2.left) * Time.deltaTime * currentSpeed * speedXOnYRatio * Mathf.Clamp(1 - Mathf.Abs(transform.position.x) / CameraController.rightBorder, 0.35f, 1f)
+			);
+		}
 
-		speedometer.value = (currentSpeed - minSpeed) / (maxSpeed - minSpeed);
+		//speedometer.value = (currentSpeed - minSpeed) / (maxSpeed - minSpeed);
 	}
 }

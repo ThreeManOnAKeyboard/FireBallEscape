@@ -28,4 +28,9 @@ public class PlayerController : MonoBehaviour
 	{
 		GetComponent<Animator>().applyRootMotion = true;
 	}
+
+	public void EnableGameUI()
+	{
+		GameManager.Instance.EnableGameUI();
+	}
 }

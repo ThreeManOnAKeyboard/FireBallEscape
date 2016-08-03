@@ -56,11 +56,16 @@ public class LeftRightMovement : MonoBehaviour
 		}
 #endif
 
-		transform.position = new Vector3
+		transform.position = Vector3.MoveTowards
 		(
-			Mathf.Lerp(transform.position.x, touchPosition.x, Time.deltaTime * speed.x),
-			transform.position.y,
-			transform.position.z
+			transform.position,
+			new Vector3
+			(
+				touchPosition.x,
+				transform.position.y,
+				transform.position.z
+			),
+			speed.x * Time.deltaTime
 		);
 
 		transform.Translate(Vector2.up * speed.y * Time.deltaTime);
