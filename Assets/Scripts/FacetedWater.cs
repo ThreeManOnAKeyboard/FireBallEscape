@@ -24,7 +24,7 @@ public class FacetedWater : MonoBehaviour
 	{
 		for (int i = 0; i < vertices.Length; i++)
 		{
-			vertices[i].x = Mathf.PingPong(Time.time * speed, randomTimes[i]);
+			vertices[i].z = Mathf.PingPong(Time.time * speed, randomTimes[i]);
 		}
 
 		mesh.vertices = vertices;
