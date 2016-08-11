@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour
 		SIDEWAYS,
 		ZIGZAG
 	}
-	public static ControlType controlType;
+	public ControlType controlType;
+
+	// The x axis offset for both left / right borders to limit the player
+	public float bordersOffset;
 
 	void Awake()
 	{

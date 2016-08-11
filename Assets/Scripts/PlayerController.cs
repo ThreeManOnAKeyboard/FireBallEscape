@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
 
 	public void EnableControlComponent()
 	{
-		switch (GameManager.controlType)
+		switch (GameManager.Instance.controlType)
 		{
 			case GameManager.ControlType.FREE:
 				GetComponent<TouchFollowMovement>().enabled = true;

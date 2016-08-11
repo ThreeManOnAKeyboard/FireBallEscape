@@ -4,8 +4,6 @@ public class LeftRightMovement : MonoBehaviour
 {
 	// The number of divisions in which the screen will be devided
 	public int bandsCount;
-	// The x axis offset for both left / right borders to limit the player
-	public float bordersOffset;
 	// The speed for each axis
 	public Vector2 speed;
 	// x position for each band
@@ -20,11 +18,11 @@ public class LeftRightMovement : MonoBehaviour
 		bandIndex = bandsCount / 2;
 
 		// The width of visible track in units
-		float trackWidth = CameraController.rightBorder * 2f - bordersOffset;
+		float trackWidth = CameraController.rightBorder * 2f - GameManager.Instance.bordersOffset;
 		// Initialise bands x positions
 		for (int i = 0; i < bandsCount; i++)
 		{
-			bandsPositions[i] = CameraController.leftBorder + bordersOffset + (i == 0 ? 0 : ((trackWidth / (float)bandsCount) * i));
+			bandsPositions[i] = CameraController.leftBorder + GameManager.Instance.bordersOffset + (i == 0 ? 0 : ((trackWidth / (float)bandsCount) * i));
 		}
 	}
 

@@ -51,7 +51,12 @@ public class TouchFollowMovement : MonoBehaviour
 			transform.position,
 			new Vector3
 			(
-				touchPosition.x,
+				Mathf.Clamp
+				(
+					touchPosition.x,
+					CameraController.leftBorder + GameManager.Instance.bordersOffset,
+					CameraController.rightBorder - GameManager.Instance.bordersOffset
+				),
 				touchPosition.y + yOffset,
 				transform.position.z
 			),

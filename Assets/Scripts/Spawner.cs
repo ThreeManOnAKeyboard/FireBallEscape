@@ -11,7 +11,6 @@ public class Spawner : MonoBehaviour
 	private Helper.methodNameHolder spawnWaterDropMethod;
 	private Helper.methodNameHolder spawnFuelDropMethod;
 
-	public float borderOffset;
 	public float offset;
 	public float minWaterSpawnInterval = 1f;
 	public float maxWaterSpawnInterval = 3f;
@@ -53,7 +52,7 @@ public class Spawner : MonoBehaviour
 			waterDrop,
 			new Vector3
 			(
-				Random.Range(CameraController.leftBorder + borderOffset, CameraController.rightBorder - borderOffset),
+				Random.Range(CameraController.leftBorder + GameManager.Instance.bordersOffset, CameraController.rightBorder - GameManager.Instance.bordersOffset),
 				transform.position.y,
 				transform.position.z
 			),
@@ -70,7 +69,7 @@ public class Spawner : MonoBehaviour
 			fuelDrop,
 			new Vector3
 			(
-				Random.Range(CameraController.leftBorder + borderOffset, CameraController.rightBorder - borderOffset),
+				Random.Range(CameraController.leftBorder + GameManager.Instance.bordersOffset, CameraController.rightBorder - GameManager.Instance.bordersOffset),
 				transform.position.y,
 				transform.position.z
 			),
