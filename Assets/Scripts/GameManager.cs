@@ -4,19 +4,18 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance { get; private set; }
-	public Tags.tags gameUITag;
 
-	private float timeScale;
+	public enum ControlType
+	{
+		FREE,
+		SIDEWAYS,
+		ZIGZAG
+	}
+	public static ControlType controlType;
 
 	void Awake()
 	{
 		Instance = this;
-	}
-
-	// Use this for initialization
-	void Start()
-	{
-		timeScale = Time.timeScale;
 	}
 
 	// Update is called once per frame
@@ -25,9 +24,24 @@ public class GameManager : MonoBehaviour
 
 	}
 
+	public void SetFreeControlType()
+	{
+		controlType = ControlType.FREE;
+	}
+
+	public void SetSidewaysControlType()
+	{
+		controlType = ControlType.SIDEWAYS;
+	}
+
+	public void SetZigZagControlType()
+	{
+		controlType = ControlType.ZIGZAG;
+	}
+
 	public void EnableGameUI()
 	{
-		GameObject.FindWithTag(gameUITag.ToString()).GetComponent<Canvas>().enabled = true;
+		GameObject.FindWithTag(Tags.tags.GameUI.ToString()).GetComponent<Canvas>().enabled = true;
 	}
 
 	public void PauseGame()
@@ -37,7 +51,7 @@ public class GameManager : MonoBehaviour
 
 	public void UnpauseGame()
 	{
-		Time.timeScale = timeScale;
+		Time.timeScale = 1;
 	}
 
 	public void RestartLevel()

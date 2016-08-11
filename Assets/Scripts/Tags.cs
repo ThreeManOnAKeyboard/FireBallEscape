@@ -4,9 +4,7 @@
 	{
 		Player,
 		Background,
-		Speedometer,
 		Drop,
-		MainCamera,
 		GameUI
 	};
 }

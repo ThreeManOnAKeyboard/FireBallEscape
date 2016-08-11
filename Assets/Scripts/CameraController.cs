@@ -17,15 +17,17 @@ public class CameraController : MonoBehaviour
 
 	void Awake()
 	{
+		// Set Quality settings for android build
 #if UNITY_ANDROID && !UNITY_EDITOR
-		QualitySettings.vSyncCount = 0;
-		Application.targetFrameRate = 50;
+		QualitySettings.vSyncCount = 1;
+		Application.targetFrameRate = 60;
 #endif
 	}
 
 	// Use this for initialization
 	void Start()
 	{
+		// Calculate visible track borders positions in world space coordinates
 		target = GameObject.FindGameObjectWithTag(playerTag.ToString()).transform;
 		float distance = (target.position - Camera.main.transform.position).z;
 		leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance)).x;

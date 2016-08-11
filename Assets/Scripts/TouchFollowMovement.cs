@@ -7,15 +7,12 @@ public class TouchFollowMovement : MonoBehaviour
 	[Range(0, 1)]
 	public float yTouchLimitRatio;
 
-	public Tags.tags cameraTag;
-
-	private GameObject mainCamera;
 	private Vector3 touchPosition;
 
 	// Use this for initialization
 	void Start()
 	{
-		mainCamera = GameObject.FindWithTag(cameraTag.ToString());
+		touchPosition = transform.position;
 	}
 
 	// Update is called once per frame
@@ -30,7 +27,7 @@ public class TouchFollowMovement : MonoBehaviour
 				(
 					Input.mousePosition.x,
 					Mathf.Clamp(Input.mousePosition.y, 0f, Screen.height * yTouchLimitRatio),
-					Mathf.Abs(mainCamera.transform.position.z - transform.position.z)
+					Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
 				)
 			);
 		}
@@ -43,7 +40,7 @@ public class TouchFollowMovement : MonoBehaviour
 				(
 					Input.GetTouch(0).position.x,
 					Mathf.Clamp(Input.GetTouch(0).position.y, 0f, Screen.height * yTouchLimitRatio),
-					Mathf.Abs(mainCamera.transform.position.z - transform.position.z)
+					Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
 				)
 			);
 		}

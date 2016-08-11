@@ -2,72 +2,81 @@
 
 public class LeftRightMovement : MonoBehaviour
 {
+	// The number of divisions in which the screen will be devided
+	public int bandsCount;
+	// The x axis offset for both left / right borders to limit the player
+	public float bordersOffset;
+	// The speed for each axis
 	public Vector2 speed;
-	public Tags.tags cameraTag;
-
-	private GameObject mainCamera;
-	private Vector3 touchPosition;
+	// x position for each band
+	private float[] bandsPositions;
+	// Current band index
+	private int bandIndex;
 
 	// Use this for initialization
 	void Start()
 	{
-		mainCamera = GameObject.FindWithTag(cameraTag.ToString());
+		bandsPositions = new float[bandsCount];
+		bandIndex = bandsCount / 2;
+
+		// The width of visible track in units
+		float trackWidth = CameraController.rightBorder * 2f - bordersOffset;
+		// Initialise bands x positions
+		for (int i = 0; i < bandsCount; i++)
+		{
+			bandsPositions[i] = CameraController.leftBorder + bordersOffset + (i == 0 ? 0 : ((trackWidth / (float)bandsCount) * i));
+		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-		if (Input.GetMouseButton(0))
-		{
-			touchPosition = Camera.main.ScreenToWorldPoint
-			(
-				new Vector3
-				(
-					Input.mousePosition.x,
-					Input.mousePosition.y,
-					Mathf.Abs(mainCamera.transform.position.z - transform.position.z)
-				)
-			);
-		}
-		else
-		{
-			touchPosition = transform.position;
-		}
+		if (Input.GetMouseButtonDown(0))
 #elif UNITY_ANDROID
-		if (Input.touchCount > 0)
-		{
-			if (Input.GetTouch(0).phase == TouchPhase.Ended)
-			{
-				touchPosition = transform.position;
-			}
-			else
-			{
-				touchPosition = Camera.main.ScreenToWorldPoint
-				(
-					new Vector3
-					(
-						Input.GetTouch(0).position.x,
-						Input.GetTouch(0).position.y,
-						Mathf.Abs(mainCamera.transform.position.z - transform.position.z)
-					)
-				);
-			}
-		}
+		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
 #endif
+		{
+			Leap();
+		}
 
+		// Move sideways
 		transform.position = Vector3.MoveTowards
 		(
 			transform.position,
 			new Vector3
 			(
-				touchPosition.x,
+				bandsPositions[bandIndex],
 				transform.position.y,
 				transform.position.z
 			),
 			speed.x * Time.deltaTime
 		);
 
+		// Move up
 		transform.Translate(Vector2.up * speed.y * Time.deltaTime);
+	}
+
+	// Perform leap on next / previous band
+	public void Leap()
+	{
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+		if (Input.mousePosition.x > Screen.width / 2)
+#elif UNITY_ANDROID
+		if (Input.GetTouch(0).position.x > Screen.width / 2)
+#endif
+		{
+			if (bandIndex < bandsCount - 1)
+			{
+				bandIndex++;
+			}
+		}
+		else
+		{
+			if (bandIndex > 0)
+			{
+				bandIndex--;
+			}
+		}
 	}
 }
