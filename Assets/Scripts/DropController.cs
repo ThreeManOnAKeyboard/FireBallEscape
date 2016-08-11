@@ -4,7 +4,7 @@ public class DropController : MonoBehaviour
 {
 	public Tags.tags playerTag;
 	public GameObject dropExplosion;
-	public int healhAmount;
+	public float healhAmount;
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
