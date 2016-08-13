@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
 	public float healthBarFillSpeed;
 	public float healthDrainSpeed;
 
+	public GameObject gameUI;
+	public GameObject gameOverScreen;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -30,11 +33,12 @@ public class PlayerController : MonoBehaviour
 	{
 		health = Mathf.Clamp(health + amount, -1f, maxHealth);
 
-		//if (health < 0)
-		//{
-		//	//GameManager.Instance.GameOver();
-		//	Destroy(gameObject);
-		//}
+		if (health < 0)
+		{
+			gameOverScreen.SetActive(true);
+			gameUI.SetActive(false);
+			Destroy(gameObject);
+		}
 
 
 		// Mathf.Clamp(currentHealth / maxHealth  maxPercent , minPercent, maxPercent)  maxHealth;
@@ -56,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
 	public void EnableGameUI()
 	{
-		GameManager.Instance.EnableGameUI();
+		gameUI.SetActive(true);
 	}
 
 	public void EnableControlComponent()

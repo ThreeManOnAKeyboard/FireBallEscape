@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.ImageEffects;
 
 public class CameraController : MonoBehaviour
@@ -19,7 +18,7 @@ public class CameraController : MonoBehaviour
 	{
 		// Set Quality settings for android build
 #if UNITY_ANDROID && !UNITY_EDITOR
-		QualitySettings.vSyncCount = 1;
+		QualitySettings.vSyncCount = 0;
 		Application.targetFrameRate = 60;
 #endif
 	}
@@ -37,12 +36,15 @@ public class CameraController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		transform.position = new Vector3
-		(
-			transform.position.x,
-			Mathf.Lerp(transform.position.y, target.position.y + yPositionOffset, Time.deltaTime * followSpeed),
-			transform.position.z
-		);
+		if (target != null)
+		{
+			transform.position = new Vector3
+			(
+				transform.position.x,
+				Mathf.Lerp(transform.position.y, target.position.y + yPositionOffset, Time.deltaTime * followSpeed),
+				transform.position.z
+			);
+		}
 	}
 
 	public void EnableApplyRootMotion()
