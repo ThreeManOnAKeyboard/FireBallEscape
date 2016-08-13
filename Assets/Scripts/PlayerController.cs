@@ -18,20 +18,15 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		//healthBar.fillAmount = health / maxHealth;
+		healthBar.fillAmount = health / maxHealth;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		//health -= healthDrainSpeed * Time.deltaTime;
+		health -= healthDrainSpeed * Time.deltaTime;
 
-		//healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, health / maxHealth, healthBarFillSpeed * Time.deltaTime);
-	}
-
-	public void AlterHealth(float amount)
-	{
-		health = Mathf.Clamp(health + amount, -1f, maxHealth);
+		healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, health / maxHealth, healthBarFillSpeed * Time.deltaTime);
 
 		if (health < 0)
 		{
@@ -39,7 +34,11 @@ public class PlayerController : MonoBehaviour
 			gameUI.SetActive(false);
 			Destroy(gameObject);
 		}
+	}
 
+	public void AlterHealth(float amount)
+	{
+		health = Mathf.Clamp(health + amount, -1f, maxHealth);
 
 		// Mathf.Clamp(currentHealth / maxHealth  maxPercent , minPercent, maxPercent)  maxHealth;
 		//float maxHealth = 0;
