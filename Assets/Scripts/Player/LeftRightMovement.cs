@@ -7,7 +7,7 @@ public class LeftRightMovement : MonoBehaviour
 	// The speed for each axis
 	public Vector2 speed;
 	// x position for each band
-	private float[] bandsPositions;
+	public float[] bandsPositions;
 	// Current band index
 	private int bandIndex;
 
