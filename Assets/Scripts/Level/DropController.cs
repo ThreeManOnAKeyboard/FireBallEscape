@@ -4,14 +4,21 @@ public class DropController : MonoBehaviour
 {
 	public Tags.tags playerTag;
 	public GameObject dropExplosion;
-	public float healhAmount;
+	public bool isHealing;
 	public float fallSpeed;
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.gameObject.tag == playerTag.ToString())
 		{
-			col.gameObject.GetComponent<PlayerController>().AlterHealth(healhAmount);
+			if (isHealing)
+			{
+				col.gameObject.GetComponent<PlayerController>().Heal();
+			}
+			else
+			{
+				col.gameObject.GetComponent<PlayerController>().Damage();
+			}
 
 			dropExplosion = Instantiate(dropExplosion);
 			dropExplosion.transform.position = transform.position;

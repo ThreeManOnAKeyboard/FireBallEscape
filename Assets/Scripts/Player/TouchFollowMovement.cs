@@ -2,8 +2,13 @@
 
 public class TouchFollowMovement : MonoBehaviour
 {
-	public float speed;
+
+	private float speed;
+	public float minSpeed = 5f;
+	public float maxSpeed = 10f;
+
 	public float yOffset;
+
 	[Range(0, 1)]
 	public float yTouchLimitRatio;
 
@@ -18,6 +23,11 @@ public class TouchFollowMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (PlayerController.isInvincible)
+		{
+			return;
+		}
+
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 		if (Input.GetMouseButton(0))
 		{
@@ -45,6 +55,8 @@ public class TouchFollowMovement : MonoBehaviour
 			);
 		}
 #endif
+
+		speed = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed, minSpeed, maxSpeed);
 
 		transform.position = Vector3.Lerp
 		(

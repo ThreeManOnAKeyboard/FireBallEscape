@@ -9,7 +9,10 @@ public class ZigZagMovement : MonoBehaviour
 	}
 	private Direction currentDirection = Direction.Right;
 
-	public float speed = 5f;
+	private float speed;
+	public float minSpeed = 5f;
+	public float maxSpeed = 10f;
+
 	[Range(0, 1)]
 	public float speedXOnYRatio = 0.5f;
 
@@ -24,6 +27,11 @@ public class ZigZagMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (PlayerController.isInvincible)
+		{
+			return;
+		}
+
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
 		if (Input.GetMouseButtonDown(0))
 #elif UNITY_ANDROID
@@ -48,6 +56,8 @@ public class ZigZagMovement : MonoBehaviour
 		{
 			currentDirection = Direction.Right;
 		}
+
+		speed = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed, minSpeed, maxSpeed);
 
 		transform.Translate(Vector2.up * speed * Time.deltaTime * (1 - speedXOnYRatio));
 
