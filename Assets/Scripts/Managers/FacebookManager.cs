@@ -74,7 +74,7 @@ public class FacebookManager : MonoBehaviour
 	public void GetProfile()
 	{
 		FB.API("/me?fields=first_name", HttpMethod.GET, GetUserName);
-		FB.API("/me/picture?type=square&height=128&width=128", HttpMethod.GET, GetProfilePicture);
+		FB.API("/me/picture?type=square&height=280&width=280", HttpMethod.GET, GetProfilePicture);
 	}
 
 	void GetUserName(IResult result)
@@ -97,7 +97,7 @@ public class FacebookManager : MonoBehaviour
 		}
 		else
 		{
-			profilePicture = Sprite.Create(result.Texture, new Rect(0, 0, 128, 128), Vector2.zero);
+			profilePicture = Sprite.Create(result.Texture, new Rect(0, 0, 280, 280), Vector2.zero);
 		}
 	}
 
