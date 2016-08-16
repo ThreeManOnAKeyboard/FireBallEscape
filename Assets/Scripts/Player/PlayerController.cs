@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 	public static float health = 10;
+	public float startHealth;
 	public static float maximumHealth;
 	public float maxHealth;
 
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
 	void Awake()
 	{
+		health = startHealth;
 		maximumHealth = maxHealth;
 	}
 

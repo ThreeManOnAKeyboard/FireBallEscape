@@ -37,6 +37,7 @@ public class LeftRightMovement : MonoBehaviour
 	{
 		if (PlayerController.isInvincible)
 		{
+			bandIndex = bandsCount / 2;
 			return;
 		}
 

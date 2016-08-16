@@ -12,27 +12,31 @@ public class BackgroundSpawner : MonoBehaviour
 	private float caveBackgroundHeight;
 	private string caveBackgroundName;
 
+	private Vector3 previousCavePosition;
+	private GameObject cave;
+
 	// Use this for initialization
 	void Start()
 	{
 		caveBackgroundHeight = caveBackground.GetComponent<MeshRenderer>().bounds.size.y - offset;
 		caveBackgroundName = caveBackground.name;
-
+		cave = caveBackground;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (transform.position.y > caveBackground.transform.position.y)
+		if (transform.position.y > cave.transform.position.y)
 		{
-			caveBackground = Instantiate(caveBackground);
-			caveBackground.transform.position = new Vector3
+			previousCavePosition = cave.transform.position;
+			cave = ObjectPool.Instance.GetPooledObject(caveBackground);
+			cave.transform.position = new Vector3
 			(
-				caveBackground.transform.position.x,
-				caveBackground.transform.position.y + caveBackgroundHeight,
-				caveBackground.transform.position.z
+				previousCavePosition.x,
+				previousCavePosition.y + caveBackgroundHeight,
+				previousCavePosition.z
 			);
-			caveBackground.name = caveBackgroundName;
+			cave.SetActive(true);
 		}
 	}
 }

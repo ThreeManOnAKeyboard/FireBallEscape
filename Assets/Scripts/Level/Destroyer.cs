@@ -8,7 +8,7 @@ public class Destroyer : MonoBehaviour
 	{
 		if (col.tag == whatToDestroyTag.ToString())
 		{
-			Destroy(col.gameObject);
+			col.gameObject.SetActive(false);
 		}
 	}
 }

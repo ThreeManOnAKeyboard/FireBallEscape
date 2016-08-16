@@ -13,7 +13,9 @@ public class LeftRightSpawner : MonoBehaviour
 	public float fuelPerWaterSpawnRatio;
 
 	// The script which contains the calculated positions of bands
-	LeftRightMovement LRMScript;
+	private LeftRightMovement LRMScript;
+
+	private GameObject drop;
 
 	// Use this for initialization
 	void Start()
@@ -40,18 +42,10 @@ public class LeftRightSpawner : MonoBehaviour
 			// Wait the random amount of time till next drop instantiation
 			yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
 
-			// Instantiate new random drop
-			Instantiate
-			(
-				Random.Range(0f, 1f) < fuelPerWaterSpawnRatio ? fuelDrop : waterDrop,
-				new Vector3
-				(
-					spawnPosition,
-					transform.position.y,
-					transform.position.z
-				),
-				Quaternion.identity
-			);
+			// Pool new random drop
+			drop = ObjectPool.Instance.GetPooledObject(Random.Range(0f, 1f) < fuelPerWaterSpawnRatio ? fuelDrop : waterDrop);
+			drop.transform.position = new Vector3(spawnPosition, transform.position.y, transform.position.z);
+			drop.SetActive(true);
 		}
 	}
 }

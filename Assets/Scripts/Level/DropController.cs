@@ -20,10 +20,10 @@ public class DropController : MonoBehaviour
 				col.gameObject.GetComponent<PlayerController>().Damage();
 			}
 
-			dropExplosion = Instantiate(dropExplosion);
-			dropExplosion.transform.position = transform.position;
-			Destroy(dropExplosion, 2f);
-			Destroy(gameObject);
+			GameObject explosion = Instantiate(dropExplosion);
+			explosion.transform.position = transform.position;
+			Destroy(explosion, 2f);
+			gameObject.SetActive(false);
 		}
 	}
 

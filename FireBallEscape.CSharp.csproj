@@ -104,6 +104,7 @@
     <Compile Include="Assets\Scripts\Level\FacetedWater.cs" />
     <Compile Include="Assets\Scripts\Level\FreeControlSpawner.cs" />
     <Compile Include="Assets\Scripts\Level\LeftRightSpawner.cs" />
+    <Compile Include="Assets\Scripts\Level\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\Level\SpawnerChooser.cs" />
     <Compile Include="Assets\Scripts\Level\ZigZagSpawner.cs" />
     <Compile Include="Assets\Scripts\Managers\FacebookHolder.cs" />

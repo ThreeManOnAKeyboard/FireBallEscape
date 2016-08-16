@@ -25,6 +25,7 @@ public class TouchFollowMovement : MonoBehaviour
 	{
 		if (PlayerController.isInvincible)
 		{
+			touchPosition = transform.position;
 			return;
 		}
 
