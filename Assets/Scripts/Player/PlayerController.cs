@@ -25,8 +25,14 @@ public class PlayerController : MonoBehaviour
 	// The amount of time player is invincible
 	public float invincibleDuration;
 
+	// When to throw max power wave to blow things up before invicibility ending
+	public float maxPowerWaveDelay;
+
 	// The maximum speed when player is invincible
 	public float invincibleSpeed;
+
+	// Shield
+	public GameObject shield;
 
 	// Some UI gameobjects
 	public GameObject gameUI;
@@ -35,8 +41,13 @@ public class PlayerController : MonoBehaviour
 	// Particle systems
 	public GameObject defaultPE;
 	public GameObject maxPowerPE;
+	public GameObject maxPowerWave;
 
 	public static bool isInvincible;
+
+	public Text scoreText;
+	public static float score;
+	private float previousY;
 
 	void Awake()
 	{
@@ -73,6 +84,7 @@ public class PlayerController : MonoBehaviour
 		{
 			gameOverScreen.SetActive(true);
 			gameUI.SetActive(false);
+			GameManager.Instance.ProcessScore();
 			Destroy(gameObject);
 		}
 		else if (health > maxHealth)
@@ -84,13 +96,24 @@ public class PlayerController : MonoBehaviour
 			// Reset all things to default after end of max power profit
 			StartCoroutine(ResetToDefault());
 		}
+
+		// Update the score
+		score += transform.position.y - previousY;
+		scoreText.text = ((int)score).ToString();
+		previousY = transform.position.y;
 	}
 
 	IEnumerator ResetToDefault()
 	{
-		yield return new WaitForSeconds(invincibleDuration);
-
 		health = maxHealth / 2f;
+		yield return new WaitForSeconds(maxPowerWaveDelay);
+
+		// Instantiate max power wave
+		GameObject mpw = Instantiate(maxPowerWave);
+		mpw.transform.position = transform.position;
+
+		yield return new WaitForSeconds(invincibleDuration - maxPowerWaveDelay);
+
 		isInvincible = false;
 		defaultPE.SetActive(true);
 		maxPowerPE.SetActive(false);
@@ -126,6 +149,7 @@ public class PlayerController : MonoBehaviour
 	public void EnableGameUI()
 	{
 		gameUI.SetActive(true);
+		score = 0;
 	}
 
 	public void EnableControlComponent()

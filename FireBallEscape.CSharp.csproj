@@ -101,17 +101,20 @@
     <Compile Include="Assets\Scripts\Level\CameraController.cs" />
     <Compile Include="Assets\Scripts\Level\Destroyer.cs" />
     <Compile Include="Assets\Scripts\Level\DropController.cs" />
+    <Compile Include="Assets\Scripts\Level\DropsHolder.cs" />
+    <Compile Include="Assets\Scripts\Level\FacebookHolder.cs" />
     <Compile Include="Assets\Scripts\Level\FacetedWater.cs" />
     <Compile Include="Assets\Scripts\Level\FreeControlSpawner.cs" />
     <Compile Include="Assets\Scripts\Level\LeftRightSpawner.cs" />
+    <Compile Include="Assets\Scripts\Level\MaxPowerWave.cs" />
     <Compile Include="Assets\Scripts\Level\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\Level\SpawnerChooser.cs" />
     <Compile Include="Assets\Scripts\Level\ZigZagSpawner.cs" />
-    <Compile Include="Assets\Scripts\Managers\FacebookHolder.cs" />
     <Compile Include="Assets\Scripts\Managers\FacebookManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Player\LeftRightMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Player\ShieldController.cs" />
     <Compile Include="Assets\Scripts\Player\TouchFollowMovement.cs" />
     <Compile Include="Assets\Scripts\Player\ZigZagMovement.cs" />
   </ItemGroup>

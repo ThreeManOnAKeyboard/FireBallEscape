@@ -6,6 +6,7 @@ public class PooledObject
 {
 	public GameObject objectToPool;
 	public int pooledAmount = 20;
+	public bool growable = true;
 }
 
 public class ObjectPool : MonoBehaviour
@@ -62,6 +63,23 @@ public class ObjectPool : MonoBehaviour
 			}
 		}
 
-		return AddPooledObject(gameObject);
+
+		// Check if gameobject can grow in amount
+		for (int i = 0; i < pooledObjectTypes.Length; i++)
+		{
+			if (gameObject.name == pooledObjectTypes[i].objectToPool.name)
+			{
+				if (pooledObjectTypes[i].growable)
+				{
+					return AddPooledObject(gameObject);
+				}
+				else
+				{
+					return null;
+				}
+			}
+		}
+
+		return null;
 	}
 }

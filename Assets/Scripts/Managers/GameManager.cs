@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
 	// The x axis offset for both left / right borders to limit the player
 	public float bordersOffset;
 
+	// Highscore text elements
+	public Text highScore;
+	public Text score;
+
 	void Awake()
 	{
 		Instance = this;
@@ -44,6 +48,25 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 
+	}
+
+	public void ProcessScore()
+	{
+		float currentHighScore = 0;
+
+		if (PlayerPrefs.HasKey(PlayerPrefsKeys.HighScore.ToString()))
+		{
+			currentHighScore = PlayerPrefs.GetFloat(PlayerPrefsKeys.HighScore.ToString());
+		}
+
+		if (PlayerController.score > currentHighScore)
+		{
+			PlayerPrefs.SetFloat(PlayerPrefsKeys.HighScore.ToString(), PlayerController.score);
+			currentHighScore = PlayerController.score;
+		}
+
+		score.text = ((int)PlayerController.score).ToString();
+		highScore.text = ((int)currentHighScore).ToString();
 	}
 
 	public void SetFreeControlType()

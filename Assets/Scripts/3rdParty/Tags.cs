@@ -5,6 +5,8 @@
 		Player,
 		Background,
 		Drop,
+		MaxPowerWave,
+		Shield,
 		GameUI
 	};
 }

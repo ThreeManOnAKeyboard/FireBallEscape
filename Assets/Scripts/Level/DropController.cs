@@ -1,35 +1,54 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class DropController : MonoBehaviour
 {
-	public Tags.tags playerTag;
-	public GameObject dropExplosion;
-	public bool isHealing;
+	public UnityEvent methodToCall;
+
+	public GameObject collisionEffect;
+
+	public float healthAmount;
 	public float fallSpeed;
+	public float scoreAmount;
 
-	public void OnTriggerEnter2D(Collider2D col)
+	// Use this for initialization
+	void Start()
 	{
-		if (col.gameObject.tag == playerTag.ToString())
-		{
-			if (isHealing)
-			{
-				col.gameObject.GetComponent<PlayerController>().Heal();
-			}
-			else
-			{
-				col.gameObject.GetComponent<PlayerController>().Damage();
-			}
 
-			GameObject explosion = Instantiate(dropExplosion);
-			explosion.transform.position = transform.position;
-			Destroy(explosion, 2f);
-			gameObject.SetActive(false);
-		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+	}
+
+	public void OnTriggerEnter2D(Collider2D col)
+	{
+		methodToCall.Invoke();
+		DoPostEffect();
+	}
+
+	public void OnWaterDrop()
+	{
+
+	}
+
+	public void OnFuelDrop()
+	{
+
+	}
+
+	public void OnShieldDrop()
+	{
+
+	}
+
+	public void DoPostEffect()
+	{
+		GameObject explosion = Instantiate(collisionEffect);
+		explosion.transform.position = transform.position;
+		Destroy(explosion, 2f);
+		gameObject.SetActive(false);
 	}
 }

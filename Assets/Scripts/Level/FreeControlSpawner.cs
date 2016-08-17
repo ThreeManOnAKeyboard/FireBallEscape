@@ -1,17 +1,13 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FreeControlSpawner : MonoBehaviour
 {
-	public GameObject waterDrop;
-	public GameObject fuelDrop;
+	public List<DropHolder> drops;
 
 	public float minSpawnInterval = 1f;
 	public float maxSpawnInterval = 3f;
-
-	// How much fuel should be spawned per water drop
-	[Range(0, 1)]
-	public float fuelPerWaterSpawnRatio;
 
 	public float additionalOffset;
 	private float totalBorderOffset;
@@ -39,7 +35,11 @@ public class FreeControlSpawner : MonoBehaviour
 			yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
 
 			// Pool new random drop
-			drop = ObjectPool.Instance.GetPooledObject(Random.Range(0f, 1f) < fuelPerWaterSpawnRatio ? fuelDrop : waterDrop);
+			while (drop == null)
+			{
+				drop = ObjectPool.Instance.GetPooledObject(GetRandomDrop());
+			}
+
 			drop.transform.position = new Vector3
 			(
 				Random.Range
@@ -52,5 +52,20 @@ public class FreeControlSpawner : MonoBehaviour
 			);
 			drop.SetActive(true);
 		}
+	}
+
+	public GameObject GetRandomDrop()
+	{
+		float randomResult = Random.Range(0, 1);
+
+		for (int i = 0; i < drops.Count; i++)
+		{
+			if (drops[i].probability > randomResult)
+			{
+				return drops[i].drop;
+			}
+		}
+
+		return null;
 	}
 }
