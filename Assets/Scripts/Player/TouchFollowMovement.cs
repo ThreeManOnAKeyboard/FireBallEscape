@@ -2,7 +2,6 @@
 
 public class TouchFollowMovement : MonoBehaviour
 {
-
 	private float speed;
 	public float minSpeed = 5f;
 	public float maxSpeed = 10f;
@@ -23,6 +22,11 @@ public class TouchFollowMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (Time.timeScale == 0)
+		{
+			return;
+		}
+
 		if (PlayerController.isInvincible)
 		{
 			touchPosition = transform.position;

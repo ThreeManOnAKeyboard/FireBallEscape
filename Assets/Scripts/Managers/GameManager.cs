@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 	void Awake()
 	{
 		Instance = this;
+		//PlayerPrefs.DeleteAll();
 	}
 
 	// Use this for initialization

@@ -108,13 +108,13 @@
     <Compile Include="Assets\Scripts\Level\LeftRightSpawner.cs" />
     <Compile Include="Assets\Scripts\Level\MaxPowerWave.cs" />
     <Compile Include="Assets\Scripts\Level\ObjectPool.cs" />
+    <Compile Include="Assets\Scripts\Level\Spawner.cs" />
     <Compile Include="Assets\Scripts\Level\SpawnerChooser.cs" />
     <Compile Include="Assets\Scripts\Level\ZigZagSpawner.cs" />
     <Compile Include="Assets\Scripts\Managers\FacebookManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Player\LeftRightMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Player\ShieldController.cs" />
     <Compile Include="Assets\Scripts\Player\TouchFollowMovement.cs" />
     <Compile Include="Assets\Scripts\Player\ZigZagMovement.cs" />
   </ItemGroup>

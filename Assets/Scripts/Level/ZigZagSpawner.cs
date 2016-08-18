@@ -1,22 +1,16 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ZigZagSpawner : MonoBehaviour
+public class ZigZagSpawner : Spawner
 {
-	public List<DropHolder> drops;
-
-	public float minSpawnInterval = 1f;
-	public float maxSpawnInterval = 3f;
-
 	public float additionalOffset;
 	private float totalBorderOffset;
 
-	private GameObject drop;
-
 	// Use this for initialization
-	void Start()
+	new void Start()
 	{
+		base.Start();
+
 		totalBorderOffset = GameManager.Instance.bordersOffset + additionalOffset;
 		StartCoroutine(SpawnDrop());
 	}
@@ -35,10 +29,10 @@ public class ZigZagSpawner : MonoBehaviour
 			yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
 
 			// Pool new random drop
-			while (drop == null)
+			do
 			{
 				drop = ObjectPool.Instance.GetPooledObject(GetRandomDrop());
-			}
+			} while (drop == null);
 
 			drop.transform.position = new Vector3
 			(
@@ -52,20 +46,5 @@ public class ZigZagSpawner : MonoBehaviour
 			);
 			drop.SetActive(true);
 		}
-	}
-
-	public GameObject GetRandomDrop()
-	{
-		float randomResult = Random.Range(0, 1);
-
-		for (int i = 0; i < drops.Count; i++)
-		{
-			if (drops[i].probability > randomResult)
-			{
-				return drops[i].drop;
-			}
-		}
-
-		return null;
 	}
 }

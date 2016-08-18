@@ -10,7 +10,6 @@ public class BackgroundSpawner : MonoBehaviour
 
 	// Some data used when generating the caves
 	private float caveBackgroundHeight;
-	private string caveBackgroundName;
 
 	private Vector3 previousCavePosition;
 	private GameObject cave;
@@ -19,7 +18,6 @@ public class BackgroundSpawner : MonoBehaviour
 	void Start()
 	{
 		caveBackgroundHeight = caveBackground.GetComponent<MeshRenderer>().bounds.size.y - offset;
-		caveBackgroundName = caveBackground.name;
 		cave = caveBackground;
 	}
 

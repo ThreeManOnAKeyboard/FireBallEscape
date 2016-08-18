@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
 	// Shield
 	public GameObject shield;
+	public float shieldDuration;
 
 	// Some UI gameobjects
 	public GameObject gameUI;
@@ -117,6 +118,38 @@ public class PlayerController : MonoBehaviour
 		isInvincible = false;
 		defaultPE.SetActive(true);
 		maxPowerPE.SetActive(false);
+	}
+
+	IEnumerator DeactivateShield()
+	{
+		yield return new WaitForSeconds(shieldDuration - 1f);
+
+		// CHANGE THIS SHIT, IT'S JUST FOR TEST PURPOSE
+
+		for (int i = 0; i < 5; i++)
+		{
+			shield.GetComponent<SpriteRenderer>().enabled = false;
+			yield return new WaitForSeconds(0.1f);
+
+			shield.GetComponent<SpriteRenderer>().enabled = true;
+			yield return new WaitForSeconds(0.1f);
+		}
+
+		shield.SetActive(false);
+	}
+
+	public void ActivateShield()
+	{
+		if (shield.activeInHierarchy)
+		{
+			StopCoroutine("DeactivateShield");
+		}
+		else
+		{
+			shield.SetActive(true);
+		}
+
+		StartCoroutine("DeactivateShield");
 	}
 
 	public void Damage()

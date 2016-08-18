@@ -20,24 +20,31 @@ public class LeftRightMovement : MonoBehaviour
 	void Start()
 	{
 		bandsPositions = new float[bandsCount];
-		bandIndex = bandsCount / 2;
+		bandIndex = (bandsCount - 1) / 2;
 
 		// The width of visible track in units
-		float trackWidth = CameraController.rightBorder * 2f - GameManager.Instance.bordersOffset;
+		float segmentLength = (CameraController.rightBorder * 2f - GameManager.Instance.bordersOffset * 2f) / (bandsCount - 1);
+
+		bandsPositions[0] = CameraController.leftBorder + GameManager.Instance.bordersOffset;
 
 		// Initialise bands x positions
-		for (int i = 0; i < bandsCount; i++)
+		for (int i = 1; i < bandsCount; i++)
 		{
-			bandsPositions[i] = CameraController.leftBorder + GameManager.Instance.bordersOffset + (i == 0 ? 0 : ((trackWidth / (float)bandsCount) * i));
+			bandsPositions[i] = bandsPositions[i - 1] + segmentLength;
 		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		if (Time.timeScale == 0)
+		{
+			return;
+		}
+
 		if (PlayerController.isInvincible)
 		{
-			bandIndex = bandsCount / 2;
+			bandIndex = (bandsCount - 1) / 2;
 			return;
 		}
 

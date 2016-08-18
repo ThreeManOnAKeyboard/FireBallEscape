@@ -7,6 +7,7 @@
 		Drop,
 		MaxPowerWave,
 		Shield,
+		Destroyer,
 		GameUI
 	};
 }
