@@ -152,6 +152,13 @@ public class PlayerController : MonoBehaviour
 		StartCoroutine("DeactivateShield");
 	}
 
+	public void ActicateWave()
+	{
+		// Instantiate max power wave
+		GameObject mpw = Instantiate(maxPowerWave);
+		mpw.transform.position = transform.position;
+	}
+
 	public void Damage()
 	{
 		// health = 5

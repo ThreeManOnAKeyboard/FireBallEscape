@@ -62,6 +62,14 @@ public class DropController : MonoBehaviour
 		}
 	}
 
+	public void OnWaveDrop()
+	{
+		if (collidedObject.tag == Tags.tags.Player.ToString())
+		{
+			collidedObject.GetComponent<PlayerController>().ActicateWave();
+		}
+	}
+
 	public void DoPostEffect()
 	{
 		GameObject explosion = Instantiate(collisionEffect);
