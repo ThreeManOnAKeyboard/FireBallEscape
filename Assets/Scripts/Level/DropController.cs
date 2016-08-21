@@ -3,13 +3,16 @@ using UnityEngine.Events;
 
 public class DropController : MonoBehaviour
 {
-	public UnityEvent methodToCall;
+	public UnityEvent onCollisionMethod;
+	public UnityEvent updateMethod;
 
 	public GameObject collisionEffect;
 
 	public float healthAmount;
 	public float fallSpeed;
 	public float scoreAmount;
+
+	public bool isComplexDrop;
 
 	private GameObject collidedObject;
 
@@ -24,15 +27,26 @@ public class DropController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		updateMethod.Invoke();
+	}
+
+	public void SimpleDropUpdate()
+	{
 		transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+	}
+
+	public void SidesFlameDropUpdate()
+	{
+		transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
 		collidedObject = col.gameObject;
-		methodToCall.Invoke();
+		onCollisionMethod.Invoke();
 
-		if (col.gameObject.tag != Tags.tags.Destroyer.ToString())
+		if (col.gameObject.tag != Tags.tags.Destroyer.ToString() && !isComplexDrop)
 		{
 			DoPostEffect();
 		}
@@ -89,6 +103,11 @@ public class DropController : MonoBehaviour
 					break;
 			}
 		}
+	}
+
+	public void OnSideFlamesDrop()
+	{
+
 	}
 
 	public void DoPostEffect()
