@@ -28,9 +28,12 @@ public class GameManager : MonoBehaviour
 	public Text highScore;
 	public Text score;
 
+	private PlayerController playerController;
+
 	void Awake()
 	{
 		Instance = this;
+		playerController = FindObjectOfType<PlayerController>();
 		//PlayerPrefs.DeleteAll();
 	}
 
@@ -60,13 +63,13 @@ public class GameManager : MonoBehaviour
 			currentHighScore = PlayerPrefs.GetFloat(PlayerPrefsKeys.HighScore.ToString());
 		}
 
-		if (PlayerController.score > currentHighScore)
+		if (playerController.GetScore() > currentHighScore)
 		{
-			PlayerPrefs.SetFloat(PlayerPrefsKeys.HighScore.ToString(), PlayerController.score);
-			currentHighScore = PlayerController.score;
+			PlayerPrefs.SetFloat(PlayerPrefsKeys.HighScore.ToString(), playerController.GetScore());
+			currentHighScore = playerController.GetScore();
 		}
 
-		score.text = ((int)PlayerController.score).ToString();
+		score.text = ((int)playerController.GetScore()).ToString();
 		highScore.text = ((int)currentHighScore).ToString();
 	}
 

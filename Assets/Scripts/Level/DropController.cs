@@ -13,10 +13,12 @@ public class DropController : MonoBehaviour
 
 	private GameObject collidedObject;
 
+	private PlayerController playerController;
+
 	// Use this for initialization
 	void Start()
 	{
-
+		playerController = FindObjectOfType<PlayerController>();
 	}
 
 	// Update is called once per frame
@@ -40,7 +42,8 @@ public class DropController : MonoBehaviour
 	{
 		if (collidedObject.tag == Tags.tags.Player.ToString())
 		{
-			collidedObject.GetComponent<PlayerController>().Damage();
+			playerController.Damage();
+			playerController.ResetMultiplier();
 		}
 	}
 
@@ -48,17 +51,16 @@ public class DropController : MonoBehaviour
 	{
 		if (collidedObject.tag == Tags.tags.Player.ToString())
 		{
-			collidedObject.GetComponent<PlayerController>().Heal();
+			playerController.Heal();
+			playerController.AddScore(scoreAmount);
 		}
-
-		PlayerController.score += scoreAmount;
 	}
 
 	public void OnShieldDrop()
 	{
 		if (collidedObject.tag == Tags.tags.Player.ToString())
 		{
-			collidedObject.GetComponent<PlayerController>().ActivateShield();
+			playerController.ActivateShield();
 		}
 	}
 
@@ -66,7 +68,26 @@ public class DropController : MonoBehaviour
 	{
 		if (collidedObject.tag == Tags.tags.Player.ToString())
 		{
-			collidedObject.GetComponent<PlayerController>().ActicateWave();
+			playerController.ActicateWave();
+		}
+	}
+
+	public void OnFuelRainDrop()
+	{
+		if (collidedObject.tag == Tags.tags.Player.ToString())
+		{
+			switch (GameManager.Instance.controlType)
+			{
+				case GameManager.ControlType.FREE:
+					FindObjectOfType<FreeControlSpawner>().ActivateFuelDropRain();
+					break;
+				case GameManager.ControlType.SIDEWAYS:
+					FindObjectOfType<LeftRightSpawner>().ActivateFuelDropRain();
+					break;
+				case GameManager.ControlType.ZIGZAG:
+					FindObjectOfType<ZigZagSpawner>().ActivateFuelDropRain();
+					break;
+			}
 		}
 	}
 

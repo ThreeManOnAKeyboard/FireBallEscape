@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour
 {
 	public List<DropHolder> drops;
+	public List<DropHolder> fuelRainDrops;
+	[HideInInspector]
+	public List<DropHolder> currentDrops;
+
+	public float fuelRainDuration;
 
 	public float minSpawnInterval;
 	public float maxSpawnInterval;
@@ -14,12 +20,25 @@ public class Spawner : MonoBehaviour
 	public void Start()
 	{
 		OrderDropsByProbability();
+		currentDrops = drops;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 
+	}
+
+	public void ActivateFuelDropRain()
+	{
+		currentDrops = fuelRainDrops;
+		StartCoroutine(ResetDrops());
+	}
+
+	public IEnumerator ResetDrops()
+	{
+		yield return new WaitForSeconds(fuelRainDuration);
+		currentDrops = drops;
 	}
 
 	protected void OrderDropsByProbability()
@@ -53,15 +72,15 @@ public class Spawner : MonoBehaviour
 	{
 		float randomResult = Random.Range(0f, 1f);
 
-		for (int i = 0; i < drops.Count; i++)
+		for (int i = 0; i < currentDrops.Count; i++)
 		{
-			if (randomResult < drops[i].probability)
+			if (randomResult <= currentDrops[i].probability)
 			{
-				return drops[i].drop;
+				return currentDrops[i].drop;
 			}
 			else
 			{
-				randomResult -= drops[i].probability;
+				randomResult -= currentDrops[i].probability;
 			}
 		}
 

@@ -44,13 +44,14 @@ public class PlayerController : MonoBehaviour
 	public GameObject maxPowerPE;
 	public GameObject maxPowerWave;
 
-	// Instantiated after wave picking the wave drop
+	// Instantiated wave after picking the wave drop
 	public GameObject waveBlast;
 
 	public static bool isInvincible;
 
 	public Text scoreText;
-	public static float score;
+	private float scoreMultiplier = 1;
+	private float score;
 	private float previousY;
 
 	void Awake()
@@ -102,7 +103,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		// Update the score
-		score += transform.position.y - previousY;
+		score += (transform.position.y - previousY) * scoreMultiplier;
 		scoreText.text = ((int)score).ToString();
 		previousY = transform.position.y;
 	}
@@ -209,5 +210,23 @@ public class PlayerController : MonoBehaviour
 				GetComponent<ZigZagMovement>().enabled = true;
 				break;
 		}
+	}
+
+	public void AddScore(float scoreAmount)
+	{
+		score += scoreAmount * scoreMultiplier++;
+	}
+
+	public void ResetMultiplier()
+	{
+		if (!isInvincible)
+		{
+			scoreMultiplier = 1;
+		}
+	}
+
+	public float GetScore()
+	{
+		return score;
 	}
 }

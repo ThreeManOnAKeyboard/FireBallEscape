@@ -16,6 +16,7 @@ public class ObjectPool : MonoBehaviour
 	public PooledObject[] pooledObjectTypes;
 
 	private Dictionary<string, List<GameObject>> pool;
+	private List<GameObject> pooledObjects;
 
 	void Awake()
 	{
@@ -52,7 +53,7 @@ public class ObjectPool : MonoBehaviour
 
 	public GameObject GetPooledObject(GameObject gameObject)
 	{
-		List<GameObject> pooledObjects = pool[gameObject.name];
+		pooledObjects = pool[gameObject.name];
 
 		// Return first available inactive pooled GameObject
 		for (int i = 0; i < pooledObjects.Count; i++)
