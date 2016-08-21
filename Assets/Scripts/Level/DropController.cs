@@ -72,9 +72,9 @@ public class DropController : MonoBehaviour
 
 	public void DoPostEffect()
 	{
-		GameObject explosion = Instantiate(collisionEffect);
-		explosion.transform.position = transform.position;
-		Destroy(explosion, 2f);
+		GameObject collisionParticleSystem = ObjectPool.Instance.GetPooledObject(collisionEffect);
+		collisionParticleSystem.transform.position = transform.position;
+		collisionParticleSystem.SetActive(true);
 		gameObject.SetActive(false);
 	}
 }

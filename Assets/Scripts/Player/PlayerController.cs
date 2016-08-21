@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour
 	public GameObject maxPowerPE;
 	public GameObject maxPowerWave;
 
+	// Instantiated after wave picking the wave drop
+	public GameObject waveBlast;
+
 	public static bool isInvincible;
 
 	public Text scoreText;
@@ -155,7 +158,7 @@ public class PlayerController : MonoBehaviour
 	public void ActicateWave()
 	{
 		// Instantiate max power wave
-		GameObject mpw = Instantiate(maxPowerWave);
+		GameObject mpw = Instantiate(waveBlast);
 		mpw.transform.position = transform.position;
 	}
 
