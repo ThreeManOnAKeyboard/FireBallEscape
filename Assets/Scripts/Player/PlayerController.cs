@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
 		// maxDamagePercent = 0.25
 		//						0.05 < 0.125 < 0.25
 		// health = 5 - (10 * Clamp(0.5 * 0.25, 0.05, 0.25)) = 5 - (10 * 0.125) = 4.75
-		if (!isInvincible)
+		if (!isInvincible && !shield.activeInHierarchy)
 		{
 			health -= maxHealth * Mathf.Clamp((health / maxHealth) * maxDamagePercent, minDamagePercent, maxDamagePercent);
 		}
@@ -182,6 +182,14 @@ public class PlayerController : MonoBehaviour
 		if (!isInvincible)
 		{
 			health += maxHealth * Mathf.Clamp((1 - health / maxHealth) * maxHealPercent, minHealPercent, maxHealPercent);
+		}
+	}
+
+	public void Kill()
+	{
+		if (!isInvincible)
+		{
+			health = 0;
 		}
 	}
 

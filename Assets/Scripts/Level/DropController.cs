@@ -4,7 +4,6 @@ using UnityEngine.Events;
 public class DropController : MonoBehaviour
 {
 	public UnityEvent onCollisionMethod;
-	public UnityEvent updateMethod;
 
 	public GameObject collisionEffect;
 
@@ -27,18 +26,7 @@ public class DropController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		updateMethod.Invoke();
-	}
-
-	public void SimpleDropUpdate()
-	{
 		transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
-	}
-
-	public void SidesFlameDropUpdate()
-	{
-		transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
-
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)
@@ -107,7 +95,14 @@ public class DropController : MonoBehaviour
 
 	public void OnSideFlamesDrop()
 	{
-
+		if (collidedObject.tag == Tags.tags.Player.ToString())
+		{
+			playerController.Kill();
+		}
+		else if (collidedObject.tag == Tags.tags.MaxPowerWave.ToString())
+		{
+			DoPostEffect();
+		}
 	}
 
 	public void DoPostEffect()

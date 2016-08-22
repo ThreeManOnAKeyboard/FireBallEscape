@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\Level\LeftRightSpawner.cs" />
     <Compile Include="Assets\Scripts\Level\MaxPowerWave.cs" />
     <Compile Include="Assets\Scripts\Level\ObjectPool.cs" />
+    <Compile Include="Assets\Scripts\Level\SideFlameController.cs" />
     <Compile Include="Assets\Scripts\Level\Spawner.cs" />
     <Compile Include="Assets\Scripts\Level\SpawnerChooser.cs" />
     <Compile Include="Assets\Scripts\Level\ZigZagSpawner.cs" />
