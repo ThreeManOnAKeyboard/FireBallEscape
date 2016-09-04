@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TouchFollowMovement : MonoBehaviour
 {
 	private float speed;
 	public float minSpeed = 5f;
 	public float maxSpeed = 10f;
+	[Range(0.001f, 0.01f)]
+	public float noTouchSpeedRatio = 0.2f;
 
 	public float yOffset;
 
@@ -33,37 +36,55 @@ public class TouchFollowMovement : MonoBehaviour
 			return;
 		}
 
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-		if (Input.GetMouseButton(0))
-		{
-			touchPosition = Camera.main.ScreenToWorldPoint
-			(
-				new Vector3
-				(
-					Input.mousePosition.x,
-					Mathf.Clamp(Input.mousePosition.y, 0f, Screen.height * yTouchLimitRatio),
-					Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
-				)
-			);
-		}
-#elif UNITY_ANDROID
-		if (Input.touchCount > 0)
-		{
-			touchPosition = Camera.main.ScreenToWorldPoint
-			(
-				new Vector3
-				(
-					Input.GetTouch(0).position.x,
-					Mathf.Clamp(Input.GetTouch(0).position.y, 0f, Screen.height * yTouchLimitRatio),
-					Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
-				)
-			);
-		}
-#endif
-
 		speed = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed, minSpeed, maxSpeed);
 
-		transform.position = Vector3.Lerp
+
+		if (!EventSystem.current.IsPointerOverGameObject())
+		{
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+			if (Input.GetMouseButton(0))
+			{
+				touchPosition = Camera.main.ScreenToWorldPoint
+				(
+					new Vector3
+					(
+						Input.mousePosition.x,
+						Mathf.Clamp(Input.mousePosition.y, 0f, Screen.height * yTouchLimitRatio),
+						Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
+					)
+				);
+
+				touchPosition.y += yOffset;
+			}
+			else
+			{
+				touchPosition = transform.position;
+				touchPosition.y += noTouchSpeedRatio * speed;
+			}
+#elif UNITY_ANDROID
+			if (Input.touchCount > 0)
+			{
+				touchPosition = Camera.main.ScreenToWorldPoint
+				(
+					new Vector3
+					(
+						Input.GetTouch(0).position.x,
+						Mathf.Clamp(Input.GetTouch(0).position.y, 0f, Screen.height * yTouchLimitRatio),
+						Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
+					)
+				);
+
+				touchPosition.y += yOffset;
+			}
+			else
+			{
+				touchPosition = transform.position;
+				touchPosition.y += noTouchSpeedRatio * speed;
+			}
+#endif
+		}
+
+		transform.position = Vector3.MoveTowards
 		(
 			transform.position,
 			new Vector3
@@ -74,7 +95,7 @@ public class TouchFollowMovement : MonoBehaviour
 					CameraController.leftBorder + GameManager.Instance.bordersOffset,
 					CameraController.rightBorder - GameManager.Instance.bordersOffset
 				),
-				touchPosition.y + yOffset,
+				touchPosition.y,
 				transform.position.z
 			),
 			Time.deltaTime * speed

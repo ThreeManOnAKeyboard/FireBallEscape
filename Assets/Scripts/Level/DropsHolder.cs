@@ -7,4 +7,7 @@ public class DropHolder
 
 	[Range(0, 1)]
 	public float probability;
+
+	public bool needCooldown;
+	public float cooldownDuration;
 }

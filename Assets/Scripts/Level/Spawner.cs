@@ -15,6 +15,7 @@ public class Spawner : MonoBehaviour
 	public float maxSpawnInterval;
 
 	protected GameObject drop;
+	protected bool isCooldownDone = true;
 
 	// Use this for initialization
 	public void Start()
@@ -76,14 +77,33 @@ public class Spawner : MonoBehaviour
 		{
 			if (randomResult <= currentDrops[i].probability)
 			{
-				return currentDrops[i].drop;
-			}
-			else
-			{
-				randomResult -= currentDrops[i].probability;
+				if (currentDrops[i].needCooldown)
+				{
+					if (isCooldownDone)
+					{
+						StartCoroutine(StartCooldown(currentDrops[i].cooldownDuration));
+						return currentDrops[i].drop;
+					}
+					else
+					{
+						// If a drop that requiries cooldown is not ready then try to get another drop type
+						return GetRandomDrop();
+					}
+				}
+				else
+				{
+					return currentDrops[i].drop;
+				}
 			}
 		}
 
 		return null;
+	}
+
+	IEnumerator StartCooldown(float cooldownDuration)
+	{
+		isCooldownDone = false;
+		yield return new WaitForSeconds(cooldownDuration);
+		isCooldownDone = true;
 	}
 }

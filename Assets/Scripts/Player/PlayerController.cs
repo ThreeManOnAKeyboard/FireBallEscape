@@ -19,8 +19,6 @@ public class PlayerController : MonoBehaviour
 	public float maxHealPercent = 0;
 
 	public float healthDrainSpeed;
-	public float healthBarFillSpeed;
-	public Image healthBar;
 
 	// The amount of time player is invincible
 	public float invincibleDuration;
@@ -30,10 +28,6 @@ public class PlayerController : MonoBehaviour
 
 	// The maximum speed when player is invincible
 	public float invincibleSpeed;
-
-	// Shield
-	public GameObject shield;
-	public float shieldDuration;
 
 	// Some UI gameobjects
 	public GameObject gameUI;
@@ -52,18 +46,23 @@ public class PlayerController : MonoBehaviour
 	public Text scoreText;
 	private float scoreMultiplier = 1;
 	private float score;
-	private float previousY;
+	private Vector3 previousPosition;
+
+	// Reference to Ability Controller
+	private AbilitiesController abilitiesController;
 
 	void Awake()
 	{
 		health = startHealth;
 		maximumHealth = maxHealth;
+		isInvincible = false;
 	}
 
 	// Use this for initialization
 	void Start()
 	{
-		healthBar.fillAmount = health / maxHealth;
+		// Find the AbilitiesController Component
+		abilitiesController = FindObjectOfType<AbilitiesController>();
 	}
 
 	// Update is called once per frame
@@ -83,8 +82,6 @@ public class PlayerController : MonoBehaviour
 			);
 		}
 
-		healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, health / maxHealth, healthBarFillSpeed * Time.deltaTime);
-
 		if (health < 0)
 		{
 			gameOverScreen.SetActive(true);
@@ -103,9 +100,11 @@ public class PlayerController : MonoBehaviour
 		}
 
 		// Update the score
-		score += (transform.position.y - previousY) * scoreMultiplier;
+		score += (transform.position.y - previousPosition.y) * scoreMultiplier;
 		scoreText.text = ((int)score).ToString();
-		previousY = transform.position.y;
+
+		// Save previous position for next frame calculations
+		previousPosition = transform.position;
 	}
 
 	IEnumerator ResetToDefault()
@@ -124,37 +123,37 @@ public class PlayerController : MonoBehaviour
 		maxPowerPE.SetActive(false);
 	}
 
-	IEnumerator DeactivateShield()
-	{
-		yield return new WaitForSeconds(shieldDuration - 1f);
+	//IEnumerator DeactivateShield()
+	//{
+	//	yield return new WaitForSeconds(shieldDuration - 1f);
 
-		// CHANGE THIS SHIT, IT'S JUST FOR TEST PURPOSE
+	//	// CHANGE THIS SHIT, IT'S JUST FOR TEST PURPOSE
 
-		for (int i = 0; i < 5; i++)
-		{
-			shield.GetComponent<SpriteRenderer>().enabled = false;
-			yield return new WaitForSeconds(0.1f);
+	//	for (int i = 0; i < 5; i++)
+	//	{
+	//		shield.GetComponent<SpriteRenderer>().enabled = false;
+	//		yield return new WaitForSeconds(0.1f);
 
-			shield.GetComponent<SpriteRenderer>().enabled = true;
-			yield return new WaitForSeconds(0.1f);
-		}
+	//		shield.GetComponent<SpriteRenderer>().enabled = true;
+	//		yield return new WaitForSeconds(0.1f);
+	//	}
 
-		shield.SetActive(false);
-	}
+	//	shield.SetActive(false);
+	//}
 
-	public void ActivateShield()
-	{
-		if (shield.activeInHierarchy)
-		{
-			StopCoroutine("DeactivateShield");
-		}
-		else
-		{
-			shield.SetActive(true);
-		}
+	//public void ActivateShield()
+	//{
+	//	if (shield.activeInHierarchy)
+	//	{
+	//		StopCoroutine("DeactivateShield");
+	//	}
+	//	else
+	//	{
+	//		shield.SetActive(true);
+	//	}
 
-		StartCoroutine("DeactivateShield");
-	}
+	//	StartCoroutine("DeactivateShield");
+	//}
 
 	public void ActicateWave()
 	{
@@ -171,9 +170,10 @@ public class PlayerController : MonoBehaviour
 		// maxDamagePercent = 0.25
 		//						0.05 < 0.125 < 0.25
 		// health = 5 - (10 * Clamp(0.5 * 0.25, 0.05, 0.25)) = 5 - (10 * 0.125) = 4.75
-		if (!isInvincible && !shield.activeInHierarchy)
+		if (!isInvincible)
 		{
 			health -= maxHealth * Mathf.Clamp((health / maxHealth) * maxDamagePercent, minDamagePercent, maxDamagePercent);
+			abilitiesController.UpdateAbility(false);
 		}
 	}
 
@@ -182,6 +182,7 @@ public class PlayerController : MonoBehaviour
 		if (!isInvincible)
 		{
 			health += maxHealth * Mathf.Clamp((1 - health / maxHealth) * maxHealPercent, minHealPercent, maxHealPercent);
+			abilitiesController.UpdateAbility(true);
 		}
 	}
 

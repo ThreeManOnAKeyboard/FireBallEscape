@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ZigZagMovement : MonoBehaviour
 {
@@ -32,19 +33,23 @@ public class ZigZagMovement : MonoBehaviour
 			return;
 		}
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-		if (Input.GetMouseButtonDown(0))
-#elif UNITY_ANDROID
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-#endif
+
+		if (!EventSystem.current.IsPointerOverGameObject())
 		{
-			if (currentDirection == Direction.Right)
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+			if (Input.GetMouseButtonDown(0))
+#elif UNITY_ANDROID
+			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+#endif
 			{
-				currentDirection = Direction.Left;
-			}
-			else
-			{
-				currentDirection = Direction.Right;
+				if (currentDirection == Direction.Right)
+				{
+					currentDirection = Direction.Left;
+				}
+				else
+				{
+					currentDirection = Direction.Right;
+				}
 			}
 		}
 
@@ -65,7 +70,7 @@ public class ZigZagMovement : MonoBehaviour
 		{
 			transform.Translate
 			(
-				(currentDirection == Direction.Right ? Vector2.right : Vector2.left) * Time.deltaTime * speed * speedXOnYRatio * Mathf.Clamp(1 - Mathf.Abs(transform.position.x) / CameraController.rightBorder, 0.35f, 1f)
+				(currentDirection == Direction.Right ? Vector2.right : Vector2.left) * Time.deltaTime * speed * speedXOnYRatio
 			);
 		}
 	}

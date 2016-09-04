@@ -62,7 +62,7 @@ public class DropController : MonoBehaviour
 	{
 		if (collidedObject.tag == Tags.tags.Player.ToString())
 		{
-			playerController.ActivateShield();
+			//playerController.ActivateShield();
 		}
 	}
 

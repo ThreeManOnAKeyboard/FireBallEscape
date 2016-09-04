@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LeftRightMovement : MonoBehaviour
 {
@@ -48,13 +49,16 @@ public class LeftRightMovement : MonoBehaviour
 			return;
 		}
 
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-		if (Input.GetMouseButtonDown(0))
-#elif UNITY_ANDROID
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-#endif
+		if (!EventSystem.current.IsPointerOverGameObject())
 		{
-			Leap();
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+			if (Input.GetMouseButtonDown(0))
+#elif UNITY_ANDROID
+			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+#endif
+			{
+				Leap();
+			}
 		}
 
 		// Calculate speed based on health amount
