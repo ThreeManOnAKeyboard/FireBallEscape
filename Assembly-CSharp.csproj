@@ -61,6 +61,10 @@
      <Compile Include="Assets\Scripts\3rdParty\FPSDisplay.cs" />
      <Compile Include="Assets\Scripts\3rdParty\Helper.cs" />
      <Compile Include="Assets\Scripts\3rdParty\Tags.cs" />
+     <Compile Include="Assets\Scripts\Abilities\AbilitiesController.cs" />
+     <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
+     <Compile Include="Assets\Scripts\Abilities\ShieldController.cs" />
+     <Compile Include="Assets\Scripts\Abilities\WaveBlastController.cs" />
      <Compile Include="Assets\Scripts\Level\BackgroundSpawner.cs" />
      <Compile Include="Assets\Scripts\Level\CameraController.cs" />
      <Compile Include="Assets\Scripts\Level\CollisionEffectController.cs" />
@@ -70,6 +74,8 @@
      <Compile Include="Assets\Scripts\Level\FacebookHolder.cs" />
      <Compile Include="Assets\Scripts\Level\FacetedWater.cs" />
      <Compile Include="Assets\Scripts\Level\FreeControlSpawner.cs" />
+     <Compile Include="Assets\Scripts\Level\GeyserController.cs" />
+     <Compile Include="Assets\Scripts\Level\HealthBarController.cs" />
      <Compile Include="Assets\Scripts\Level\LeftRightSpawner.cs" />
      <Compile Include="Assets\Scripts\Level\MaxPowerWave.cs" />
      <Compile Include="Assets\Scripts\Level\ObjectPool.cs" />
