@@ -21,7 +21,7 @@ public class FreeControlSpawner : Spawner
 
 	}
 
-	IEnumerator SpawnDrop()
+	private IEnumerator SpawnDrop()
 	{
 		while (true)
 		{

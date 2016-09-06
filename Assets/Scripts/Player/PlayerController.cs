@@ -20,12 +20,6 @@ public class PlayerController : MonoBehaviour
 
 	public float healthDrainSpeed;
 
-	// The amount of time player is invincible
-	public float invincibleDuration;
-
-	// When to throw max power wave to blow things up before invicibility ending
-	public float maxPowerWaveDelay;
-
 	// The maximum speed when player is invincible
 	public float invincibleSpeed;
 
@@ -34,12 +28,8 @@ public class PlayerController : MonoBehaviour
 	public GameObject gameOverScreen;
 
 	// Particle systems
-	public GameObject defaultPE;
-	public GameObject maxPowerPE;
-	public GameObject maxPowerWave;
-
-	// Instantiated wave after picking the wave drop
-	public GameObject waveBlast;
+	public GameObject defaultParticleSystem;
+	public GameObject maxPowerParticleSystem;
 
 	public static bool isInvincible;
 
@@ -89,15 +79,6 @@ public class PlayerController : MonoBehaviour
 			GameManager.Instance.ProcessScore();
 			Destroy(gameObject);
 		}
-		else if (health > maxHealth)
-		{
-			isInvincible = true;
-			defaultPE.SetActive(false);
-			maxPowerPE.SetActive(true);
-
-			// Reset all things to default after end of max power profit
-			StartCoroutine(ResetToDefault());
-		}
 
 		// Update the score
 		score += (transform.position.y - previousPosition.y) * scoreMultiplier;
@@ -105,61 +86,6 @@ public class PlayerController : MonoBehaviour
 
 		// Save previous position for next frame calculations
 		previousPosition = transform.position;
-	}
-
-	IEnumerator ResetToDefault()
-	{
-		health = maxHealth / 2f;
-		yield return new WaitForSeconds(maxPowerWaveDelay);
-
-		// Instantiate max power wave
-		GameObject mpw = Instantiate(maxPowerWave);
-		mpw.transform.position = transform.position;
-
-		yield return new WaitForSeconds(invincibleDuration - maxPowerWaveDelay);
-
-		isInvincible = false;
-		defaultPE.SetActive(true);
-		maxPowerPE.SetActive(false);
-	}
-
-	//IEnumerator DeactivateShield()
-	//{
-	//	yield return new WaitForSeconds(shieldDuration - 1f);
-
-	//	// CHANGE THIS SHIT, IT'S JUST FOR TEST PURPOSE
-
-	//	for (int i = 0; i < 5; i++)
-	//	{
-	//		shield.GetComponent<SpriteRenderer>().enabled = false;
-	//		yield return new WaitForSeconds(0.1f);
-
-	//		shield.GetComponent<SpriteRenderer>().enabled = true;
-	//		yield return new WaitForSeconds(0.1f);
-	//	}
-
-	//	shield.SetActive(false);
-	//}
-
-	//public void ActivateShield()
-	//{
-	//	if (shield.activeInHierarchy)
-	//	{
-	//		StopCoroutine("DeactivateShield");
-	//	}
-	//	else
-	//	{
-	//		shield.SetActive(true);
-	//	}
-
-	//	StartCoroutine("DeactivateShield");
-	//}
-
-	public void ActicateWave()
-	{
-		// Instantiate max power wave
-		GameObject mpw = Instantiate(waveBlast);
-		mpw.transform.position = transform.position;
 	}
 
 	public void Damage()

@@ -30,10 +30,6 @@ public class SideFlameController : MonoBehaviour
 			// Flip flame side
 			transform.parent.Rotate(transform.up, 180f);
 
-			//Vector3 parentEulerAngles = gameObject.transform.parent.transform.eulerAngles;
-			//parentEulerAngles.x *= -1;
-			//gameObject.transform.parent.transform.eulerAngles = parentEulerAngles;
-
 			yield return new WaitForSeconds(switchDelay);
 		}
 	}

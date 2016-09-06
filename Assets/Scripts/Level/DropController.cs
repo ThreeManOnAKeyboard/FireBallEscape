@@ -58,41 +58,6 @@ public class DropController : MonoBehaviour
 		}
 	}
 
-	public void OnShieldDrop()
-	{
-		if (collidedObject.tag == Tags.tags.Player.ToString())
-		{
-			//playerController.ActivateShield();
-		}
-	}
-
-	public void OnWaveDrop()
-	{
-		if (collidedObject.tag == Tags.tags.Player.ToString())
-		{
-			playerController.ActicateWave();
-		}
-	}
-
-	public void OnFuelRainDrop()
-	{
-		if (collidedObject.tag == Tags.tags.Player.ToString())
-		{
-			switch (GameManager.Instance.controlType)
-			{
-				case GameManager.ControlType.FREE:
-					FindObjectOfType<FreeControlSpawner>().ActivateFuelDropRain();
-					break;
-				case GameManager.ControlType.SIDEWAYS:
-					FindObjectOfType<LeftRightSpawner>().ActivateFuelDropRain();
-					break;
-				case GameManager.ControlType.ZIGZAG:
-					FindObjectOfType<ZigZagSpawner>().ActivateFuelDropRain();
-					break;
-			}
-		}
-	}
-
 	public void OnSideFlamesDrop()
 	{
 		if (collidedObject.tag == Tags.tags.Player.ToString())

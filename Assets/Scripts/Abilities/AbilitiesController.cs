@@ -22,7 +22,12 @@ public class AbilitiesController : MonoBehaviour
 	void Update()
 	{
 		// Smoothly update the ability icon background fill amount
-		abilityIconBackground.fillAmount = Mathf.Lerp(abilityIconBackground.fillAmount, currentBackgroundFillAmount, Time.deltaTime * backgroundFillSpeed);
+		abilityIconBackground.fillAmount = Mathf.Lerp
+		(
+			abilityIconBackground.fillAmount,
+			currentBackgroundFillAmount,
+			Time.deltaTime * backgroundFillSpeed
+		);
 	}
 
 	public void OnAbilityClick()
@@ -65,7 +70,6 @@ public class AbilitiesController : MonoBehaviour
 		// Reset things
 		currentFuelAmount = 0f;
 		currentBackgroundFillAmount = 0f;
-		abilityIconBackground.fillAmount = 0f;
 
 		// Update things
 		abilityIconHolder.sprite = abilities[currentAbilityIndex].abilityIcon;

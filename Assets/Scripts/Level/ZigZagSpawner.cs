@@ -15,13 +15,7 @@ public class ZigZagSpawner : Spawner
 		StartCoroutine(SpawnDrop());
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
-
-	IEnumerator SpawnDrop()
+	private IEnumerator SpawnDrop()
 	{
 		while (true)
 		{

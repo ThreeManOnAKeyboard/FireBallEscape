@@ -26,7 +26,7 @@ public class LeftRightSpawner : Spawner
 
 	}
 
-	IEnumerator SpawnDrop(float spawnPosition)
+	private IEnumerator SpawnDrop(float spawnPosition)
 	{
 		while (true)
 		{

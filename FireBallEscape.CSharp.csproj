@@ -99,7 +99,10 @@
     <Compile Include="Assets\Scripts\3rdParty\Tags.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilitiesController.cs" />
     <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
+    <Compile Include="Assets\Scripts\Abilities\FireBallController.cs" />
+    <Compile Include="Assets\Scripts\Abilities\FuelRainController.cs" />
     <Compile Include="Assets\Scripts\Abilities\ShieldController.cs" />
+    <Compile Include="Assets\Scripts\Abilities\StrikeController.cs" />
     <Compile Include="Assets\Scripts\Abilities\WaveBlastController.cs" />
     <Compile Include="Assets\Scripts\Level\BackgroundSpawner.cs" />
     <Compile Include="Assets\Scripts\Level\CameraController.cs" />
@@ -113,7 +116,6 @@
     <Compile Include="Assets\Scripts\Level\GeyserController.cs" />
     <Compile Include="Assets\Scripts\Level\HealthBarController.cs" />
     <Compile Include="Assets\Scripts\Level\LeftRightSpawner.cs" />
-    <Compile Include="Assets\Scripts\Level\MaxPowerWave.cs" />
     <Compile Include="Assets\Scripts\Level\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\Level\SideFlameController.cs" />
     <Compile Include="Assets\Scripts\Level\Spawner.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Assets\Scripts\Level\ZigZagSpawner.cs" />
     <Compile Include="Assets\Scripts\Managers\FacebookManager.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Player\Cheats.cs" />
     <Compile Include="Assets\Scripts\Player\LeftRightMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\TouchFollowMovement.cs" />

@@ -5,11 +5,8 @@ using System.Collections.Generic;
 public class Spawner : MonoBehaviour
 {
 	public List<DropHolder> drops;
-	public List<DropHolder> fuelRainDrops;
 	[HideInInspector]
 	public List<DropHolder> currentDrops;
-
-	public float fuelRainDuration;
 
 	public float minSpawnInterval;
 	public float maxSpawnInterval;
@@ -30,15 +27,13 @@ public class Spawner : MonoBehaviour
 
 	}
 
-	public void ActivateFuelDropRain()
+	public void ActivateFuelDropRain(List<DropHolder> fuelRainDrops)
 	{
 		currentDrops = fuelRainDrops;
-		StartCoroutine(ResetDrops());
 	}
 
-	public IEnumerator ResetDrops()
+	public void ResetDrops()
 	{
-		yield return new WaitForSeconds(fuelRainDuration);
 		currentDrops = drops;
 	}
 
@@ -100,7 +95,7 @@ public class Spawner : MonoBehaviour
 		return null;
 	}
 
-	IEnumerator StartCooldown(float cooldownDuration)
+	private IEnumerator StartCooldown(float cooldownDuration)
 	{
 		isCooldownDone = false;
 		yield return new WaitForSeconds(cooldownDuration);
