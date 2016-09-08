@@ -31,6 +31,13 @@ public class ShieldController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		// Verify if player is alive
+		if (player == null)
+		{
+			gameObject.SetActive(false);
+			return;
+		}
+
 		// Follow the player
 		transform.position = player.transform.position;
 

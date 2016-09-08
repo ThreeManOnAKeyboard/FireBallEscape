@@ -16,6 +16,8 @@ public class TouchFollowMovement : MonoBehaviour
 
 	private Vector3 touchPosition;
 
+	private bool UITouchExited = true;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -38,51 +40,59 @@ public class TouchFollowMovement : MonoBehaviour
 
 		speed = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed, minSpeed, maxSpeed);
 
-
-		if (!EventSystem.current.IsPointerOverGameObject())
-		{
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-			if (Input.GetMouseButton(0))
-			{
-				touchPosition = Camera.main.ScreenToWorldPoint
-				(
-					new Vector3
-					(
-						Input.mousePosition.x,
-						Mathf.Clamp(Input.mousePosition.y, 0f, Screen.height * yTouchLimitRatio),
-						Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
-					)
-				);
-
-				touchPosition.y += yOffset;
-			}
-			else
-			{
-				touchPosition = transform.position;
-				touchPosition.y += noTouchSpeedRatio * speed;
-			}
-#elif UNITY_ANDROID
-			if (Input.touchCount > 0)
-			{
-				touchPosition = Camera.main.ScreenToWorldPoint
-				(
-					new Vector3
-					(
-						Input.GetTouch(0).position.x,
-						Mathf.Clamp(Input.GetTouch(0).position.y, 0f, Screen.height * yTouchLimitRatio),
-						Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
-					)
-				);
-
-				touchPosition.y += yOffset;
-			}
-			else
-			{
-				touchPosition = transform.position;
-				touchPosition.y += noTouchSpeedRatio * speed;
-			}
-#endif
+		// If player held the mouse button on UI element then don't let the character move
+		if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
+		{
+			UITouchExited = false;
 		}
+
+		// If the mouse button is released after pressing the UI element then let the character move
+		if (Input.GetMouseButtonUp(0) && UITouchExited == false)
+		{
+			UITouchExited = true;
+		}
+
+		if (Input.GetMouseButton(0) && UITouchExited == true)
+		{
+			touchPosition = Camera.main.ScreenToWorldPoint
+			(
+				new Vector3
+				(
+					Input.mousePosition.x,
+					Mathf.Clamp(Input.mousePosition.y, 0f, Screen.height * yTouchLimitRatio),
+					Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
+				)
+			);
+
+			touchPosition.y += yOffset;
+		}
+		else
+		{
+			touchPosition = transform.position;
+			touchPosition.y += noTouchSpeedRatio * speed;
+		}
+#elif UNITY_ANDROID
+		if (Input.touchCount > 0)
+		{
+			touchPosition = Camera.main.ScreenToWorldPoint
+			(
+				new Vector3
+				(
+					Input.GetTouch(0).position.x,
+					Mathf.Clamp(Input.GetTouch(0).position.y, 0f, Screen.height * yTouchLimitRatio),
+					Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
+				)
+			);
+
+			touchPosition.y += yOffset;
+		}
+		else
+		{
+			touchPosition = transform.position;
+			touchPosition.y += noTouchSpeedRatio * speed;
+		}
+#endif
 
 		transform.position = Vector3.MoveTowards
 		(

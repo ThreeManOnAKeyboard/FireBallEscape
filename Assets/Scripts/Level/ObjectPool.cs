@@ -83,4 +83,9 @@ public class ObjectPool : MonoBehaviour
 
 		return null;
 	}
+
+	public List<GameObject> GetPooledList(GameObject gameObject)
+	{
+		return pool[gameObject.name];
+	}
 }
