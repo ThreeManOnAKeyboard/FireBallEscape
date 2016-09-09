@@ -8,6 +8,7 @@
 		MaxPowerWave,
 		Shield,
 		Destroyer,
-		GameUI
+		GameUI,
+		Fireball
 	};
 }

@@ -37,7 +37,12 @@ public class StrikeController : MonoBehaviour
 			yield return new WaitForSeconds(cooldown);
 		}
 
-		yield return new WaitForSeconds(5f);
+		// Deactivate ability when all fireballs reached their target
+		while (GameObject.FindGameObjectsWithTag(Tags.tags.Fireball.ToString()).Length != 0)
+		{
+			yield return new WaitForSeconds(0.5f);
+		}
+
 		gameObject.SetActive(false);
 	}
 }

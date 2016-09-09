@@ -7,7 +7,6 @@ public class DropController : MonoBehaviour
 
 	public GameObject collisionEffect;
 
-	public float healthAmount;
 	public float fallSpeed;
 	public float scoreAmount;
 

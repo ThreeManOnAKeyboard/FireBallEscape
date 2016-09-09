@@ -20,6 +20,9 @@ public class FireBallController : MonoBehaviour
 
 	void OnEnable()
 	{
+		targetedWaterDrop = null;
+		collisionPoint = Vector3.zero;
+		startPosition = Vector3.zero;
 		StartCoroutine(StrikeWaterDrop());
 	}
 
@@ -99,7 +102,6 @@ public class FireBallController : MonoBehaviour
 
 				time += Time.deltaTime;
 			}
-
 			yield return null;
 		}
 	}
