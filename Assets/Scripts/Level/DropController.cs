@@ -47,6 +47,11 @@ public class DropController : MonoBehaviour
 			playerController.Damage();
 			playerController.ResetMultiplier();
 		}
+
+		if (StrikeController.targetedDrops != null)
+		{
+			StrikeController.targetedDrops.Remove(gameObject);
+		}
 	}
 
 	public void OnFuelDrop()

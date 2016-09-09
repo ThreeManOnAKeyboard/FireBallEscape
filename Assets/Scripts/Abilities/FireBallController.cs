@@ -20,13 +20,12 @@ public class FireBallController : MonoBehaviour
 
 	void OnEnable()
 	{
-		waterDropTransform = GetWaterDrop();
 		StartCoroutine(StrikeWaterDrop());
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.gameObject == waterDropTransform.gameObject)
+		if (waterDropTransform != null && col.gameObject == waterDropTransform.gameObject)
 		{
 			// Explosion effect
 			GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(fireBallExplosion);
@@ -47,7 +46,7 @@ public class FireBallController : MonoBehaviour
 		foreach (GameObject waterDrop in waterDrops)
 		{
 			// Check if water drop is active in hierarchy and it is enough far away from player
-			if (waterDrop.activeInHierarchy && Camera.main.WorldToScreenPoint(waterDrop.transform.position).y / Screen.height > yScreenRatioLimit)
+			if (waterDrop.activeInHierarchy && Camera.main.WorldToScreenPoint(waterDrop.transform.position).y / Screen.height > yScreenRatioLimit && !StrikeController.targetedDrops.Contains(waterDrop))
 			{
 				if (nearestWaterDrop == null)
 				{
@@ -71,19 +70,21 @@ public class FireBallController : MonoBehaviour
 				nearestWaterDrop.position.z
 			);
 
-			startPosition = nearestWaterDrop.position;
+			startPosition = transform.position;
+
+			StrikeController.targetedDrops.Add(nearestWaterDrop.gameObject);
 		}
+
+		time = 0f;
 
 		return nearestWaterDrop;
 	}
 
 	private IEnumerator StrikeWaterDrop()
 	{
-		time = 0f;
-
 		while (time < collisionDelay)
 		{
-			if (waterDropTransform == null)
+			if (waterDropTransform == null || !waterDropTransform.gameObject.activeInHierarchy)
 			{
 				waterDropTransform = GetWaterDrop();
 			}

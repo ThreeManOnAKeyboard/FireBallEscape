@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StrikeController : MonoBehaviour
@@ -7,19 +8,14 @@ public class StrikeController : MonoBehaviour
 	public int fireballsAmount = 1;
 	public float cooldown = 1f;
 
+	public static List<GameObject> targetedDrops;
 	private GameObject player;
 
 	// Use this for initialization
 	void Awake()
 	{
+		targetedDrops = new List<GameObject>();
 		player = GameObject.Find(Tags.tags.Player.ToString());
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-		// Follow the player
-		transform.position = player.transform.position;
 	}
 
 	void OnEnable()
@@ -32,12 +28,14 @@ public class StrikeController : MonoBehaviour
 		for (int i = 0; i < fireballsAmount; i++)
 		{
 			GameObject fireBallInstance = ObjectPool.Instance.GetPooledObject(fireBall);
-			fireBallInstance.transform.position = transform.position;
+			print(player.transform.position);
+			fireBallInstance.transform.position = player.transform.position;
 			fireBallInstance.SetActive(true);
 
 			yield return new WaitForSeconds(cooldown);
 		}
 
+		yield return new WaitForSeconds(5f);
 		gameObject.SetActive(false);
 	}
 }
