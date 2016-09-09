@@ -12,7 +12,7 @@ public class FireBallController : MonoBehaviour
 	public GameObject fireBallExplosion;
 
 	// The water drop to follow
-	private Transform waterDropTransform;
+	private GameObject targetedWaterDrop;
 
 	private Vector3 collisionPoint;
 	private Vector3 startPosition;
@@ -25,7 +25,7 @@ public class FireBallController : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if (waterDropTransform != null && col.gameObject == waterDropTransform.gameObject)
+		if (targetedWaterDrop != null && col.gameObject == targetedWaterDrop.gameObject)
 		{
 			// Explosion effect
 			GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(fireBallExplosion);
@@ -37,11 +37,11 @@ public class FireBallController : MonoBehaviour
 		}
 	}
 
-	private Transform GetWaterDrop()
+	private GameObject GetWaterDrop()
 	{
 		List<GameObject> waterDrops = ObjectPool.Instance.GetPooledList(waterDropPrefab);
 
-		Transform nearestWaterDrop = null;
+		GameObject nearestWaterDrop = null;
 
 		foreach (GameObject waterDrop in waterDrops)
 		{
@@ -50,11 +50,11 @@ public class FireBallController : MonoBehaviour
 			{
 				if (nearestWaterDrop == null)
 				{
-					nearestWaterDrop = waterDrop.transform;
+					nearestWaterDrop = waterDrop;
 				}
-				else if (waterDrop.transform.position.y < nearestWaterDrop.position.y)
+				else if (waterDrop.transform.position.y < nearestWaterDrop.transform.position.y)
 				{
-					nearestWaterDrop = waterDrop.transform;
+					nearestWaterDrop = waterDrop;
 				}
 			}
 		}
@@ -65,17 +65,17 @@ public class FireBallController : MonoBehaviour
 
 			collisionPoint = new Vector3
 			(
-				nearestWaterDrop.position.x,
-				nearestWaterDrop.position.y - dropController.fallSpeed * collisionDelay,
-				nearestWaterDrop.position.z
+				nearestWaterDrop.transform.position.x,
+				nearestWaterDrop.transform.position.y - dropController.fallSpeed * collisionDelay,
+				nearestWaterDrop.transform.position.z
 			);
 
 			startPosition = transform.position;
 
+			time = 0f;
+
 			StrikeController.targetedDrops.Add(nearestWaterDrop.gameObject);
 		}
-
-		time = 0f;
 
 		return nearestWaterDrop;
 	}
@@ -84,9 +84,9 @@ public class FireBallController : MonoBehaviour
 	{
 		while (time < collisionDelay)
 		{
-			if (waterDropTransform == null || !waterDropTransform.gameObject.activeInHierarchy)
+			if (targetedWaterDrop == null || !targetedWaterDrop.gameObject.activeInHierarchy)
 			{
-				waterDropTransform = GetWaterDrop();
+				targetedWaterDrop = GetWaterDrop();
 			}
 			else
 			{

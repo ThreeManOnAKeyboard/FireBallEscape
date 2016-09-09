@@ -28,8 +28,10 @@ public class StrikeController : MonoBehaviour
 		for (int i = 0; i < fireballsAmount; i++)
 		{
 			GameObject fireBallInstance = ObjectPool.Instance.GetPooledObject(fireBall);
-			print(player.transform.position);
-			fireBallInstance.transform.position = player.transform.position;
+			if (player != null)
+			{
+				fireBallInstance.transform.position = player.transform.position;
+			}
 			fireBallInstance.SetActive(true);
 
 			yield return new WaitForSeconds(cooldown);

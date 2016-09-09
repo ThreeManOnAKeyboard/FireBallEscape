@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
 			gameOverScreen.SetActive(true);
 			gameUI.SetActive(false);
 			GameManager.Instance.ProcessScore();
+			StopAllCoroutines();
 			Destroy(gameObject);
 		}
 
