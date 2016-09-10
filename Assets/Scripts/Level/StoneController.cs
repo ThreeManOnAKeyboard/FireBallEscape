@@ -14,15 +14,14 @@ public class StoneController : MonoBehaviour
 
 	void OnEnable()
 	{
-		Debug.Break();
 		thisRigidBody.AddForce(impulseForce * Random.Range(-1, 2), ForceMode2D.Impulse);
 	}
 
-	public void OnCollisionEnter2D(Collision2D col)
+	public void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.gameObject.tag == Tags.tags.Player.ToString())
 		{
-
+			col.gameObject.GetComponent<PlayerController>().Kill();
 		}
 	}
 }

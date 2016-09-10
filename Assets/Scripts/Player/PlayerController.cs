@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
 	// Particle systems
 	public GameObject defaultParticleSystem;
 	public GameObject maxPowerParticleSystem;
+	public GameObject deathExplosion;
 
 	public static bool isInvincible;
 
@@ -77,6 +78,7 @@ public class PlayerController : MonoBehaviour
 			gameOverScreen.SetActive(true);
 			gameUI.SetActive(false);
 			GameManager.Instance.ProcessScore();
+			Instantiate(deathExplosion).transform.position = transform.position;
 			StopAllCoroutines();
 			Destroy(gameObject);
 		}
