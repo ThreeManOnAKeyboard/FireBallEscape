@@ -52,7 +52,7 @@ public class LeftRightMovement : MonoBehaviour
 		if (!EventSystem.current.IsPointerOverGameObject())
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-			if (Input.GetMouseButtonDown(0))
+			if (Input.GetButtonDown("Horizontal"))
 #elif UNITY_ANDROID
 			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
 #endif
@@ -89,7 +89,7 @@ public class LeftRightMovement : MonoBehaviour
 	public void Leap()
 	{
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-		if (Input.mousePosition.x > Screen.width / 2)
+		if (Input.GetAxisRaw("Horizontal") > 0f)
 #elif UNITY_ANDROID
 		if (Input.GetTouch(0).position.x > Screen.width / 2)
 #endif
