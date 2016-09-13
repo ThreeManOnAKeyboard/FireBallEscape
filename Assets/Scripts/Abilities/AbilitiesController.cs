@@ -21,6 +21,13 @@ public class AbilitiesController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+#if UNITY_EDITOR
+		if (Input.GetButtonDown("Jump"))
+		{
+			OnAbilityClick();
+		}
+#endif
+
 		// Smoothly update the ability icon background fill amount
 		abilityIconBackground.fillAmount = Mathf.Lerp
 		(

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireBallController : MonoBehaviour
 {
-	public float collisionDelay;
+	public float collisionTime;
 
 	public float yScreenRatioLimit;
 
@@ -13,16 +13,27 @@ public class FireBallController : MonoBehaviour
 
 	// The water drop to follow
 	private GameObject targetedWaterDrop;
-
+	private Transform particleSystemTransform;
+	private Transform playerTransform;
+	private Animator animator;
 	private Vector3 collisionPoint;
 	private Vector3 startPosition;
 	private float time;
+	private float positionOffset;
+
+	private void Awake()
+	{
+		particleSystemTransform = gameObject.GetComponentInChildren<Transform>();
+		playerTransform = GameObject.FindWithTag(Tags.tags.Player.ToString()).transform;
+		animator = GetComponentInChildren<Animator>();
+	}
 
 	void OnEnable()
 	{
 		targetedWaterDrop = null;
 		collisionPoint = Vector3.zero;
 		startPosition = Vector3.zero;
+		time = 0f;
 		StartCoroutine(StrikeWaterDrop());
 	}
 
@@ -34,6 +45,7 @@ public class FireBallController : MonoBehaviour
 			GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(fireBallExplosion);
 			collisionEffect.transform.position = transform.position;
 			collisionEffect.SetActive(true);
+			animator.SetBool("Animate", false);
 
 			// Deactivate current fireball
 			gameObject.SetActive(false);
@@ -69,7 +81,7 @@ public class FireBallController : MonoBehaviour
 			collisionPoint = new Vector3
 			(
 				nearestWaterDrop.transform.position.x,
-				nearestWaterDrop.transform.position.y - dropController.fallSpeed * collisionDelay,
+				nearestWaterDrop.transform.position.y - dropController.fallSpeed * collisionTime,
 				nearestWaterDrop.transform.position.z
 			);
 
@@ -85,24 +97,59 @@ public class FireBallController : MonoBehaviour
 
 	private IEnumerator StrikeWaterDrop()
 	{
-		while (time < collisionDelay)
+		animator.SetBool("Animate", true);
+
+		while (time < collisionTime)
 		{
 			if (targetedWaterDrop == null || !targetedWaterDrop.gameObject.activeInHierarchy)
 			{
+				StopCoroutine("CalibratePosition");
+				animator.enabled = false;
+
 				targetedWaterDrop = GetWaterDrop();
+
+				if (playerTransform == null)
+				{
+					gameObject.SetActive(false);
+				}
+				else
+				{
+					positionOffset = particleSystemTransform.position.x;
+					transform.position = (playerTransform.position.x - positionOffset) * Vector3.right;
+				}
 			}
 			else
 			{
+				animator.enabled = true;
+
+				StartCoroutine("CalibratePosition");
+
 				transform.position = new Vector3
 				(
-					startPosition.x + (collisionPoint.x - startPosition.x) * (time / collisionDelay),
-					startPosition.y + (collisionPoint.y - startPosition.y) * (time / collisionDelay),
+					startPosition.x + (collisionPoint.x - startPosition.x) * (time / collisionTime),
+					startPosition.y + (collisionPoint.y - startPosition.y) * (time / collisionTime),
 					transform.position.z
 				);
 
 				time += Time.deltaTime;
 			}
 			yield return null;
+		}
+	}
+
+	private IEnumerator CalibratePosition()
+	{
+		float time = 0f;
+		AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+		float remainingTime = stateInfo.length * (1f - stateInfo.normalizedTime);
+
+		while (time <= remainingTime)
+		{
+			transform.position += positionOffset * (time / remainingTime) * Vector3.right;
+
+			yield return null;
+
+			time += Time.deltaTime;
 		}
 	}
 }

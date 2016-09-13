@@ -12,13 +12,13 @@ public class StrikeController : MonoBehaviour
 	private GameObject player;
 
 	// Use this for initialization
-	void Awake()
+	private void Awake()
 	{
 		targetedDrops = new List<GameObject>();
 		player = GameObject.Find(Tags.tags.Player.ToString());
 	}
 
-	void OnEnable()
+	private void OnEnable()
 	{
 		StartCoroutine(SpawnFireBalls());
 	}
@@ -27,11 +27,16 @@ public class StrikeController : MonoBehaviour
 	{
 		for (int i = 0; i < fireballsAmount; i++)
 		{
+			// Get instance
 			GameObject fireBallInstance = ObjectPool.Instance.GetPooledObject(fireBall);
+
+			// Set position
 			if (player != null)
 			{
 				fireBallInstance.transform.position = player.transform.position;
 			}
+
+			// Activate fireball
 			fireBallInstance.SetActive(true);
 
 			yield return new WaitForSeconds(cooldown);
