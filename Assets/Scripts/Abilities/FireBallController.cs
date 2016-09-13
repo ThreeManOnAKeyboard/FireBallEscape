@@ -19,12 +19,17 @@ public class FireBallController : MonoBehaviour
 	private Vector3 collisionPoint;
 	private Vector3 startPosition;
 	private float time;
-	private float positionOffset;
 
 	private void Awake()
 	{
 		particleSystemTransform = gameObject.GetComponentInChildren<Transform>();
-		playerTransform = GameObject.FindWithTag(Tags.tags.Player.ToString()).transform;
+		GameObject player = GameObject.FindWithTag(Tags.tags.Player.ToString());
+
+		if (player != null)
+		{
+			playerTransform = player.transform;
+		}
+
 		animator = GetComponentInChildren<Animator>();
 	}
 
@@ -103,8 +108,7 @@ public class FireBallController : MonoBehaviour
 		{
 			if (targetedWaterDrop == null || !targetedWaterDrop.gameObject.activeInHierarchy)
 			{
-				StopCoroutine("CalibratePosition");
-				animator.enabled = false;
+				animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, -1, 0f);
 
 				targetedWaterDrop = GetWaterDrop();
 
@@ -114,16 +118,13 @@ public class FireBallController : MonoBehaviour
 				}
 				else
 				{
-					positionOffset = particleSystemTransform.position.x;
-					transform.position = (playerTransform.position.x - positionOffset) * Vector3.right;
+					// Reset particle system position
+					//particleSystemTransform.position = Vector3.zero;
+					transform.position = playerTransform.position;
 				}
 			}
 			else
 			{
-				animator.enabled = true;
-
-				StartCoroutine("CalibratePosition");
-
 				transform.position = new Vector3
 				(
 					startPosition.x + (collisionPoint.x - startPosition.x) * (time / collisionTime),
@@ -133,23 +134,8 @@ public class FireBallController : MonoBehaviour
 
 				time += Time.deltaTime;
 			}
-			yield return null;
-		}
-	}
-
-	private IEnumerator CalibratePosition()
-	{
-		float time = 0f;
-		AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-		float remainingTime = stateInfo.length * (1f - stateInfo.normalizedTime);
-
-		while (time <= remainingTime)
-		{
-			transform.position += positionOffset * (time / remainingTime) * Vector3.right;
 
 			yield return null;
-
-			time += Time.deltaTime;
 		}
 	}
 }
