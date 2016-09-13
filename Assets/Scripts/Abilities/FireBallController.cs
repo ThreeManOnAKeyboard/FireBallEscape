@@ -13,7 +13,6 @@ public class FireBallController : MonoBehaviour
 
 	// The water drop to follow
 	private GameObject targetedWaterDrop;
-	private Transform particleSystemTransform;
 	private Transform playerTransform;
 	private Animator animator;
 	private Vector3 collisionPoint;
@@ -22,7 +21,6 @@ public class FireBallController : MonoBehaviour
 
 	private void Awake()
 	{
-		particleSystemTransform = gameObject.GetComponentInChildren<Transform>();
 		GameObject player = GameObject.FindWithTag(Tags.tags.Player.ToString());
 
 		if (player != null)
@@ -50,7 +48,7 @@ public class FireBallController : MonoBehaviour
 			GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(fireBallExplosion);
 			collisionEffect.transform.position = transform.position;
 			collisionEffect.SetActive(true);
-			animator.SetBool("Animate", false);
+			animator.Stop();
 
 			// Deactivate current fireball
 			gameObject.SetActive(false);
@@ -95,6 +93,13 @@ public class FireBallController : MonoBehaviour
 			time = 0f;
 
 			StrikeController.targetedDrops.Add(nearestWaterDrop.gameObject);
+
+			transform.localScale = new Vector3
+			(
+				(Random.Range(0, 2) == 0 ? 1 : -1) * transform.localScale.x,
+				transform.localScale.y,
+				transform.localScale.z
+			);
 		}
 
 		return nearestWaterDrop;
@@ -102,8 +107,6 @@ public class FireBallController : MonoBehaviour
 
 	private IEnumerator StrikeWaterDrop()
 	{
-		animator.SetBool("Animate", true);
-
 		while (time < collisionTime)
 		{
 			if (targetedWaterDrop == null || !targetedWaterDrop.gameObject.activeInHierarchy)
@@ -118,8 +121,6 @@ public class FireBallController : MonoBehaviour
 				}
 				else
 				{
-					// Reset particle system position
-					//particleSystemTransform.position = Vector3.zero;
 					transform.position = playerTransform.position;
 				}
 			}

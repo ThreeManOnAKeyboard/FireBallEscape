@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class AbilitiesController : MonoBehaviour
@@ -45,9 +46,16 @@ public class AbilitiesController : MonoBehaviour
 			return;
 		}
 
-		abilities[currentAbilityIndex].TriggerAbility();
-		currentAbilityIndex = 0;
-		ChangeCurrentAbility();
+		try
+		{
+			abilities[currentAbilityIndex].TriggerAbility();
+			currentAbilityIndex = 0;
+			ChangeCurrentAbility();
+		}
+		catch (System.Exception)
+		{
+			StartCoroutine(TriggerRefuse());
+		}
 	}
 
 	public void UpdateAbility(bool isFuelDrop)
@@ -80,5 +88,16 @@ public class AbilitiesController : MonoBehaviour
 
 		// Update things
 		abilityIconHolder.sprite = abilities[currentAbilityIndex].abilityIcon;
+	}
+
+	// This is just for development stage
+	private IEnumerator TriggerRefuse()
+	{
+		Text refuseText = GameObject.Find("RefuseText").GetComponent<Text>();
+		refuseText.enabled = true;
+
+		yield return new WaitForSeconds(2f);
+
+		refuseText.enabled = false;
 	}
 }

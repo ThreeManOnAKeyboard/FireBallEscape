@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class FuelRainController : MonoBehaviour
 {
+	public float speed;
 	public List<DropHolder> fuelRainDrops;
 	public float fuelRainDuration;
 
@@ -12,10 +13,15 @@ public class FuelRainController : MonoBehaviour
 
 	private delegate void ResetMethod();
 	private ResetMethod resetMethod;
+	private ParticleSystem thisParticleSystem;
+	private Transform playerTransform;
 
 	// Use this for initialization
 	void Awake()
 	{
+		thisParticleSystem = GetComponent<ParticleSystem>();
+		playerTransform = GameObject.FindWithTag(Tags.tags.Player.ToString()).transform;
+
 		switch (GameManager.Instance.controlType)
 		{
 			case GameManager.ControlType.FREE:
@@ -35,9 +41,12 @@ public class FuelRainController : MonoBehaviour
 
 	void OnEnable()
 	{
+		transform.position = playerTransform.position;
+
 		onEnableMethod(fuelRainDrops);
 
 		StartCoroutine(ResetDrops());
+		StartCoroutine(Move());
 	}
 
 	private IEnumerator ResetDrops()
@@ -46,5 +55,25 @@ public class FuelRainController : MonoBehaviour
 
 		resetMethod();
 		gameObject.SetActive(false);
+	}
+
+	private IEnumerator Move()
+	{
+		if (thisParticleSystem.isStopped)
+		{
+			thisParticleSystem.Play();
+		}
+
+		while (Camera.main.WorldToViewportPoint(transform.position).y <= 1.3f && Camera.main.WorldToViewportPoint(transform.position).y >= -0.3f)
+		{
+			transform.Translate(Vector2.up * speed * Time.deltaTime);
+
+			yield return null;
+		}
+
+		if (thisParticleSystem.isPlaying)
+		{
+			thisParticleSystem.Stop();
+		}
 	}
 }
