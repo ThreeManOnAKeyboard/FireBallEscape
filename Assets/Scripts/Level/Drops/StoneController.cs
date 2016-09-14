@@ -14,7 +14,7 @@ public class StoneController : MonoBehaviour
 
 	void OnEnable()
 	{
-		thisRigidBody.AddForce(impulseForce * Random.Range(-1, 2), ForceMode2D.Impulse);
+		thisRigidBody.AddForce(impulseForce * (Random.Range(0, 2) == 0 ? 1f : -1f), ForceMode2D.Impulse);
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)
