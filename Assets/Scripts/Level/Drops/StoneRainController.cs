@@ -1,27 +1,23 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class FuelRainController : MonoBehaviour
+public class StoneRainController : MonoBehaviour
 {
-	public float speed;
-	public List<DropHolder> fuelRainDrops;
+	public List<DropHolder> stoneRainDrops;
 	public float duration;
 
-	private delegate void EnableMethod(List<DropHolder> fuelRainDrops);
+	public static bool isActive;
+
+	private delegate void EnableMethod(List<DropHolder> stoneRainDrops);
 	private EnableMethod enableMethod;
 
 	private delegate void ResetMethod();
 	private ResetMethod resetMethod;
-	private ParticleSystem thisParticleSystem;
-	private Transform playerTransform;
 
 	// Use this for initialization
-	void Awake()
+	private void Awake()
 	{
-		thisParticleSystem = GetComponent<ParticleSystem>();
-		playerTransform = GameObject.FindWithTag(Tags.tags.Player.ToString()).transform;
-
 		switch (GameManager.Instance.controlType)
 		{
 			case GameManager.ControlType.FREE:
@@ -39,14 +35,17 @@ public class FuelRainController : MonoBehaviour
 		}
 	}
 
-	void OnEnable()
+	private void OnEnable()
 	{
-		transform.position = playerTransform.position;
-
-		enableMethod(fuelRainDrops);
+		isActive = true;
+		enableMethod(stoneRainDrops);
 
 		StartCoroutine(ResetDrops());
-		StartCoroutine(Move());
+	}
+
+	private void OnDisable()
+	{
+		isActive = false;
 	}
 
 	private IEnumerator ResetDrops()
@@ -55,25 +54,5 @@ public class FuelRainController : MonoBehaviour
 
 		resetMethod();
 		gameObject.SetActive(false);
-	}
-
-	private IEnumerator Move()
-	{
-		if (thisParticleSystem.isStopped)
-		{
-			thisParticleSystem.Play();
-		}
-
-		while (Camera.main.WorldToViewportPoint(transform.position).y <= 1.3f && Camera.main.WorldToViewportPoint(transform.position).y >= -0.3f)
-		{
-			transform.Translate(Vector2.up * speed * Time.deltaTime);
-
-			yield return null;
-		}
-
-		if (thisParticleSystem.isPlaying)
-		{
-			thisParticleSystem.Stop();
-		}
 	}
 }

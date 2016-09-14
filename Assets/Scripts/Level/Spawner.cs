@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
 
 	}
 
-	public void ActivateFuelDropRain(List<DropHolder> fuelRainDrops)
+	public void ChangeCurrentDrops(List<DropHolder> fuelRainDrops)
 	{
 		currentDrops = fuelRainDrops;
 	}

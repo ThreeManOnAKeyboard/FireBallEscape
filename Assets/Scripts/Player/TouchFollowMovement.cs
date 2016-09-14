@@ -75,6 +75,19 @@ public class TouchFollowMovement : MonoBehaviour
 #elif UNITY_ANDROID
 		if (Input.touchCount > 0)
 		{
+			if (Input.GetTouch(0).phase == TouchPhase.Began && EventSystem.current.IsPointerOverGameObject())
+			{
+				UITouchExited = false;
+			}
+
+			if (Input.GetTouch(0).phase == TouchPhase.Ended && UITouchExited == false)
+			{
+				UITouchExited = true;
+			}
+		}
+
+		if (Input.touchCount > 0 && UITouchExited)
+		{
 			touchPosition = Camera.main.ScreenToWorldPoint
 			(
 				new Vector3

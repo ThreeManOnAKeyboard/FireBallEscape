@@ -140,6 +140,7 @@
     <Compile Include="Assets\Scripts\Level\Drops\GeyserController.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\SideFlameController.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\StoneController.cs" />
+    <Compile Include="Assets\Scripts\Level\Drops\StoneRainController.cs" />
     <Compile Include="Assets\Scripts\Level\FacebookHolder.cs" />
     <Compile Include="Assets\Scripts\Level\FacetedWater.cs" />
     <Compile Include="Assets\Scripts\Level\FreeControlSpawner.cs" />

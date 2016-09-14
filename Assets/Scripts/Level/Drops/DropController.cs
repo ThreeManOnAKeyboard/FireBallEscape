@@ -41,6 +41,8 @@ public class DropController : MonoBehaviour
 
 	public void OnWaterDrop()
 	{
+		bool postEffectRequired = false;
+
 		if (collidedObject.tag == Tags.tags.Player.ToString())
 		{
 			playerController.Damage();
@@ -49,7 +51,28 @@ public class DropController : MonoBehaviour
 
 		if (StrikeController.targetedDrops != null)
 		{
+			if (collidedObject.tag == Tags.tags.Fireball.ToString())
+			{
+				if (StrikeController.targetedDrops.Contains(gameObject))
+				{
+					postEffectRequired = true;
+				}
+			}
+			else
+			{
+				postEffectRequired = true;
+			}
+
 			StrikeController.targetedDrops.Remove(gameObject);
+		}
+		else
+		{
+			postEffectRequired = true;
+		}
+
+		if (postEffectRequired)
+		{
+			DoPostEffect();
 		}
 	}
 
@@ -62,7 +85,7 @@ public class DropController : MonoBehaviour
 		}
 	}
 
-	public void OnSideFlamesDrop()
+	public void OnSidesFlameDrop()
 	{
 		if (collidedObject.tag == Tags.tags.Player.ToString())
 		{

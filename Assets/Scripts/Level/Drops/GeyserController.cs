@@ -27,7 +27,7 @@ public class GeyserController : MonoBehaviour
 		{
 			// Right side
 			position.x = CameraController.rightBorder - offset;
-			rotation = Quaternion.Euler(0f, 0f, Random.Range(-angleRange, angleRange));
+			rotation = Quaternion.Euler(Random.Range(0f, 359f), 0f, Random.Range(-angleRange, angleRange));
 		}
 		else
 		{

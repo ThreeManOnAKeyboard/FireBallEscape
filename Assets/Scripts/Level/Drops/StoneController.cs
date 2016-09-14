@@ -21,7 +21,14 @@ public class StoneController : MonoBehaviour
 	{
 		if (col.gameObject.tag == Tags.tags.Player.ToString())
 		{
-			col.gameObject.GetComponent<PlayerController>().Kill();
+			if (StoneRainController.isActive)
+			{
+				col.gameObject.GetComponent<PlayerController>().Damage();
+			}
+			else
+			{
+				col.gameObject.GetComponent<PlayerController>().Kill();
+			}
 		}
 	}
 }

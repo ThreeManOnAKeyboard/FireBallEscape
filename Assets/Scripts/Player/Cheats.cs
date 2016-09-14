@@ -2,6 +2,7 @@
 
 public class Cheats : MonoBehaviour
 {
+#if UNITY_EDITOR
 	private PlayerController playerController;
 
 	// Use this for initialization
@@ -13,7 +14,6 @@ public class Cheats : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-#if UNITY_EDITOR
 		if (Input.GetKeyDown(KeyCode.UpArrow))
 		{
 			playerController.Heal();
