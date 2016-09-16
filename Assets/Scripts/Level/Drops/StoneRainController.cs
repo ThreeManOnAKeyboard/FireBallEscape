@@ -37,6 +37,11 @@ public class StoneRainController : MonoBehaviour
 
 	private void OnEnable()
 	{
+		if (FindObjectOfType<FuelRainController>() != null)
+		{
+			gameObject.SetActive(false);
+		}
+
 		isActive = true;
 		enableMethod(stoneRainDrops);
 
@@ -51,8 +56,10 @@ public class StoneRainController : MonoBehaviour
 	private IEnumerator ResetDrops()
 	{
 		yield return new WaitForSeconds(duration);
-
 		resetMethod();
+
+		// Should be changed
+		yield return new WaitForSeconds(3f);
 		gameObject.SetActive(false);
 	}
 }

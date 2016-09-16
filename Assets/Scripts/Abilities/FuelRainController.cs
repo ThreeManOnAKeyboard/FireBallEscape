@@ -41,6 +41,13 @@ public class FuelRainController : MonoBehaviour
 
 	void OnEnable()
 	{
+		StoneRainController SRC = FindObjectOfType<StoneRainController>();
+
+		if (SRC != null)
+		{
+			SRC.gameObject.SetActive(false);
+		}
+
 		transform.position = playerTransform.position;
 
 		enableMethod(fuelRainDrops);
