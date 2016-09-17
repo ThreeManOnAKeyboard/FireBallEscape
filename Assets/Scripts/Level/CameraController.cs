@@ -14,14 +14,14 @@ public class CameraController : MonoBehaviour
 	public float followSpeed;
 	public float yPositionOffset;
 
+#if UNITY_ANDROID && !UNITY_EDITOR
 	void Awake()
 	{
 		// Set Quality settings for android build
-#if UNITY_ANDROID && !UNITY_EDITOR
-		QualitySettings.vSyncCount = 0;
+		//QualitySettings.vSyncCount = 0;
 		Application.targetFrameRate = 60;
+}
 #endif
-	}
 
 	// Use this for initialization
 	void Start()
@@ -41,7 +41,7 @@ public class CameraController : MonoBehaviour
 			transform.position = new Vector3
 			(
 				transform.position.x,
-				Mathf.Lerp(transform.position.y, target.position.y + yPositionOffset, Time.deltaTime * followSpeed),
+				Mathf.Lerp(transform.position.y, target.position.y + yPositionOffset, followSpeed * Time.deltaTime),
 				transform.position.z
 			);
 		}

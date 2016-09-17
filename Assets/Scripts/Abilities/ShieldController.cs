@@ -42,15 +42,18 @@ public class ShieldController : MonoBehaviour
 		transform.position = player.transform.position;
 
 		// Update the rotation angle of shield
-		transform.eulerAngles = new Vector3
+		transform.rotation = Quaternion.Euler
 		(
-			transform.eulerAngles.x,
-			transform.eulerAngles.y,
-			Mathf.LerpAngle
+			new Vector3
 			(
-				transform.eulerAngles.z,
-				(previousPosition.x - transform.position.x) * rotationSpeed,
-				Time.deltaTime * lerpSpeed
+				transform.eulerAngles.x,
+				transform.eulerAngles.y,
+				Mathf.LerpAngle
+				(
+					transform.eulerAngles.z,
+					(previousPosition.x - transform.position.x) * rotationSpeed,
+					Time.deltaTime * lerpSpeed
+				)
 			)
 		);
 
