@@ -7,6 +7,7 @@ public class ShieldController : MonoBehaviour
 	public float shieldDuration;
 	public float rotationSpeed = 10f;
 	public float lerpSpeed = 1f;
+	public float maxAngle = 45f;
 	[Range(0.05f, 1f)]
 	public float blinkDuration = 0.5f;
 	public int blinkTimes = 3;
@@ -15,21 +16,23 @@ public class ShieldController : MonoBehaviour
 	private GameObject player;
 	private Vector3 previousPosition;
 
-	void Awake()
+	private void Awake()
 	{
 		player = GameObject.Find(Tags.tags.Player.ToString());
+		transform.parent = player.transform;
+		transform.localPosition = Vector3.zero;
 		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
 	// Use this for initialization
-	void OnEnable()
+	private void OnEnable()
 	{
-		previousPosition = transform.position;
+		previousPosition = player.transform.position;
 		StartCoroutine(DeactivateShield());
 	}
 
 	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
 		// Verify if player is alive
 		if (player == null)
@@ -38,9 +41,6 @@ public class ShieldController : MonoBehaviour
 			return;
 		}
 
-		// Follow the player
-		transform.position = player.transform.position;
-
 		// Update the rotation angle of shield
 		transform.rotation = Quaternion.Euler
 		(
@@ -48,20 +48,25 @@ public class ShieldController : MonoBehaviour
 			(
 				transform.eulerAngles.x,
 				transform.eulerAngles.y,
-				Mathf.LerpAngle
-				(
-					transform.eulerAngles.z,
-					(previousPosition.x - transform.position.x) * rotationSpeed,
-					Time.deltaTime * lerpSpeed
-				)
+					//Mathf.Clamp
+					//(
+					Mathf.LerpAngle
+					(
+						transform.eulerAngles.z,
+						(previousPosition.x - player.transform.position.x) * rotationSpeed,
+						Time.deltaTime * lerpSpeed
+					)
+			//	-maxAngle,
+			//	maxAngle
+			//)
 			)
 		);
 
 		// Save current position
-		previousPosition = transform.position;
+		previousPosition = player.transform.position;
 	}
 
-	IEnumerator DeactivateShield()
+	private IEnumerator DeactivateShield()
 	{
 		yield return new WaitForSeconds(shieldDuration - blinkTimes * blinkDuration);
 
