@@ -18,7 +18,7 @@ public class ShieldController : MonoBehaviour
 
 	private void Awake()
 	{
-		player = GameObject.Find(Tags.tags.Player.ToString());
+		player = GameObject.Find(Tags.PLAYER);
 		transform.parent = player.transform;
 		transform.localPosition = Vector3.zero;
 		spriteRenderer = GetComponent<SpriteRenderer>();
@@ -48,17 +48,15 @@ public class ShieldController : MonoBehaviour
 			(
 				transform.eulerAngles.x,
 				transform.eulerAngles.y,
-					//Mathf.Clamp
-					//(
+				ClampAngle
+				(
 					Mathf.LerpAngle
 					(
 						transform.eulerAngles.z,
 						(previousPosition.x - player.transform.position.x) * rotationSpeed,
 						Time.deltaTime * lerpSpeed
 					)
-			//	-maxAngle,
-			//	maxAngle
-			//)
+				)
 			)
 		);
 
@@ -81,5 +79,24 @@ public class ShieldController : MonoBehaviour
 		}
 
 		gameObject.SetActive(false);
+	}
+
+	private float ClampAngle(float angle)
+	{
+		if (angle > maxAngle && angle < (360f - maxAngle))
+		{
+			if ((angle - maxAngle) < (360f - maxAngle - angle))
+			{
+				return maxAngle;
+			}
+			else
+			{
+				return 360f - maxAngle;
+			}
+		}
+		else
+		{
+			return angle;
+		}
 	}
 }

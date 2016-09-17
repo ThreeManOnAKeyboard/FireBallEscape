@@ -6,9 +6,6 @@ public class CameraController : MonoBehaviour
 	public static float leftBorder;
 	public static float rightBorder;
 
-	public Tags.tags playerTag;
-	public Tags.tags backgroundTag;
-
 	private Transform target;
 
 	public float followSpeed;
@@ -18,7 +15,7 @@ public class CameraController : MonoBehaviour
 	void Awake()
 	{
 		// Set Quality settings for android build
-		//QualitySettings.vSyncCount = 0;
+		QualitySettings.vSyncCount = 0;
 		Application.targetFrameRate = 60;
 }
 #endif
@@ -27,7 +24,7 @@ public class CameraController : MonoBehaviour
 	void Start()
 	{
 		// Calculate visible track borders positions in world space coordinates
-		target = GameObject.FindGameObjectWithTag(playerTag.ToString()).transform;
+		target = GameObject.FindGameObjectWithTag(Tags.PLAYER).transform;
 		float distance = (target.position - Camera.main.transform.position).z;
 		leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance)).x;
 		rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance)).x;

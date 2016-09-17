@@ -16,7 +16,7 @@ public class WaveBlastController : MonoBehaviour
 
 	private void Awake()
 	{
-		player = GameObject.FindWithTag(Tags.tags.Player.ToString());
+		player = GameObject.FindWithTag(Tags.PLAYER);
 		thisShape = GetComponent<ParticleSystem>().shape;
 		circleCollider2D = GetComponent<CircleCollider2D>();
 	}

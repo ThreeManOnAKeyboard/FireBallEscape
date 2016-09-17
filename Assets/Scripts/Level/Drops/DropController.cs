@@ -33,7 +33,7 @@ public class DropController : MonoBehaviour
 		collidedObject = col.gameObject;
 		onCollisionMethod.Invoke();
 
-		if (col.gameObject.tag != Tags.tags.Destroyer.ToString() && !isComplexDrop)
+		if (col.gameObject.tag != Tags.DESTROYER && !isComplexDrop)
 		{
 			DoPostEffect();
 		}
@@ -43,15 +43,19 @@ public class DropController : MonoBehaviour
 	{
 		bool postEffectRequired = false;
 
-		if (collidedObject.tag == Tags.tags.Player.ToString())
+		if (collidedObject.tag == Tags.PLAYER)
 		{
 			playerController.Damage();
 			playerController.ResetMultiplier();
 		}
 
-		if (StrikeController.targetedDrops != null)
+		if (collidedObject.tag == Tags.DESTROYER)
 		{
-			if (collidedObject.tag == Tags.tags.Fireball.ToString())
+			postEffectRequired = false;
+		}
+		else if (StrikeController.targetedDrops != null)
+		{
+			if (collidedObject.tag == Tags.FIREBALL)
 			{
 				if (StrikeController.targetedDrops.Contains(gameObject))
 				{
@@ -78,7 +82,7 @@ public class DropController : MonoBehaviour
 
 	public void OnFuelDrop()
 	{
-		if (collidedObject.tag == Tags.tags.Player.ToString())
+		if (collidedObject.tag == Tags.PLAYER)
 		{
 			playerController.Heal();
 			playerController.AddScore(scoreAmount);
@@ -87,11 +91,11 @@ public class DropController : MonoBehaviour
 
 	public void OnSidesFlameDrop()
 	{
-		if (collidedObject.tag == Tags.tags.Player.ToString())
+		if (collidedObject.tag == Tags.PLAYER)
 		{
 			playerController.Kill();
 		}
-		else if (collidedObject.tag == Tags.tags.MaxPowerWave.ToString())
+		else if (collidedObject.tag == Tags.MAXPOWERWAVE)
 		{
 			DoPostEffect();
 		}

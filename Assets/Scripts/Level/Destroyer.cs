@@ -2,11 +2,9 @@
 
 public class Destroyer : MonoBehaviour
 {
-	public Tags.tags whatToDestroyTag;
-
 	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.tag == whatToDestroyTag.ToString())
+		if (col.tag == Tags.DROP)
 		{
 			col.gameObject.SetActive(false);
 		}

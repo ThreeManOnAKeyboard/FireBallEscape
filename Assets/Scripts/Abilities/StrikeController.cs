@@ -15,7 +15,7 @@ public class StrikeController : MonoBehaviour
 	private void Awake()
 	{
 		targetedDrops = new List<GameObject>();
-		player = GameObject.Find(Tags.tags.Player.ToString());
+		player = GameObject.Find(Tags.PLAYER);
 	}
 
 	private void OnEnable()
@@ -43,7 +43,7 @@ public class StrikeController : MonoBehaviour
 		}
 
 		// Deactivate ability when all fireballs reached their target
-		while (GameObject.FindGameObjectsWithTag(Tags.tags.Fireball.ToString()).Length != 0)
+		while (GameObject.FindGameObjectsWithTag(Tags.FIREBALL).Length != 0)
 		{
 			yield return new WaitForSeconds(0.5f);
 		}

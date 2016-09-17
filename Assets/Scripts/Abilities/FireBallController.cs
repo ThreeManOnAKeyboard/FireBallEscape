@@ -21,7 +21,7 @@ public class FireBallController : MonoBehaviour
 
 	private void Awake()
 	{
-		GameObject player = GameObject.FindWithTag(Tags.tags.Player.ToString());
+		GameObject player = GameObject.FindWithTag(Tags.PLAYER);
 
 		if (player != null)
 		{
@@ -107,7 +107,7 @@ public class FireBallController : MonoBehaviour
 
 	private IEnumerator StrikeWaterDrop()
 	{
-		while (time < collisionTime)
+		while (true)
 		{
 			if (targetedWaterDrop == null || !targetedWaterDrop.gameObject.activeInHierarchy)
 			{

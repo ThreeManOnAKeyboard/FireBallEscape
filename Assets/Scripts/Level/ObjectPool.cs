@@ -15,6 +15,7 @@ public class ObjectPool : MonoBehaviour
 
 	public PooledObject[] pooledObjectTypes;
 
+	private GameObject pooledObjectsParent;
 	private Dictionary<string, List<GameObject>> pool;
 	private List<GameObject> pooledObjects;
 
@@ -29,6 +30,9 @@ public class ObjectPool : MonoBehaviour
 
 	void Start()
 	{
+		// Create the pooling parent
+		pooledObjectsParent = new GameObject("PooledGameObjects");
+
 		// Set up the pool and instantiate all initial objects
 		pool = new Dictionary<string, List<GameObject>>();
 		PooledObject pooledObjectType;
@@ -48,6 +52,8 @@ public class ObjectPool : MonoBehaviour
 		GameObject pooledObject = Instantiate(newObject);
 		pooledObject.SetActive(false);
 		pool[newObject.name].Add(pooledObject);
+		pooledObject.transform.parent = pooledObjectsParent.transform;
+		pooledObject.transform.position = Vector3.zero;
 		return pooledObject;
 	}
 

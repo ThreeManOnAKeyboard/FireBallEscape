@@ -20,7 +20,7 @@ public class FuelRainController : MonoBehaviour
 	void Awake()
 	{
 		thisParticleSystem = GetComponent<ParticleSystem>();
-		playerTransform = GameObject.FindWithTag(Tags.tags.Player.ToString()).transform;
+		playerTransform = GameObject.FindWithTag(Tags.PLAYER).transform;
 
 		switch (GameManager.Instance.controlType)
 		{

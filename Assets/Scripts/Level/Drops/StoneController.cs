@@ -24,12 +24,20 @@ public class StoneController : MonoBehaviour
 			onStoneRain = false;
 		}
 
+		// Center position
+		transform.position = new Vector3
+		(
+			0f,
+			transform.position.y,
+			transform.position.z
+		);
+
 		thisRigidBody.AddForce(impulseForce * (Random.Range(0, 2) == 0 ? 1f : -1f), ForceMode2D.Impulse);
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.gameObject.tag == Tags.tags.Player.ToString())
+		if (col.gameObject.tag == Tags.PLAYER)
 		{
 			if (onStoneRain)
 			{

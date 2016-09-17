@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -35,6 +34,7 @@ public class PlayerController : MonoBehaviour
 	public static bool isInvincible;
 
 	public Text scoreText;
+	public float scoreRate = 1f;
 	private float scoreMultiplier = 1;
 	private float score;
 	private Vector3 previousPosition;
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		// Update the score
-		score += (transform.position.y - previousPosition.y) * scoreMultiplier;
+		score += (transform.position.y - previousPosition.y) * scoreMultiplier * scoreRate;
 		scoreText.text = ((int)score).ToString();
 
 		// Save previous position for next frame calculations
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
 	public void AddScore(float scoreAmount)
 	{
-		score += scoreAmount * scoreMultiplier++;
+		score += scoreAmount * scoreMultiplier++ * scoreRate;
 	}
 
 	public void ResetMultiplier()
