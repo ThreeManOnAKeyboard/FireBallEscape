@@ -6,8 +6,8 @@ public class TouchFollowMovement : MonoBehaviour
 	private Vector2 speed;
 	public Vector2 minSpeed;
 	public Vector2 maxSpeed;
-	[Range(0.001f, 1f)]
-	public float noTouchSpeedRatio = 0.2f;
+	public float noTouchSpeed;
+	//public float maxNoTouchSpeed;
 
 	public float yOffset;
 
@@ -74,7 +74,7 @@ public class TouchFollowMovement : MonoBehaviour
 		else
 		{
 			touchPosition = transform.position;
-			touchPosition.y += noTouchSpeedRatio * speed.y;
+			touchPosition.y += noTouchSpeed * Time.deltaTime;
 		}
 #elif UNITY_ANDROID
 		if (Input.touchCount > 0)
@@ -107,7 +107,7 @@ public class TouchFollowMovement : MonoBehaviour
 		else
 		{
 			touchPosition = transform.position;
-			touchPosition.y += noTouchSpeedRatio * speed.y;
+			touchPosition.y += noTouchSpeed * Time.deltaTime;
 		}
 #endif
 
@@ -115,21 +115,11 @@ public class TouchFollowMovement : MonoBehaviour
 		(
 			Mathf.Clamp
 			(
-				Mathf.Lerp
-				(
-					transform.position.x,
-					touchPosition.x,
-					speed.x * Time.deltaTime
-				),
+				transform.position.x + (touchPosition.x - transform.position.x) * speed.x * Time.deltaTime,
 				CameraController.leftBorder + GameManager.Instance.bordersOffset,
 				CameraController.rightBorder - GameManager.Instance.bordersOffset
 			),
-			Mathf.Lerp
-			(
-				transform.position.y,
-				touchPosition.y,
-				speed.y * Time.deltaTime
-			),
+			transform.position.y + (touchPosition.y - transform.position.y) * speed.y * Time.deltaTime,
 			transform.position.z
 		);
 	}

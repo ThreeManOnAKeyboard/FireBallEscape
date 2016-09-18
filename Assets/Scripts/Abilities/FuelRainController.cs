@@ -56,9 +56,6 @@ public class FuelRainController : MonoBehaviour
 
 		transform.position = playerTransform.position;
 
-		enableMethod(fuelRainDrops);
-
-		StartCoroutine(ResetDrops());
 		StartCoroutine(Move());
 	}
 
@@ -86,6 +83,8 @@ public class FuelRainController : MonoBehaviour
 
 		// Activate splash effect after the fuel rain drop went out of the screen
 		StartCoroutine(DoSplashEffect());
+		enableMethod(fuelRainDrops);
+		StartCoroutine(ResetDrops());
 
 		if (thisParticleSystem.isPlaying)
 		{
