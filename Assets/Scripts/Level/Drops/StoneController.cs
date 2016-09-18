@@ -41,7 +41,7 @@ public class StoneController : MonoBehaviour
 		{
 			if (onStoneRain)
 			{
-				col.gameObject.GetComponent<PlayerController>().Damage();
+				col.gameObject.GetComponent<PlayerController>().Damage(false);
 			}
 			else
 			{

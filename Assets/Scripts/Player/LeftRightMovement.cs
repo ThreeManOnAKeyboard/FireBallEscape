@@ -49,24 +49,21 @@ public class LeftRightMovement : MonoBehaviour
 			return;
 		}
 
-		if (!EventSystem.current.IsPointerOverGameObject())
-		{
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-			if (Input.GetButtonDown("Horizontal"))
+		if (!EventSystem.current.IsPointerOverGameObject() && Input.GetButtonDown("Horizontal"))
 #elif UNITY_ANDROID
-			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+		if (Input.touchCount > 0 && !TouchManager.Instance.IsPointerOverUIObject(0) && Input.GetTouch(0).phase == TouchPhase.Began)
 #endif
-			{
-				Leap();
-			}
+		{
+			Leap();
 		}
 
 		// Calculate speed based on health amount
 		speed = new Vector2
 		(
 			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.x, minSpeed.x, maxSpeed.x),
-			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y)
-		);
+				Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y)
+			);
 
 		// Move sideways
 		transform.position = Vector3.MoveTowards

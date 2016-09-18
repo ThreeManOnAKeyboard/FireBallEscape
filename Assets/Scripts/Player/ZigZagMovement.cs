@@ -19,12 +19,6 @@ public class ZigZagMovement : MonoBehaviour
 
 	public float borderOffset;
 
-	// Use this for initialization
-	void Start()
-	{
-
-	}
-
 	// Update is called once per frame
 	void Update()
 	{
@@ -33,23 +27,19 @@ public class ZigZagMovement : MonoBehaviour
 			return;
 		}
 
-
-		if (!EventSystem.current.IsPointerOverGameObject())
-		{
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR
-			if (Input.GetMouseButtonDown(0))
+		if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
 #elif UNITY_ANDROID
-			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !TouchManager.Instance.IsPointerOverUIObject(0))
 #endif
+		{
+			if (currentDirection == Direction.Right)
 			{
-				if (currentDirection == Direction.Right)
-				{
-					currentDirection = Direction.Left;
-				}
-				else
-				{
-					currentDirection = Direction.Right;
-				}
+				currentDirection = Direction.Left;
+			}
+			else
+			{
+				currentDirection = Direction.Right;
 			}
 		}
 

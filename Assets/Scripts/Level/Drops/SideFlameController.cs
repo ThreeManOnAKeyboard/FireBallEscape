@@ -38,7 +38,7 @@ public class SideFlameController : MonoBehaviour
 	{
 		if (col.gameObject.tag == Tags.PLAYER)
 		{
-			playerController.Damage();
+			playerController.Damage(false);
 		}
 	}
 }

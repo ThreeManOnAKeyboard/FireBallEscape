@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 	public float healthDrainSpeed;
 
 	// The maximum speed when player is invincible
-	public float invincibleSpeed;
+	private float invincibleSpeed;
 
 	// Some UI gameobjects
 	public GameObject gameUI;
@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 		previousPosition = transform.position;
 	}
 
-	public void Damage()
+	public void Damage(bool isDrop)
 	{
 		// health = 5
 		// maxHealth = 10
@@ -102,16 +102,24 @@ public class PlayerController : MonoBehaviour
 		if (!isInvincible)
 		{
 			health -= maxHealth * Mathf.Clamp((health / maxHealth) * maxDamagePercent, minDamagePercent, maxDamagePercent);
-			abilitiesController.UpdateAbility(false);
+
+			if (isDrop)
+			{
+				abilitiesController.UpdateAbility(false);
+			}
 		}
 	}
 
-	public void Heal()
+	public void Heal(bool isDrop)
 	{
 		if (!isInvincible)
 		{
 			health += maxHealth * Mathf.Clamp((1 - health / maxHealth) * maxHealPercent, minHealPercent, maxHealPercent);
-			abilitiesController.UpdateAbility(true);
+
+			if (isDrop)
+			{
+				abilitiesController.UpdateAbility(true);
+			}
 		}
 	}
 
@@ -166,5 +174,20 @@ public class PlayerController : MonoBehaviour
 	public float GetScore()
 	{
 		return score;
+	}
+
+	public void ActivateUltimate(float speed)
+	{
+		isInvincible = true;
+		defaultParticleSystem.SetActive(false);
+		maxPowerParticleSystem.SetActive(true);
+		invincibleSpeed = speed;
+	}
+
+	public void DeactivateUltimate()
+	{
+		isInvincible = false;
+		defaultParticleSystem.SetActive(true);
+		maxPowerParticleSystem.SetActive(false);
 	}
 }

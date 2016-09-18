@@ -3,10 +3,10 @@ using UnityEngine.EventSystems;
 
 public class TouchFollowMovement : MonoBehaviour
 {
-	private float speed;
-	public float minSpeed = 5f;
-	public float maxSpeed = 10f;
-	[Range(0.001f, 0.01f)]
+	private Vector2 speed;
+	public Vector2 minSpeed;
+	public Vector2 maxSpeed;
+	[Range(0.001f, 1f)]
 	public float noTouchSpeedRatio = 0.2f;
 
 	public float yOffset;
@@ -38,7 +38,11 @@ public class TouchFollowMovement : MonoBehaviour
 			return;
 		}
 
-		speed = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed, minSpeed, maxSpeed);
+		speed = new Vector2
+		(
+			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.x, minSpeed.x, maxSpeed.x),
+			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y)
+		);
 
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 		// If player held the mouse button on UI element then don't let the character move
@@ -70,12 +74,12 @@ public class TouchFollowMovement : MonoBehaviour
 		else
 		{
 			touchPosition = transform.position;
-			touchPosition.y += noTouchSpeedRatio * speed;
+			touchPosition.y += noTouchSpeedRatio * speed.y;
 		}
 #elif UNITY_ANDROID
 		if (Input.touchCount > 0)
 		{
-			if (Input.GetTouch(0).phase == TouchPhase.Began && EventSystem.current.IsPointerOverGameObject())
+			if (Input.GetTouch(0).phase == TouchPhase.Began && TouchManager.Instance.IsPointerOverUIObject(0))
 			{
 				UITouchExited = false;
 			}
@@ -103,25 +107,30 @@ public class TouchFollowMovement : MonoBehaviour
 		else
 		{
 			touchPosition = transform.position;
-			touchPosition.y += noTouchSpeedRatio * speed;
+			touchPosition.y += noTouchSpeedRatio * speed.y;
 		}
 #endif
 
-		transform.position = Vector3.MoveTowards
+		transform.position = new Vector3
 		(
-			transform.position,
-			new Vector3
+			Mathf.Clamp
 			(
-				Mathf.Clamp
+				Mathf.Lerp
 				(
+					transform.position.x,
 					touchPosition.x,
-					CameraController.leftBorder + GameManager.Instance.bordersOffset,
-					CameraController.rightBorder - GameManager.Instance.bordersOffset
+					speed.x * Time.deltaTime
 				),
-				touchPosition.y,
-				transform.position.z
+				CameraController.leftBorder + GameManager.Instance.bordersOffset,
+				CameraController.rightBorder - GameManager.Instance.bordersOffset
 			),
-			Time.deltaTime * speed
+			Mathf.Lerp
+			(
+				transform.position.y,
+				touchPosition.y,
+				speed.y * Time.deltaTime
+			),
+			transform.position.z
 		);
 	}
 }

@@ -45,7 +45,7 @@ public class DropController : MonoBehaviour
 
 		if (collidedObject.tag == Tags.PLAYER)
 		{
-			playerController.Damage();
+			playerController.Damage(true);
 			playerController.ResetMultiplier();
 		}
 
@@ -84,7 +84,7 @@ public class DropController : MonoBehaviour
 	{
 		if (collidedObject.tag == Tags.PLAYER)
 		{
-			playerController.Heal();
+			playerController.Heal(true);
 			playerController.AddScore(scoreAmount);
 		}
 	}

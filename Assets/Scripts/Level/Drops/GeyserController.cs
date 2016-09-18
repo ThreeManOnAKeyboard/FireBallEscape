@@ -74,7 +74,7 @@ public class GeyserController : MonoBehaviour
 	{
 		if (col.gameObject.tag == Tags.PLAYER)
 		{
-			col.gameObject.GetComponent<PlayerController>().Damage();
+			col.gameObject.GetComponent<PlayerController>().Damage(false);
 		}
 	}
 }

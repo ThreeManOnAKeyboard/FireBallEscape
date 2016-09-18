@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class AbilitiesController : MonoBehaviour
 {
 	public Ability[] abilities;
+	public SuperAbility[] superAbilities;
 	public Image abilityIconHolder;
 	public Image abilityIconBackground;
 	public float backgroundFillSpeed;
@@ -13,14 +14,26 @@ public class AbilitiesController : MonoBehaviour
 	private float currentBackgroundFillAmount;
 	private int currentAbilityIndex;
 
-	// Use this for initialization
-	void Start()
-	{
+	// Super Abilities related stuff
+	private SuperAbility.Combination[] currentCombination;
 
+	private void Awake()
+	{
+		int maxComboLength = superAbilities[0].combination.Length;
+
+		for (int i = 0; i < superAbilities.Length; i++)
+		{
+			if (superAbilities[i].combination.Length > maxComboLength)
+			{
+				maxComboLength = superAbilities[i].combination.Length;
+			}
+		}
+
+		currentCombination = new SuperAbility.Combination[maxComboLength];
 	}
 
 	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
 #if UNITY_EDITOR
 		if (Input.GetButtonDown("Jump"))
@@ -76,7 +89,12 @@ public class AbilitiesController : MonoBehaviour
 			{
 				// Update fill amount
 				currentBackgroundFillAmount = currentFuelAmount / abilities[currentAbilityIndex + 1].neededFuel;
+				CheckCombination(isFuelDrop);
 			}
+		}
+		else
+		{
+			CheckCombination(isFuelDrop);
 		}
 	}
 
@@ -99,5 +117,47 @@ public class AbilitiesController : MonoBehaviour
 		yield return new WaitForSeconds(2f);
 
 		refuseText.enabled = false;
+	}
+
+	private void CheckCombination(bool isFuelDrop)
+	{
+		// Move combination
+		for (int i = 0; i < currentCombination.Length - 1; i++)
+		{
+			currentCombination[i] = currentCombination[i + 1];
+		}
+
+		// Add the last element of combination
+		currentCombination[currentCombination.Length - 1] = isFuelDrop ? SuperAbility.Combination.Fuel : SuperAbility.Combination.Water;
+
+		// Check if any super ability has to be triggered
+		for (int i = 0; i < superAbilities.Length; i++)
+		{
+			for (int j = 0; j <= currentAbilityIndex; j++)
+			{
+				// Check if super ability is available
+				if (superAbilities[i].requiredAbility == abilities[j])
+				{
+					// Check the combination
+					SuperAbility.Combination[] comboToCheck = superAbilities[i].combination;
+					int k;
+					for (k = 1; k <= comboToCheck.Length; k++)
+					{
+						if (comboToCheck[comboToCheck.Length - k] != currentCombination[currentCombination.Length - k])
+						{
+							break;
+						}
+					}
+
+					if (k == comboToCheck.Length + 1)
+					{
+						// Trigger Super Ability
+						superAbilities[i].TriggerAbility();
+						currentCombination = new SuperAbility.Combination[currentCombination.Length];
+						break;
+					}
+				}
+			}
+		}
 	}
 }

@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class FuelRainController : MonoBehaviour
 {
 	public float speed;
 	public List<DropHolder> fuelRainDrops;
 	public float duration;
+
+	private Image splashEffectImage;
+	[Range(0.01f, 1f)]
+	public float splashDuration;
 
 	private delegate void EnableMethod(List<DropHolder> fuelRainDrops);
 	private EnableMethod enableMethod;
@@ -17,10 +22,11 @@ public class FuelRainController : MonoBehaviour
 	private Transform playerTransform;
 
 	// Use this for initialization
-	void Awake()
+	private void Awake()
 	{
 		thisParticleSystem = GetComponent<ParticleSystem>();
 		playerTransform = GameObject.FindWithTag(Tags.PLAYER).transform;
+		splashEffectImage = GameObject.Find("FuelRainSplashEffect").GetComponent<Image>();
 
 		switch (GameManager.Instance.controlType)
 		{
@@ -39,7 +45,7 @@ public class FuelRainController : MonoBehaviour
 		}
 	}
 
-	void OnEnable()
+	private void OnEnable()
 	{
 		StoneRainController SRC = FindObjectOfType<StoneRainController>();
 
@@ -78,9 +84,42 @@ public class FuelRainController : MonoBehaviour
 			yield return null;
 		}
 
+		// Activate splash effect after the fuel rain drop went out of the screen
+		StartCoroutine(DoSplashEffect());
+
 		if (thisParticleSystem.isPlaying)
 		{
 			thisParticleSystem.Stop();
 		}
+	}
+
+	private IEnumerator DoSplashEffect()
+	{
+		float time = 0f;
+		Color color = splashEffectImage.color;
+
+		// Fade to maximum alpha
+		while (time < (splashDuration / 3))
+		{
+			color.a = time / (splashDuration / 3);
+			splashEffectImage.color = color;
+
+			time += Time.deltaTime;
+			yield return null;
+		}
+
+		time = 0f;
+		// Fade to minimum alpha
+		while (time <= (splashDuration * 2 / 3))
+		{
+			color.a = (1 - time / (splashDuration * 2 / 3));
+			splashEffectImage.color = color;
+
+			time += Time.deltaTime;
+			yield return null;
+		}
+
+		color.a = 0f;
+		splashEffectImage.color = color;
 	}
 }
