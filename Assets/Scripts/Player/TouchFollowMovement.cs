@@ -7,7 +7,6 @@ public class TouchFollowMovement : MonoBehaviour
 	public Vector2 minSpeed;
 	public Vector2 maxSpeed;
 	public float noTouchSpeed;
-	//public float maxNoTouchSpeed;
 
 	public float yOffset;
 
@@ -16,7 +15,7 @@ public class TouchFollowMovement : MonoBehaviour
 
 	private Vector3 touchPosition;
 
-	private bool UITouchExited = true;
+	private bool[] UITouchExited = new bool[2];
 
 	// Use this for initialization
 	void Start()
@@ -48,16 +47,16 @@ public class TouchFollowMovement : MonoBehaviour
 		// If player held the mouse button on UI element then don't let the character move
 		if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
 		{
-			UITouchExited = false;
+			UITouchExited[0] = false;
 		}
 
 		// If the mouse button is released after pressing the UI element then let the character move
-		if (Input.GetMouseButtonUp(0) && UITouchExited == false)
+		if (Input.GetMouseButtonUp(0) && UITouchExited[0] == false)
 		{
-			UITouchExited = true;
+			UITouchExited[0] = true;
 		}
 
-		if (Input.GetMouseButton(0) && UITouchExited == true)
+		if (Input.GetMouseButton(0) && UITouchExited[0] == true)
 		{
 			touchPosition = Camera.main.ScreenToWorldPoint
 			(
@@ -76,41 +75,52 @@ public class TouchFollowMovement : MonoBehaviour
 			touchPosition = transform.position;
 			touchPosition.y += noTouchSpeed * Time.deltaTime;
 		}
-#elif UNITY_ANDROID
-		if (Input.touchCount > 0)
+		//#elif UNITY_ANDROID
+		int iterationsCount = Mathf.Min(Input.touchCount, 2);
+		if (iterationsCount > 0)
 		{
-			if (Input.GetTouch(0).phase == TouchPhase.Began && TouchManager.Instance.IsPointerOverUIObject(0))
+			for (int touchIndex = 0; touchIndex < iterationsCount; touchIndex++)
 			{
-				UITouchExited = false;
-			}
+				if (Input.GetTouch(touchIndex)
+					.phase == TouchPhase.Began && TouchManager.Instance.IsPointerOverUIObject(touchIndex))
+				{
+					UITouchExited[touchIndex] = false;
+				}
 
-			if (Input.GetTouch(0).phase == TouchPhase.Ended && UITouchExited == false)
-			{
-				UITouchExited = true;
+				if (Input.GetTouch(0).phase == TouchPhase.Ended && UITouchExited[touchIndex] == false)
+				{
+					UITouchExited[touchIndex] = true;
+				}
 			}
 		}
 
-		if (Input.touchCount > 0 && UITouchExited)
+		if (iterationsCount > 0)
 		{
-			touchPosition = Camera.main.ScreenToWorldPoint
-			(
-				new Vector3
-				(
-					Input.GetTouch(0).position.x,
-					Mathf.Clamp(Input.GetTouch(0).position.y, 0f, Screen.height * yTouchLimitRatio),
-					Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
-				)
-			);
+			for (int touchIndex = 0; touchIndex < iterationsCount; touchIndex++)
+			{
+				if (UITouchExited[touchIndex])
+				{
+					touchPosition = Camera.main.ScreenToWorldPoint
+					(
+						new Vector3
+						(
+							Input.GetTouch(touchIndex).position.x,
+							Mathf.Clamp(Input.GetTouch(touchIndex).position.y, 0f, Screen.height * yTouchLimitRatio),
+							Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
+						)
+					);
 
-			touchPosition.y += yOffset;
-		}
-		else
-		{
-			touchPosition = transform.position;
-			touchPosition.y += noTouchSpeed * Time.deltaTime;
+					touchPosition.y += yOffset;
+					break;
+				}
+				else
+				{
+					touchPosition = transform.position;
+					touchPosition.y += noTouchSpeed * Time.deltaTime;
+				}
+			}
 		}
 #endif
-
 		transform.position = new Vector3
 		(
 			Mathf.Clamp
