@@ -11,10 +11,12 @@ public class GeyserController : MonoBehaviour
 	public ParticleSystem inactiveParticleSystem;
 	public ParticleSystem activeParticleSystem;
 	private BoxCollider2D boxCollider2D;
+	private PlayerController playerController;
 
 	void Awake()
 	{
 		boxCollider2D = GetComponent<BoxCollider2D>();
+		playerController = FindObjectOfType<PlayerController>();
 	}
 
 	// Use this for initialization
@@ -72,9 +74,9 @@ public class GeyserController : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.gameObject.tag == Tags.PLAYER)
+		if (col.gameObject.tag == Tags.PLAYER && !playerController.isUnderSuperShield)
 		{
-			col.gameObject.GetComponent<PlayerController>().Damage(false);
+			playerController.Damage(false);
 		}
 	}
 }

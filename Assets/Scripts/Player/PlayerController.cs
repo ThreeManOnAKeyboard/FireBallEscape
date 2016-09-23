@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
 	public GameObject deathExplosion;
 
 	public static bool isInvincible;
+	public bool isUnderSuperShield;
 
 	public Text scoreText;
 	public float scoreRate = 1f;

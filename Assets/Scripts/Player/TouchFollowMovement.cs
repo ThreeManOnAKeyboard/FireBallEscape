@@ -6,7 +6,7 @@ public class TouchFollowMovement : MonoBehaviour
 	private Vector2 speed;
 	public Vector2 minSpeed;
 	public Vector2 maxSpeed;
-	public float noTouchSpeed;
+	public float noTouchSpeedRate;
 
 	public float yOffset;
 
@@ -15,12 +15,13 @@ public class TouchFollowMovement : MonoBehaviour
 
 	private Vector3 touchPosition;
 
-	private bool[] UITouchExited = new bool[2];
+	private bool[] UITouchExited;
 
 	// Use this for initialization
 	void Start()
 	{
 		touchPosition = transform.position;
+		UITouchExited = new bool[2];
 	}
 
 	// Update is called once per frame
@@ -73,29 +74,25 @@ public class TouchFollowMovement : MonoBehaviour
 		else
 		{
 			touchPosition = transform.position;
-			touchPosition.y += noTouchSpeed * Time.deltaTime;
+			touchPosition.y += noTouchSpeedRate * speed.y * Time.deltaTime;
 		}
-		//#elif UNITY_ANDROID
+#elif UNITY_ANDROID
 		int iterationsCount = Mathf.Min(Input.touchCount, 2);
 		if (iterationsCount > 0)
 		{
 			for (int touchIndex = 0; touchIndex < iterationsCount; touchIndex++)
 			{
-				if (Input.GetTouch(touchIndex)
-					.phase == TouchPhase.Began && TouchManager.Instance.IsPointerOverUIObject(touchIndex))
+				if (Input.GetTouch(touchIndex).phase == TouchPhase.Began && TouchManager.Instance.IsPointerOverUIObject(touchIndex))
 				{
 					UITouchExited[touchIndex] = false;
 				}
 
-				if (Input.GetTouch(0).phase == TouchPhase.Ended && UITouchExited[touchIndex] == false)
+				if (Input.GetTouch(touchIndex).phase == TouchPhase.Ended && UITouchExited[touchIndex] == false)
 				{
 					UITouchExited[touchIndex] = true;
 				}
 			}
-		}
 
-		if (iterationsCount > 0)
-		{
 			for (int touchIndex = 0; touchIndex < iterationsCount; touchIndex++)
 			{
 				if (UITouchExited[touchIndex])
@@ -113,24 +110,37 @@ public class TouchFollowMovement : MonoBehaviour
 					touchPosition.y += yOffset;
 					break;
 				}
-				else
+				else if (touchIndex == (iterationsCount - 1))
 				{
-					touchPosition = transform.position;
-					touchPosition.y += noTouchSpeed * Time.deltaTime;
+					MoveUp();
 				}
 			}
 		}
+		else
+		{
+			MoveUp();
+		}
 #endif
-		transform.position = new Vector3
-		(
-			Mathf.Clamp
+		if (!(touchPosition == transform.position))
+		{
+			transform.position = new Vector3
 			(
-				transform.position.x + (touchPosition.x - transform.position.x) * speed.x * Time.deltaTime,
-				CameraController.leftBorder + GameManager.Instance.bordersOffset,
-				CameraController.rightBorder - GameManager.Instance.bordersOffset
-			),
-			transform.position.y + (touchPosition.y - transform.position.y) * speed.y * Time.deltaTime,
-			transform.position.z
-		);
+				Mathf.Clamp
+				(
+					transform.position.x + (touchPosition.x - transform.position.x) * speed.x * Time.deltaTime,
+					CameraController.leftBorder + GameManager.Instance.bordersOffset,
+					CameraController.rightBorder - GameManager.Instance.bordersOffset
+				),
+				transform.position.y + (touchPosition.y - transform.position.y) * speed.y * Time.deltaTime,
+				transform.position.z
+			);
+		}
+	}
+
+	private void MoveUp()
+	{
+		touchPosition = transform.position;
+		touchPosition.y += noTouchSpeedRate * speed.y * Time.deltaTime;
+		transform.position = touchPosition;
 	}
 }

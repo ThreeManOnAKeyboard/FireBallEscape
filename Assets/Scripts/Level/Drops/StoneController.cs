@@ -5,11 +5,13 @@ public class StoneController : MonoBehaviour
 	public Vector2 impulseForce;
 
 	private Rigidbody2D thisRigidBody;
+	private PlayerController playerController;
 	private bool onStoneRain;
 
 	// Use this for initialization
 	void Awake()
 	{
+		playerController = FindObjectOfType<PlayerController>();
 		thisRigidBody = GetComponent<Rigidbody2D>();
 	}
 
@@ -41,11 +43,14 @@ public class StoneController : MonoBehaviour
 		{
 			if (onStoneRain)
 			{
-				col.gameObject.GetComponent<PlayerController>().Damage(false);
+				if (!playerController.isUnderSuperShield)
+				{
+					playerController.Damage(false);
+				}
 			}
 			else
 			{
-				col.gameObject.GetComponent<PlayerController>().Kill();
+				playerController.Kill();
 			}
 		}
 	}

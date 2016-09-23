@@ -4,7 +4,7 @@ using UnityEngine;
 public class ShieldController : MonoBehaviour
 {
 	// Shield parameters
-	public float shieldDuration;
+	public float duration;
 	public float rotationSpeed = 10f;
 	public float lerpSpeed = 1f;
 	public float maxAngle = 45f;
@@ -12,13 +12,19 @@ public class ShieldController : MonoBehaviour
 	public float blinkDuration = 0.5f;
 	public int blinkTimes = 3;
 
+	public SpriteRenderer[] shieldSprites;
+	public float effectDuration;
+
+	public SpriteRenderer collisionSpriteEffect;
+	public float collisionEffectDuration;
+
 	private SpriteRenderer spriteRenderer;
 	private GameObject player;
 	private Vector3 previousPosition;
 
 	private void Awake()
 	{
-		player = GameObject.Find(Tags.PLAYER);
+		player = GameObject.FindWithTag(Tags.PLAYER);
 		transform.parent = player.transform;
 		transform.localPosition = Vector3.zero;
 		spriteRenderer = GetComponent<SpriteRenderer>();
@@ -28,6 +34,7 @@ public class ShieldController : MonoBehaviour
 	private void OnEnable()
 	{
 		previousPosition = player.transform.position;
+		StartCoroutine(DoEffect(true));
 		StartCoroutine(DeactivateShield());
 	}
 
@@ -64,9 +71,14 @@ public class ShieldController : MonoBehaviour
 		previousPosition = player.transform.position;
 	}
 
+	public void OnTriggerEnter2D(Collider2D col)
+	{
+		StartCoroutine(DoCollisionEffect(true));
+	}
+
 	private IEnumerator DeactivateShield()
 	{
-		yield return new WaitForSeconds(shieldDuration - blinkTimes * blinkDuration);
+		yield return new WaitForSeconds(duration - blinkTimes * blinkDuration - effectDuration);
 
 		// Blinking shield before deactivation
 		for (int i = 0; i < blinkTimes; i++)
@@ -78,7 +90,52 @@ public class ShieldController : MonoBehaviour
 			yield return new WaitForSeconds(blinkDuration / 2);
 		}
 
+		StartCoroutine(DoEffect(false));
+
+		yield return new WaitForSeconds(effectDuration);
+
 		gameObject.SetActive(false);
+	}
+
+	private IEnumerator DoEffect(bool onActivation)
+	{
+		float time = 0f;
+		Color color;
+
+		while (time <= effectDuration)
+		{
+			for (int i = 0; i < shieldSprites.Length; i++)
+			{
+				color = shieldSprites[i].color;
+				color.a = onActivation ? (time / effectDuration) : (1f - time / effectDuration);
+				shieldSprites[i].color = color;
+			}
+
+			time += Time.deltaTime;
+			yield return null;
+		}
+	}
+
+	private IEnumerator DoCollisionEffect(bool onEnable)
+	{
+		float time = 0f;
+		float duration = collisionEffectDuration / 2f;
+		Color color;
+
+		while (time <= duration)
+		{
+			color = collisionSpriteEffect.color;
+			color.a = onEnable ? (time / duration) : (1 - time / duration);
+			collisionSpriteEffect.color = color;
+
+			time += Time.deltaTime;
+			yield return null;
+		}
+
+		if (onEnable)
+		{
+			StartCoroutine(DoCollisionEffect(false));
+		}
 	}
 
 	private float ClampAngle(float angle)
