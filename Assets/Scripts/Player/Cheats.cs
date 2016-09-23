@@ -16,7 +16,7 @@ public class Cheats : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.UpArrow))
 		{
-			playerController.Heal(false);
+			playerController.Heal(true);
 		}
 	}
 #endif
