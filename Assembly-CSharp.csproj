@@ -97,6 +97,7 @@
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Player\TouchFollowMovement.cs" />
      <Compile Include="Assets\Scripts\Player\ZigZagMovement.cs" />
+     <Compile Include="Assets\Scripts\Super Abilities\SuperShieldController.cs" />
      <Compile Include="Assets\Scripts\Super Abilities\UltimateController.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
