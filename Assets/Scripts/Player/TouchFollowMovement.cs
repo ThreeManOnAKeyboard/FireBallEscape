@@ -6,6 +6,7 @@ public class TouchFollowMovement : MonoBehaviour
 	private Vector2 speed;
 	public Vector2 minSpeed;
 	public Vector2 maxSpeed;
+	[Range(0.01f, 1f)]
 	public float noTouchSpeedRate;
 
 	public float yOffset;
@@ -15,13 +16,12 @@ public class TouchFollowMovement : MonoBehaviour
 
 	private Vector3 touchPosition;
 
-	private bool[] UITouchExited;
+	private bool[] UITouchExited = { true, true };
 
 	// Use this for initialization
 	void Start()
 	{
 		touchPosition = transform.position;
-		UITouchExited = new bool[2];
 	}
 
 	// Update is called once per frame
@@ -76,7 +76,7 @@ public class TouchFollowMovement : MonoBehaviour
 			touchPosition = transform.position;
 			touchPosition.y += noTouchSpeedRate * speed.y * Time.deltaTime;
 		}
-#elif UNITY_ANDROID
+//#elif UNITY_ANDROID
 		int iterationsCount = Mathf.Min(Input.touchCount, 2);
 		if (iterationsCount > 0)
 		{
@@ -121,7 +121,7 @@ public class TouchFollowMovement : MonoBehaviour
 			MoveUp();
 		}
 #endif
-		if (!(touchPosition == transform.position))
+		if (touchPosition != transform.position)
 		{
 			transform.position = new Vector3
 			(

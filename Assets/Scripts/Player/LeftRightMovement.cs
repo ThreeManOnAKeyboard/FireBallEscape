@@ -62,8 +62,8 @@ public class LeftRightMovement : MonoBehaviour
 		speed = new Vector2
 		(
 			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.x, minSpeed.x, maxSpeed.x),
-				Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y)
-			);
+			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y)
+		);
 
 		// Move sideways
 		transform.position = Vector3.MoveTowards

@@ -1,3 +1,7 @@
+## [1.8.2] - 2016-09-23
+### Fixed
+- Tizen Store - Product list not delivered to new app or new user
+
 ## [1.8.1] - 2016-08-30
 ### Fixed
 - Windows Store - Windows App Compatibility Kit Supported API failure with exposure of Tizen API.
@@ -10,7 +14,6 @@
 ### Fixed
 - Google Play - Promo code redemptions not being detected whilst the App is running.
 - Google Play - Guard against spurious SecurityException (additional details [here](https://github.com/googlesamples/android-play-billing/issues/26).)
-
 
 ## [1.7.0] - 2016-08-07
 ### Added
