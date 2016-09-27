@@ -2,7 +2,7 @@
 
 public class Destroyer : MonoBehaviour
 {
-	public enum DestroyerType
+	public enum DestroyerType : byte
 	{
 		DropsDestroyer,
 		BackgroundDestroyer

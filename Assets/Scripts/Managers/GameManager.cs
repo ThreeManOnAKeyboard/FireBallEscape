@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance { get; private set; }
 
-	public enum ControlType
+	public enum ControlType : byte
 	{
 		FREE,
 		SIDEWAYS,
@@ -15,7 +14,7 @@ public class GameManager : MonoBehaviour
 	}
 	public ControlType controlType;
 
-	public enum PlayerPrefsKeys
+	public enum PlayerPrefsKeys : byte
 	{
 		RestartHappened,
 		HighScore
@@ -24,16 +23,14 @@ public class GameManager : MonoBehaviour
 	// The x axis offset for both left / right borders to limit the player
 	public float bordersOffset;
 
-	// Highscore text elements
-	public Text highScore;
-	public Text score;
-
-	private PlayerController playerController;
-
 	void Awake()
 	{
-		Instance = this;
-		playerController = FindObjectOfType<PlayerController>();
+		if (Instance == null)
+		{
+			Instance = this;
+		}
+
+		// Uncomment this if you want to reset highscores and stuff like that
 		//PlayerPrefs.DeleteAll();
 	}
 
@@ -52,25 +49,6 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 
-	}
-
-	public void ProcessScore()
-	{
-		float currentHighScore = 0;
-
-		if (PlayerPrefs.HasKey(PlayerPrefsKeys.HighScore.ToString()))
-		{
-			currentHighScore = PlayerPrefs.GetFloat(PlayerPrefsKeys.HighScore.ToString());
-		}
-
-		if (playerController.GetScore() > currentHighScore)
-		{
-			PlayerPrefs.SetFloat(PlayerPrefsKeys.HighScore.ToString(), playerController.GetScore());
-			currentHighScore = playerController.GetScore();
-		}
-
-		score.text = ((int)playerController.GetScore()).ToString();
-		highScore.text = ((int)currentHighScore).ToString();
 	}
 
 	public void SetFreeControlType()

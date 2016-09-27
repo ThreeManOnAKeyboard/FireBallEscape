@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,10 +33,6 @@ public class PlayerController : MonoBehaviour
 	public static bool isInvincible;
 	public bool isUnderSuperShield;
 
-	public Text scoreText;
-	public float scoreRate = 1f;
-	private float scoreMultiplier = 1;
-	private float score;
 	private Vector3 previousPosition;
 
 	// Reference to Ability Controller
@@ -78,18 +73,11 @@ public class PlayerController : MonoBehaviour
 		{
 			gameOverScreen.SetActive(true);
 			gameUI.SetActive(false);
-			GameManager.Instance.ProcessScore();
+			ScoreManager.Instance.ProcessScore();
 			Instantiate(deathExplosion).transform.position = transform.position;
 			StopAllCoroutines();
 			Destroy(gameObject);
 		}
-
-		// Update the score
-		score += (transform.position.y - previousPosition.y) * scoreMultiplier * scoreRate;
-		scoreText.text = ((int)score).ToString();
-
-		// Save previous position for next frame calculations
-		previousPosition = transform.position;
 	}
 
 	public void Damage(bool isDrop)
@@ -140,7 +128,6 @@ public class PlayerController : MonoBehaviour
 	public void EnableGameUI()
 	{
 		gameUI.SetActive(true);
-		score = 0;
 	}
 
 	public void EnableControlComponent()
@@ -157,24 +144,6 @@ public class PlayerController : MonoBehaviour
 				GetComponent<ZigZagMovement>().enabled = true;
 				break;
 		}
-	}
-
-	public void AddScore(float scoreAmount)
-	{
-		score += scoreAmount * scoreMultiplier++ * scoreRate;
-	}
-
-	public void ResetMultiplier()
-	{
-		if (!isInvincible)
-		{
-			scoreMultiplier = 1;
-		}
-	}
-
-	public float GetScore()
-	{
-		return score;
 	}
 
 	public void ActivateUltimate(float speed)

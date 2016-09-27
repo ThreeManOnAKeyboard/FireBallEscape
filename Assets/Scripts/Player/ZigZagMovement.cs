@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class ZigZagMovement : MonoBehaviour
 {
-	private enum Direction
+	private enum Direction : byte
 	{
 		Right,
 		Left

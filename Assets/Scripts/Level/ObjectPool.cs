@@ -94,4 +94,16 @@ public class ObjectPool : MonoBehaviour
 	{
 		return pool[gameObject.name];
 	}
+
+	public List<GameObject> GetPooledLists(GameObject[] gameObjects)
+	{
+		List<GameObject> newList = new List<GameObject>();
+
+		for (int i = 0; i < gameObjects.Length; i++)
+		{
+			newList.AddRange(pool[gameObjects[i].name]);
+		}
+
+		return newList;
+	}
 }

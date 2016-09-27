@@ -46,18 +46,22 @@ public class DropController : MonoBehaviour
 		if (collidedObject.tag == Tags.PLAYER)
 		{
 			playerController.Damage(true);
-			playerController.ResetMultiplier();
+
+			if (!PlayerController.isInvincible)
+			{
+				ScoreManager.Instance.ResetMultiplier();
+			}
 		}
 
 		if (collidedObject.tag == Tags.DESTROYER)
 		{
 			postEffectRequired = false;
 		}
-		else if (StrikeController.targetedDrops != null)
+		else if (StrikeController.targets != null)
 		{
 			if (collidedObject.tag == Tags.FIREBALL)
 			{
-				if (StrikeController.targetedDrops.Contains(gameObject))
+				if (StrikeController.targets.Contains(gameObject))
 				{
 					postEffectRequired = true;
 				}
@@ -67,7 +71,7 @@ public class DropController : MonoBehaviour
 				postEffectRequired = true;
 			}
 
-			StrikeController.targetedDrops.Remove(gameObject);
+			StrikeController.targets.Remove(gameObject);
 		}
 		else
 		{
@@ -85,7 +89,7 @@ public class DropController : MonoBehaviour
 		if (collidedObject.tag == Tags.PLAYER)
 		{
 			playerController.Heal(true);
-			playerController.AddScore(scoreAmount);
+			ScoreManager.Instance.AddScore(scoreAmount);
 		}
 	}
 

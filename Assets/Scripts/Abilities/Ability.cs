@@ -5,8 +5,8 @@ public class Ability : ScriptableObject
 {
 	public Sprite abilityIcon;
 	public AudioClip abilitySound;
-	public float neededFuel = 1f;
 	public GameObject abilityPrefab;
+	public int neededFuel = 1;
 
 	public void TriggerAbility()
 	{

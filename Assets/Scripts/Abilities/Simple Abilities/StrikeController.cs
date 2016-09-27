@@ -8,13 +8,13 @@ public class StrikeController : MonoBehaviour
 	public int fireballsAmount = 1;
 	public float cooldown = 1f;
 
-	public static List<GameObject> targetedDrops;
+	public static List<GameObject> targets;
 	private GameObject player;
 
 	// Use this for initialization
 	private void Awake()
 	{
-		targetedDrops = new List<GameObject>();
+		targets = new List<GameObject>();
 		player = GameObject.Find(Tags.PLAYER);
 	}
 

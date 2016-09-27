@@ -8,11 +8,11 @@ public class FireBallController : MonoBehaviour
 
 	public float yScreenRatioLimit;
 
-	public GameObject waterDropPrefab;
+	public GameObject strikeableObject;
 	public GameObject fireBallExplosion;
 
-	// The water drop to follow
-	private GameObject targetedWaterDrop;
+	// The target to follow
+	private GameObject target;
 	private Transform playerTransform;
 	private Animator animator;
 	private Vector3 collisionPoint;
@@ -33,16 +33,16 @@ public class FireBallController : MonoBehaviour
 
 	void OnEnable()
 	{
-		targetedWaterDrop = null;
+		target = null;
 		collisionPoint = Vector3.zero;
 		startPosition = Vector3.zero;
 		time = 0f;
-		StartCoroutine(StrikeWaterDrop());
+		StartCoroutine(StrikeTarget());
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if (targetedWaterDrop != null && col.gameObject == targetedWaterDrop.gameObject)
+		if (target != null && col.gameObject == target.gameObject)
 		{
 			// Explosion effect
 			GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(fireBallExplosion);
@@ -55,65 +55,60 @@ public class FireBallController : MonoBehaviour
 		}
 	}
 
-	private GameObject GetWaterDrop()
+	private GameObject GetTarget()
 	{
-		List<GameObject> waterDrops = ObjectPool.Instance.GetPooledList(waterDropPrefab);
+		List<GameObject> targetOptions = ObjectPool.Instance.GetPooledList(strikeableObject);
 
-		GameObject nearestWaterDrop = null;
+		GameObject nearestTarget = null;
 
-		foreach (GameObject waterDrop in waterDrops)
+		foreach (GameObject posibleTarget in targetOptions)
 		{
-			// Check if water drop is active in hierarchy and it is enough far away from player
-			if (waterDrop.activeInHierarchy && Camera.main.WorldToScreenPoint(waterDrop.transform.position).y / Screen.height > yScreenRatioLimit && !StrikeController.targetedDrops.Contains(waterDrop))
+			// Check if target is active in hierarchy and it is enough far away from player
+			if (posibleTarget.activeInHierarchy && Camera.main.WorldToScreenPoint(posibleTarget.transform.position).y / Screen.height > yScreenRatioLimit && !StrikeController.targets.Contains(posibleTarget))
 			{
-				if (nearestWaterDrop == null)
+				if ((nearestTarget == null) || posibleTarget.transform.position.y < nearestTarget.transform.position.y)
 				{
-					nearestWaterDrop = waterDrop;
-				}
-				else if (waterDrop.transform.position.y < nearestWaterDrop.transform.position.y)
-				{
-					nearestWaterDrop = waterDrop;
+					nearestTarget = posibleTarget;
 				}
 			}
 		}
 
-		if (nearestWaterDrop != null)
+		if (nearestTarget != null)
 		{
-			DropController dropController = nearestWaterDrop.gameObject.GetComponent<DropController>();
+			DropController dropController = nearestTarget.gameObject.GetComponent<DropController>();
 
 			collisionPoint = new Vector3
 			(
-				nearestWaterDrop.transform.position.x,
-				nearestWaterDrop.transform.position.y - dropController.fallSpeed * collisionTime,
-				nearestWaterDrop.transform.position.z
+				nearestTarget.transform.position.x,
+				nearestTarget.transform.position.y - dropController.fallSpeed * collisionTime,
+				nearestTarget.transform.position.z
 			);
 
 			startPosition = transform.position;
 
+			StrikeController.targets.Add(nearestTarget.gameObject);
+
 			time = 0f;
-
-			StrikeController.targetedDrops.Add(nearestWaterDrop.gameObject);
-
-			transform.localScale = new Vector3
-			(
-				(Random.Range(0, 2) == 0 ? 1 : -1) * transform.localScale.x,
-				transform.localScale.y,
-				transform.localScale.z
-			);
 		}
 
-		return nearestWaterDrop;
+		transform.localScale = new Vector3
+		(
+			(Random.Range(0, 2) == 0 ? 1 : -1) * transform.localScale.x,
+			transform.localScale.y,
+			transform.localScale.z
+		);
+
+		return nearestTarget;
 	}
 
-	private IEnumerator StrikeWaterDrop()
+	private IEnumerator StrikeTarget()
 	{
 		while (true)
 		{
-			if (targetedWaterDrop == null || !targetedWaterDrop.gameObject.activeInHierarchy)
+			if (target == null || !target.gameObject.activeInHierarchy)
 			{
+				target = GetTarget();
 				animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, -1, 0f);
-
-				targetedWaterDrop = GetWaterDrop();
 
 				if (playerTransform == null)
 				{

@@ -3,7 +3,7 @@
 [CreateAssetMenu(menuName = "Super Ability")]
 public class SuperAbility : ScriptableObject
 {
-	public enum Combination
+	public enum Combination : byte
 	{
 		Empty,
 		Fuel,

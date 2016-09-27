@@ -34,6 +34,7 @@ public class ShieldController : MonoBehaviour
 	private void OnEnable()
 	{
 		previousPosition = player.transform.position;
+		transform.rotation = Quaternion.identity;
 		StartCoroutine(DoEffect(true));
 		StartCoroutine(DeactivateShield());
 	}
