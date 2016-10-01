@@ -27,7 +27,7 @@ public class ZigZagMovement : MonoBehaviour
 			return;
 		}
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
 		if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
 #elif UNITY_ANDROID
 		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !TouchManager.Instance.IsPointerOverUIObject(0))

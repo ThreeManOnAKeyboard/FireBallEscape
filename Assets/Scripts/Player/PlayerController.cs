@@ -78,6 +78,10 @@ public class PlayerController : MonoBehaviour
 			StopAllCoroutines();
 			Destroy(gameObject);
 		}
+		else if (health > maxHealth)
+		{
+			health = maxHealth;
+		}
 	}
 
 	public void Damage(bool isDrop)
