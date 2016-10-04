@@ -64,16 +64,12 @@
      <Compile Include="Assets\Scripts\3rdParty\TouchManager.cs" />
      <Compile Include="Assets\Scripts\Abilities\AbilitiesController.cs" />
      <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
-     <Compile Include="Assets\Scripts\Abilities\Simple Abilities\FireBallController.cs" />
-     <Compile Include="Assets\Scripts\Abilities\Simple Abilities\FuelRainController.cs" />
-     <Compile Include="Assets\Scripts\Abilities\Simple Abilities\ShieldController.cs" />
-     <Compile Include="Assets\Scripts\Abilities\Simple Abilities\StrikeController.cs" />
-     <Compile Include="Assets\Scripts\Abilities\Simple Abilities\WaveBlastController.cs" />
-     <Compile Include="Assets\Scripts\Abilities\Super Abilities\SuperFireBallController.cs" />
-     <Compile Include="Assets\Scripts\Abilities\Super Abilities\SuperShieldController.cs" />
-     <Compile Include="Assets\Scripts\Abilities\Super Abilities\SuperStrikeController.cs" />
-     <Compile Include="Assets\Scripts\Abilities\Super Abilities\UltimateController.cs" />
+     <Compile Include="Assets\Scripts\Abilities\FireBallController.cs" />
+     <Compile Include="Assets\Scripts\Abilities\FuelRainController.cs" />
+     <Compile Include="Assets\Scripts\Abilities\ShieldController.cs" />
+     <Compile Include="Assets\Scripts\Abilities\StrikeController.cs" />
      <Compile Include="Assets\Scripts\Abilities\SuperAbility.cs" />
+     <Compile Include="Assets\Scripts\Abilities\WaveBlastController.cs" />
      <Compile Include="Assets\Scripts\Level\BackgroundSpawner.cs" />
      <Compile Include="Assets\Scripts\Level\CameraController.cs" />
      <Compile Include="Assets\Scripts\Level\CollisionEffectController.cs" />
@@ -96,12 +92,13 @@
      <Compile Include="Assets\Scripts\Managers\FacebookManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\Purchaser.cs" />
-     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\Player\Cheats.cs" />
      <Compile Include="Assets\Scripts\Player\LeftRightMovement.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Player\TouchFollowMovement.cs" />
      <Compile Include="Assets\Scripts\Player\ZigZagMovement.cs" />
+     <Compile Include="Assets\Scripts\Super Abilities\SuperShieldController.cs" />
+     <Compile Include="Assets\Scripts\Super Abilities\UltimateController.cs" />
      <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderRGB.shader" />
@@ -194,31 +191,31 @@
  <HintPath>D:/Soft/Unity3D/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="Facebook.Unity">
- <HintPath>F:/Unitities/FireBallEscape/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
+ <HintPath>D:/UnityProjects/FireBallEscape/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
  </Reference>
  <Reference Include="Facebook.Unity.IOS">
- <HintPath>F:/Unitities/FireBallEscape/Assets/FacebookSDK/Plugins/iOS/Facebook.Unity.IOS.dll</HintPath>
+ <HintPath>D:/UnityProjects/FireBallEscape/Assets/FacebookSDK/Plugins/iOS/Facebook.Unity.IOS.dll</HintPath>
  </Reference>
  <Reference Include="Common">
- <HintPath>F:/Unitities/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Common.dll</HintPath>
+ <HintPath>D:/UnityProjects/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Common.dll</HintPath>
  </Reference>
  <Reference Include="Editor">
- <HintPath>F:/Unitities/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
+ <HintPath>D:/UnityProjects/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
  </Reference>
  <Reference Include="Security">
- <HintPath>F:/Unitities/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Security.dll</HintPath>
+ <HintPath>D:/UnityProjects/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Security.dll</HintPath>
  </Reference>
  <Reference Include="Stores">
- <HintPath>F:/Unitities/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Stores.dll</HintPath>
+ <HintPath>D:/UnityProjects/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Stores.dll</HintPath>
  </Reference>
  <Reference Include="Apple">
- <HintPath>F:/Unitities/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
+ <HintPath>D:/UnityProjects/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
  </Reference>
  <Reference Include="Tizen">
- <HintPath>F:/Unitities/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
+ <HintPath>D:/UnityProjects/FireBallEscape/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
  </Reference>
  <Reference Include="winrt">
- <HintPath>F:/Unitities/FireBallEscape/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
+ <HintPath>D:/UnityProjects/FireBallEscape/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
