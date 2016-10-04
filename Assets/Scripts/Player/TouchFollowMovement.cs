@@ -3,9 +3,13 @@ using UnityEngine.EventSystems;
 
 public class TouchFollowMovement : MonoBehaviour
 {
+	// For test purposes in case if a mobile device is connected to Unity via Unity Remote 5
+	public bool isUnityRemote;
+
 	private Vector2 speed;
 	public Vector2 minSpeed;
 	public Vector2 maxSpeed;
+	public float xAxisLerpSpeed;
 	[Range(0.01f, 1f)]
 	public float noTouchSpeedRate;
 
@@ -15,6 +19,8 @@ public class TouchFollowMovement : MonoBehaviour
 	public float yTouchLimitRatio;
 
 	private Vector3 touchPosition;
+
+	private bool facingRight;
 
 	private bool[] UITouchExited = { true, true };
 
@@ -38,13 +44,38 @@ public class TouchFollowMovement : MonoBehaviour
 			return;
 		}
 
-		speed = new Vector2
-		(
-			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.x, minSpeed.x, maxSpeed.x),
-			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y)
-		);
+		speed.y = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y);
 
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
+		if (isUnityRemote)
+		{
+			ProcessMobileInput();
+		}
+		else
+		{
+			ProcessComputerInput();
+		}
+#elif UNITY_ANDROID
+		ProcessMobileInput();
+#endif
+		if (touchPosition != transform.position)
+		{
+			transform.position = new Vector3
+			(
+				Mathf.Clamp
+				(
+					Mathf.MoveTowards(transform.position.x, touchPosition.x, speed.x * Time.deltaTime),
+					CameraController.leftBorder + GameManager.Instance.bordersOffset,
+					CameraController.rightBorder - GameManager.Instance.bordersOffset
+				),
+				Mathf.Lerp(transform.position.y, touchPosition.y, speed.y * Time.deltaTime),
+				transform.position.z
+			);
+		}
+	}
+
+	private void ProcessComputerInput()
+	{
 		// If player held the mouse button on UI element then don't let the character move
 		if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
 		{
@@ -52,12 +83,12 @@ public class TouchFollowMovement : MonoBehaviour
 		}
 
 		// If the mouse button is released after pressing the UI element then let the character move
-		if (Input.GetMouseButtonUp(0) && UITouchExited[0] == false)
+		if (Input.GetMouseButtonUp(0) && !UITouchExited[0])
 		{
 			UITouchExited[0] = true;
 		}
 
-		if (Input.GetMouseButton(0) && UITouchExited[0] == true)
+		if (Input.GetMouseButton(0) && UITouchExited[0])
 		{
 			touchPosition = Camera.main.ScreenToWorldPoint
 			(
@@ -69,14 +100,34 @@ public class TouchFollowMovement : MonoBehaviour
 				)
 			);
 
+			if ((transform.position.x < touchPosition.x && !facingRight) || (transform.position.x > touchPosition.x && facingRight))
+			{
+				speed.x = 0f;
+				facingRight = !facingRight;
+			}
+
+			speed.x = Mathf.Lerp
+			(
+				speed.x,
+				Mathf.Clamp
+				(
+					PlayerController.health / PlayerController.maximumHealth * maxSpeed.x,
+					minSpeed.x,
+					maxSpeed.x
+				),
+				xAxisLerpSpeed * Time.deltaTime
+			);
+
 			touchPosition.y += yOffset;
 		}
 		else
 		{
-			touchPosition = transform.position;
-			touchPosition.y += noTouchSpeedRate * speed.y * Time.deltaTime;
+			MoveUp();
 		}
-//#elif UNITY_ANDROID
+	}
+
+	private void ProcessMobileInput()
+	{
 		int iterationsCount = Mathf.Min(Input.touchCount, 2);
 		if (iterationsCount > 0)
 		{
@@ -87,7 +138,7 @@ public class TouchFollowMovement : MonoBehaviour
 					UITouchExited[touchIndex] = false;
 				}
 
-				if (Input.GetTouch(touchIndex).phase == TouchPhase.Ended && UITouchExited[touchIndex] == false)
+				if (Input.GetTouch(touchIndex).phase == TouchPhase.Ended && !UITouchExited[touchIndex])
 				{
 					UITouchExited[touchIndex] = true;
 				}
@@ -107,6 +158,24 @@ public class TouchFollowMovement : MonoBehaviour
 						)
 					);
 
+					if ((transform.position.x < touchPosition.x && !facingRight) || (transform.position.x > touchPosition.x && facingRight))
+					{
+						speed.x = 0f;
+						facingRight = !facingRight;
+					}
+
+					speed.x = Mathf.Lerp
+					(
+						speed.x,
+						Mathf.Clamp
+						(
+							PlayerController.health / PlayerController.maximumHealth * maxSpeed.x,
+							minSpeed.x,
+							maxSpeed.x
+						),
+						xAxisLerpSpeed * Time.deltaTime
+					);
+
 					touchPosition.y += yOffset;
 					break;
 				}
@@ -120,25 +189,11 @@ public class TouchFollowMovement : MonoBehaviour
 		{
 			MoveUp();
 		}
-#endif
-		if (touchPosition != transform.position)
-		{
-			transform.position = new Vector3
-			(
-				Mathf.Clamp
-				(
-					transform.position.x + (touchPosition.x - transform.position.x) * speed.x * Time.deltaTime,
-					CameraController.leftBorder + GameManager.Instance.bordersOffset,
-					CameraController.rightBorder - GameManager.Instance.bordersOffset
-				),
-				transform.position.y + (touchPosition.y - transform.position.y) * speed.y * Time.deltaTime,
-				transform.position.z
-			);
-		}
 	}
 
 	private void MoveUp()
 	{
+		speed.x = 0f;
 		touchPosition = transform.position;
 		touchPosition.y += noTouchSpeedRate * speed.y * Time.deltaTime;
 		transform.position = touchPosition;

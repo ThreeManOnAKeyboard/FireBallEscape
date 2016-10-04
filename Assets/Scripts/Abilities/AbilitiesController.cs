@@ -67,7 +67,7 @@ public class AbilitiesController : MonoBehaviour
 		}
 		catch (System.Exception)
 		{
-			StartCoroutine(TriggerRefuse());
+			//StartCoroutine(TriggerRefuse());
 		}
 	}
 

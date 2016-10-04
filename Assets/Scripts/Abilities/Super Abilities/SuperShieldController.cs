@@ -6,6 +6,9 @@ public class SuperShieldController : MonoBehaviour
 	public float duration;
 	public float effectDuration;
 	public float collisionEffectDuration;
+	[Range(0.05f, 1f)]
+	public float blinkDuration = 0.5f;
+	public int blinkTimes = 3;
 
 	private PlayerController playerController;
 

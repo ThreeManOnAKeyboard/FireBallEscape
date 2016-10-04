@@ -3,6 +3,8 @@
 public class StoneController : MonoBehaviour
 {
 	public Vector2 impulseForce;
+	public GameObject explosionEffect;
+	private Transform[] stonePieces;
 
 	private Rigidbody2D thisRigidBody;
 	private PlayerController playerController;
@@ -13,6 +15,7 @@ public class StoneController : MonoBehaviour
 	{
 		playerController = FindObjectOfType<PlayerController>();
 		thisRigidBody = GetComponent<Rigidbody2D>();
+		stonePieces = GetComponentsInChildren<Transform>(true);
 	}
 
 	void OnEnable()
@@ -52,6 +55,15 @@ public class StoneController : MonoBehaviour
 			{
 				playerController.Kill();
 			}
+
+			for (int i = 0; i < stonePieces.Length; i++)
+			{
+				stonePieces[i].gameObject.SetActive(true);
+			}
+
+			transform.DetachChildren();
+			explosionEffect.SetActive(true);
+			gameObject.SetActive(false);
 		}
 	}
 }
