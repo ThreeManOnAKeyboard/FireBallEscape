@@ -62,7 +62,7 @@ public class StoneController : MonoBehaviour
 			}
 
 			transform.DetachChildren();
-			explosionEffect.SetActive(true);
+			//explosionEffect.SetActive(true);
 			gameObject.SetActive(false);
 		}
 	}
