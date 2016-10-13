@@ -9,13 +9,11 @@ public class StrikeController : MonoBehaviour
 	public float cooldown = 1f;
 
 	public static List<GameObject> targets;
-	private GameObject player;
 
 	// Use this for initialization
 	private void Awake()
 	{
 		targets = new List<GameObject>();
-		player = GameObject.Find(Tags.PLAYER);
 	}
 
 	private void OnEnable()
@@ -29,12 +27,6 @@ public class StrikeController : MonoBehaviour
 		{
 			// Get instance
 			GameObject fireBallInstance = ObjectPool.Instance.GetPooledObject(fireBall);
-
-			// Set position
-			if (player != null)
-			{
-				fireBallInstance.transform.position = player.transform.position;
-			}
 
 			// Activate fireball
 			fireBallInstance.SetActive(true);

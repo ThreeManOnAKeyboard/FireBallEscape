@@ -121,6 +121,10 @@ public class FireBallController : MonoBehaviour
 			}
 			else
 			{
+				//if (Vector3.Distance())
+				//{
+
+				//}
 				transform.position = new Vector3
 				(
 					startPosition.x + (collisionPoint.x - startPosition.x) * (time / collisionTime),
