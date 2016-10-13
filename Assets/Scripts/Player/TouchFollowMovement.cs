@@ -47,14 +47,14 @@ public class TouchFollowMovement : MonoBehaviour
 		speed.y = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y);
 
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-		if (isUnityRemote)
-		{
-			ProcessMobileInput();
-		}
-		else
-		{
+		//if (isUnityRemote)
+		//{
+		//	ProcessMobileInput();
+		//}
+		//else
+		//{
 			ProcessComputerInput();
-		}
+		//}
 #elif UNITY_ANDROID
 		ProcessMobileInput();
 #endif
