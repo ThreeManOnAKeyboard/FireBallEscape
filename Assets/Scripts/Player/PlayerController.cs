@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,8 +16,6 @@ public class PlayerController : MonoBehaviour
 	public float minHealPercent = 0;
 	[Range(0, 1)]
 	public float maxHealPercent = 0;
-
-	public float healthDrainSpeed;
 
 	// The maximum speed when player is invincible
 	private float invincibleSpeed;
@@ -55,11 +54,7 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (!isInvincible)
-		{
-			health -= healthDrainSpeed * Time.deltaTime;
-		}
-		else
+		if (isInvincible)
 		{
 			transform.position = new Vector3
 			(
@@ -163,5 +158,22 @@ public class PlayerController : MonoBehaviour
 		isInvincible = false;
 		defaultParticleSystem.SetActive(true);
 		maxPowerParticleSystem.SetActive(false);
+	}
+
+	public void StartHealthDrain(float duration, float drainSpeed)
+	{
+		// Check if coroutine need to be extended
+		StartCoroutine(DrainHealth(duration, drainSpeed));
+	}
+
+	private IEnumerator DrainHealth(float duration, float drainSpeed)
+	{
+		while (duration > 0f)
+		{
+			health -= drainSpeed * Time.deltaTime;
+
+			duration -= Time.deltaTime;
+			yield return null;
+		}
 	}
 }

@@ -41,47 +41,7 @@ public class DropController : MonoBehaviour
 
 	public void OnWaterDrop()
 	{
-		bool postEffectRequired = false;
 
-		if (collidedObject.tag == Tags.PLAYER)
-		{
-			playerController.Damage(true);
-
-			if (!PlayerController.isInvincible)
-			{
-				ScoreManager.Instance.ResetMultiplier();
-			}
-		}
-
-		if (collidedObject.tag == Tags.DESTROYER)
-		{
-			postEffectRequired = false;
-		}
-		else if (StrikeController.targets != null)
-		{
-			if (collidedObject.tag == Tags.FIREBALL)
-			{
-				if (StrikeController.targets.Contains(gameObject))
-				{
-					postEffectRequired = true;
-				}
-			}
-			else
-			{
-				postEffectRequired = true;
-			}
-
-			StrikeController.targets.Remove(gameObject);
-		}
-		else
-		{
-			postEffectRequired = true;
-		}
-
-		if (postEffectRequired)
-		{
-			DoPostEffect();
-		}
 	}
 
 	public void OnFuelDrop()
@@ -90,18 +50,6 @@ public class DropController : MonoBehaviour
 		{
 			playerController.Heal(true);
 			ScoreManager.Instance.AddScore(scoreAmount);
-		}
-	}
-
-	public void OnSidesFlameDrop()
-	{
-		if (collidedObject.tag == Tags.PLAYER)
-		{
-			playerController.Kill();
-		}
-		else if (collidedObject.tag == Tags.MAXPOWERWAVE)
-		{
-			DoPostEffect();
 		}
 	}
 
