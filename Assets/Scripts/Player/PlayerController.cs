@@ -17,9 +17,6 @@ public class PlayerController : MonoBehaviour
 	[Range(0, 1)]
 	public float maxHealPercent = 0;
 
-	// The maximum speed when player is invincible
-	private float invincibleSpeed;
-
 	// Some UI gameobjects
 	public GameObject gameUI;
 	public GameObject gameOverScreen;
@@ -34,13 +31,19 @@ public class PlayerController : MonoBehaviour
 
 	private Vector3 previousPosition;
 
-	// Reference to Ability Controller
+	// The maximum speed when player is invincible
+	private float invincibleSpeed;
+
+	public static float targetHealth;
+
+	// Reference to Ability Controller script
 	private AbilitiesController abilitiesController;
 
 	void Awake()
 	{
 		health = startHealth;
 		maximumHealth = maxHealth;
+		targetHealth = maximumHealth;
 		isInvincible = false;
 	}
 
@@ -70,7 +73,6 @@ public class PlayerController : MonoBehaviour
 			gameUI.SetActive(false);
 			ScoreManager.Instance.ProcessScore();
 			Instantiate(deathExplosion).transform.position = transform.position;
-			StopAllCoroutines();
 			Destroy(gameObject);
 		}
 		else if (health > maxHealth)
@@ -79,14 +81,20 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	#region Health related methods
 	public void Damage(bool isDrop)
 	{
+		#region Calculus example
+		////
 		// health = 5
 		// maxHealth = 10
 		// minDamagePercent = 0.05
 		// maxDamagePercent = 0.25
 		//						0.05 < 0.125 < 0.25
 		// health = 5 - (10 * Clamp(0.5 * 0.25, 0.05, 0.25)) = 5 - (10 * 0.125) = 4.75
+		////
+		#endregion
+
 		if (!isInvincible)
 		{
 			health -= maxHealth * Mathf.Clamp((health / maxHealth) * maxDamagePercent, minDamagePercent, maxDamagePercent);
@@ -102,7 +110,14 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!isInvincible)
 		{
-			health += maxHealth * Mathf.Clamp((1 - health / maxHealth) * maxHealPercent, minHealPercent, maxHealPercent);
+			if (targetHealth != maximumHealth)
+			{
+				targetHealth = maximumHealth;
+			}
+			else
+			{
+				health += maxHealth * Mathf.Clamp((1 - health / maxHealth) * maxHealPercent, minHealPercent, maxHealPercent);
+			}
 
 			if (isDrop)
 			{
@@ -118,7 +133,9 @@ public class PlayerController : MonoBehaviour
 			health = 0;
 		}
 	}
+	#endregion
 
+	#region On game start actions
 	public void EnableApplyRootMotion()
 	{
 		GetComponent<Animator>().applyRootMotion = true;
@@ -144,7 +161,9 @@ public class PlayerController : MonoBehaviour
 				break;
 		}
 	}
+	#endregion
 
+	#region Ultimate effect
 	public void ActivateUltimate(float speed)
 	{
 		isInvincible = true;
@@ -159,21 +178,37 @@ public class PlayerController : MonoBehaviour
 		defaultParticleSystem.SetActive(true);
 		maxPowerParticleSystem.SetActive(false);
 	}
+	#endregion
 
-	public void StartHealthDrain(float duration, float drainSpeed)
+	#region Poison drop effect
+	public void StartHealthDrain(float amount, float drainSpeed)
 	{
-		// Check if coroutine need to be extended
-		StartCoroutine(DrainHealth(duration, drainSpeed));
+		if (targetHealth != maximumHealth)
+		{
+			targetHealth = targetHealth - amount;
+		}
+		else
+		{
+			targetHealth = health - amount;
+			StartCoroutine(DrainHealth(drainSpeed));
+		}
+
+		if (targetHealth < 0f)
+		{
+			targetHealth = 0f;
+		}
 	}
 
-	private IEnumerator DrainHealth(float duration, float drainSpeed)
+	private IEnumerator DrainHealth(float drainSpeed)
 	{
-		while (duration > 0f)
+		while (health > targetHealth)
 		{
 			health -= drainSpeed * Time.deltaTime;
 
-			duration -= Time.deltaTime;
 			yield return null;
 		}
+
+		targetHealth = maximumHealth;
 	}
+	#endregion
 }

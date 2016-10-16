@@ -67,6 +67,12 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Facebook.Unity">
       <HintPath>Assets\FacebookSDK\Plugins\Facebook.Unity.dll</HintPath>
     </Reference>
@@ -182,7 +188,6 @@
     <Compile Include="Assets\Scripts\Level\CollisionEffectController.cs" />
     <Compile Include="Assets\Scripts\Level\Destroyer.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\Drop.cs" />
-    <Compile Include="Assets\Scripts\Level\Drops\DropController.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\DropsHolder.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\FuelDrop.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\GeyserController.cs" />

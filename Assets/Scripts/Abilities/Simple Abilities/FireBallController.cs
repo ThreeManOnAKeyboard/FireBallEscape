@@ -75,12 +75,12 @@ public class FireBallController : MonoBehaviour
 
 		if (nearestTarget != null)
 		{
-			DropController dropController = nearestTarget.gameObject.GetComponent<DropController>();
+			Drop targetDrop = nearestTarget.gameObject.GetComponent<Drop>();
 
 			collisionPoint = new Vector3
 			(
 				nearestTarget.transform.position.x,
-				nearestTarget.transform.position.y - dropController.fallSpeed * collisionTime,
+				nearestTarget.transform.position.y - targetDrop.fallSpeed * collisionTime,
 				nearestTarget.transform.position.z
 			);
 
