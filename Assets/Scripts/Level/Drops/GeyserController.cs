@@ -74,7 +74,7 @@ public class GeyserController : MonoBehaviour
 		}
 	}
 
-	public void OnTriggerEnter2D(BoxCollider2D col)
+	public void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.gameObject.tag == Tags.PLAYER && !playerController.isUnderSuperShield)
 		{
