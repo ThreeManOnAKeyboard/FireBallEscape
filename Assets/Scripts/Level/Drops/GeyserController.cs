@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GeyserController : MonoBehaviour
 {
+	public bool isHealing;
+
 	public float ejectDuration;
 	public float ejectCooldown;
 	public float angleRange = 40f;
@@ -10,12 +12,12 @@ public class GeyserController : MonoBehaviour
 
 	public ParticleSystem inactiveParticleSystem;
 	public ParticleSystem activeParticleSystem;
-	private BoxCollider2D boxCollider2D;
+	private BoxCollider2D thisCollider2D;
 	private PlayerController playerController;
 
 	void Awake()
 	{
-		boxCollider2D = GetComponent<BoxCollider2D>();
+		thisCollider2D = GetComponent<BoxCollider2D>();
 		playerController = FindObjectOfType<PlayerController>();
 	}
 
@@ -49,7 +51,7 @@ public class GeyserController : MonoBehaviour
 	{
 		activeParticleSystem.Stop();
 		inactiveParticleSystem.Play();
-		boxCollider2D.enabled = false;
+		thisCollider2D.enabled = false;
 	}
 
 	IEnumerator Eject()
@@ -59,24 +61,31 @@ public class GeyserController : MonoBehaviour
 			// Eject the geyser
 			activeParticleSystem.Play();
 			inactiveParticleSystem.Stop();
-			boxCollider2D.enabled = true;
+			thisCollider2D.enabled = true;
 
 			yield return new WaitForSeconds(ejectDuration);
 
 			// Stop ejection
 			activeParticleSystem.Stop();
 			inactiveParticleSystem.Play();
-			boxCollider2D.enabled = false;
+			thisCollider2D.enabled = false;
 
 			yield return new WaitForSeconds(ejectCooldown);
 		}
 	}
 
-	public void OnTriggerEnter2D(Collider2D col)
+	public void OnTriggerEnter2D(BoxCollider2D col)
 	{
 		if (col.gameObject.tag == Tags.PLAYER && !playerController.isUnderSuperShield)
 		{
-			playerController.Damage(false);
+			if (isHealing)
+			{
+				playerController.FullHeal();
+			}
+			else
+			{
+				playerController.Damage(false);
+			}
 		}
 	}
 }

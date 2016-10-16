@@ -126,6 +126,12 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	public void FullHeal()
+	{
+		targetHealth = maximumHealth;
+		health = maximumHealth;
+	}
+
 	public void Kill()
 	{
 		if (!isInvincible)
