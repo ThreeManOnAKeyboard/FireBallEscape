@@ -68,14 +68,14 @@ public class ScoreManager : MonoBehaviour
 	{
 		float currentHighScore = 0;
 
-		if (PlayerPrefs.HasKey(GameManager.PlayerPrefsKeys.HighScore.ToString()))
+		if (PlayerPrefs.HasKey(PlayerPrefsKeys.HIGHSCORE))
 		{
-			currentHighScore = PlayerPrefs.GetFloat(GameManager.PlayerPrefsKeys.HighScore.ToString());
+			currentHighScore = PlayerPrefs.GetFloat(PlayerPrefsKeys.HIGHSCORE);
 		}
 
 		if (score > currentHighScore)
 		{
-			PlayerPrefs.SetFloat(GameManager.PlayerPrefsKeys.HighScore.ToString(), score);
+			PlayerPrefs.SetFloat(PlayerPrefsKeys.HIGHSCORE, score);
 			currentHighScore = score;
 		}
 

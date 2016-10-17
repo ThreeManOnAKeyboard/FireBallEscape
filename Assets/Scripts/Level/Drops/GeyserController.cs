@@ -84,7 +84,7 @@ public class GeyserController : MonoBehaviour
 			}
 			else
 			{
-				playerController.Damage(false);
+				playerController.Damage();
 			}
 		}
 	}

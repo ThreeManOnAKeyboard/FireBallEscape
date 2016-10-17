@@ -6,7 +6,8 @@ public class FuelDrop : Drop
 	{
 		if (col.tag == Tags.PLAYER)
 		{
-			playerController.Heal(true);
+			playerController.Heal();
+			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Fuel);
 			ScoreManager.Instance.AddScore(scoreAmount);
 		}
 

@@ -3,13 +3,13 @@
 [CreateAssetMenu(menuName = "Ability")]
 public class Ability : ScriptableObject
 {
-	public Sprite abilityIcon;
-	public AudioClip abilitySound;
-	public GameObject abilityPrefab;
-	public int neededFuel = 1;
+	public Enumerations.DropType[] combination = new Enumerations.DropType[3];
+	public Sprite icon;
+	public AudioClip soundEffect;
+	public GameObject prefab;
 
 	public void TriggerAbility()
 	{
-		ObjectPool.Instance.GetPooledObject(abilityPrefab).SetActive(true);
+		ObjectPool.Instance.GetPooledObject(prefab).SetActive(true);
 	}
 }

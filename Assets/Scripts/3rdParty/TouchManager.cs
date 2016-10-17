@@ -9,12 +9,10 @@ public class TouchManager : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
-		if (Instance == null)
-		{
-			Instance = this;
-		}
+		Instance = this;
 	}
 
+	// Verifies if touch is pointed over UI an object
 	public bool IsPointerOverUIObject(int touchIndex)
 	{
 		PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);

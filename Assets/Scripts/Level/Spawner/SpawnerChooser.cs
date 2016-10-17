@@ -8,13 +8,13 @@ public class SpawnerChooser : MonoBehaviour
 		// Activate respective spawner depending on choosen control type
 		switch (GameManager.Instance.controlType)
 		{
-			case GameManager.ControlType.FREE:
+			case Enumerations.ControlType.Free:
 				GetComponent<FreeControlSpawner>().enabled = true;
 				break;
-			case GameManager.ControlType.SIDEWAYS:
+			case Enumerations.ControlType.Sideways:
 				GetComponent<LeftRightSpawner>().enabled = true;
 				break;
-			case GameManager.ControlType.ZIGZAG:
+			case Enumerations.ControlType.ZigZag:
 				GetComponent<ZigZagSpawner>().enabled = true;
 				break;
 		}

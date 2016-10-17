@@ -6,7 +6,8 @@ public class WaterDrop : Drop
 	{
 		if (col.tag == Tags.PLAYER)
 		{
-			playerController.Damage(true);
+			playerController.Damage();
+			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Water);
 
 			if (!PlayerController.isInvincible)
 			{

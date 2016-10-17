@@ -6,19 +6,7 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance { get; private set; }
 
-	public enum ControlType : byte
-	{
-		FREE,
-		SIDEWAYS,
-		ZIGZAG
-	}
-	public ControlType controlType;
-
-	public enum PlayerPrefsKeys : byte
-	{
-		RestartHappened,
-		HighScore
-	}
+	public Enumerations.ControlType controlType;
 
 	// The x axis offset for both left / right borders to limit the player
 	public float bordersOffset;
@@ -38,9 +26,9 @@ public class GameManager : MonoBehaviour
 	void Start()
 	{
 		// If the game was restarted then simulate play button press to get into "choose control type screen"
-		if (PlayerPrefs.HasKey(PlayerPrefsKeys.RestartHappened.ToString()) && PlayerPrefs.GetInt(PlayerPrefsKeys.RestartHappened.ToString()) == 1)
+		if (PlayerPrefs.HasKey(PlayerPrefsKeys.RESTART_HAPPENED) && PlayerPrefs.GetInt(PlayerPrefsKeys.RESTART_HAPPENED) == 1)
 		{
-			PlayerPrefs.SetInt(PlayerPrefsKeys.RestartHappened.ToString(), 0);
+			PlayerPrefs.SetInt(PlayerPrefsKeys.RESTART_HAPPENED, 0);
 			ExecuteEvents.Execute(GameObject.Find("StartButton"), new PointerEventData(EventSystem.current), ExecuteEvents.submitHandler);
 		}
 	}
@@ -53,17 +41,17 @@ public class GameManager : MonoBehaviour
 
 	public void SetFreeControlType()
 	{
-		controlType = ControlType.FREE;
+		controlType = Enumerations.ControlType.Free;
 	}
 
 	public void SetSidewaysControlType()
 	{
-		controlType = ControlType.SIDEWAYS;
+		controlType = Enumerations.ControlType.Sideways;
 	}
 
 	public void SetZigZagControlType()
 	{
-		controlType = ControlType.ZIGZAG;
+		controlType = Enumerations.ControlType.ZigZag;
 	}
 
 	public void PauseGame()
@@ -83,7 +71,7 @@ public class GameManager : MonoBehaviour
 
 	public void Restart()
 	{
-		PlayerPrefs.SetInt(PlayerPrefsKeys.RestartHappened.ToString(), 1);
+		PlayerPrefs.SetInt(PlayerPrefsKeys.RESTART_HAPPENED, 1);
 		GoToMenu();
 	}
 

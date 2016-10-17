@@ -2,25 +2,21 @@
 
 public class Destroyer : MonoBehaviour
 {
-	public enum DestroyerType : byte
-	{
-		DropsDestroyer,
-		BackgroundDestroyer
-	}
 
-	public DestroyerType type;
+	public Enumerations.DestroyerType type;
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
 		switch (type)
 		{
-			case DestroyerType.DropsDestroyer:
+			case Enumerations.DestroyerType.DropsDestroyer:
 				if (col.tag == Tags.DROP)
 				{
 					col.gameObject.SetActive(false);
 				}
 				break;
-			case DestroyerType.BackgroundDestroyer:
+
+			case Enumerations.DestroyerType.BackgroundDestroyer:
 				if (col.tag == Tags.BACKGROUND)
 				{
 					col.gameObject.SetActive(false);

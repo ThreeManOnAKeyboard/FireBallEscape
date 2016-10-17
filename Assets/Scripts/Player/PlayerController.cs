@@ -36,22 +36,12 @@ public class PlayerController : MonoBehaviour
 
 	public static float targetHealth;
 
-	// Reference to Ability Controller script
-	private AbilitiesController abilitiesController;
-
 	void Awake()
 	{
 		health = startHealth;
 		maximumHealth = maxHealth;
 		targetHealth = maximumHealth;
 		isInvincible = false;
-	}
-
-	// Use this for initialization
-	void Start()
-	{
-		// Find the AbilitiesController Component
-		abilitiesController = FindObjectOfType<AbilitiesController>();
 	}
 
 	// Update is called once per frame
@@ -82,7 +72,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	#region Health related methods
-	public void Damage(bool isDrop)
+	public void Damage()
 	{
 		#region Calculus example
 		////
@@ -98,15 +88,10 @@ public class PlayerController : MonoBehaviour
 		if (!isInvincible)
 		{
 			health -= maxHealth * Mathf.Clamp((health / maxHealth) * maxDamagePercent, minDamagePercent, maxDamagePercent);
-
-			if (isDrop)
-			{
-				abilitiesController.UpdateAbility(false);
-			}
 		}
 	}
 
-	public void Heal(bool isDrop)
+	public void Heal()
 	{
 		if (!isInvincible)
 		{
@@ -117,11 +102,6 @@ public class PlayerController : MonoBehaviour
 			else
 			{
 				health += maxHealth * Mathf.Clamp((1 - health / maxHealth) * maxHealPercent, minHealPercent, maxHealPercent);
-			}
-
-			if (isDrop)
-			{
-				abilitiesController.UpdateAbility(true);
 			}
 		}
 	}
@@ -156,13 +136,13 @@ public class PlayerController : MonoBehaviour
 	{
 		switch (GameManager.Instance.controlType)
 		{
-			case GameManager.ControlType.FREE:
+			case Enumerations.ControlType.Free:
 				GetComponent<TouchFollowMovement>().enabled = true;
 				break;
-			case GameManager.ControlType.SIDEWAYS:
+			case Enumerations.ControlType.Sideways:
 				GetComponent<LeftRightMovement>().enabled = true;
 				break;
-			case GameManager.ControlType.ZIGZAG:
+			case Enumerations.ControlType.ZigZag:
 				GetComponent<ZigZagMovement>().enabled = true;
 				break;
 		}

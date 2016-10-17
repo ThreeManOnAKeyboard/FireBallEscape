@@ -3,12 +3,8 @@ using UnityEngine.EventSystems;
 
 public class ZigZagMovement : MonoBehaviour
 {
-	private enum Direction : byte
-	{
-		Right,
-		Left
-	}
-	private Direction currentDirection = Direction.Right;
+	[HideInInspector]
+	public Enumerations.Direction currentDirection = Enumerations.Direction.Right;
 
 	private float speed;
 	public float minSpeed = 5f;
@@ -33,34 +29,41 @@ public class ZigZagMovement : MonoBehaviour
 		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !TouchManager.Instance.IsPointerOverUIObject(0))
 #endif
 		{
-			if (currentDirection == Direction.Right)
+			// Change the player movement direction on screen touch
+			switch (currentDirection)
 			{
-				currentDirection = Direction.Left;
-			}
-			else
-			{
-				currentDirection = Direction.Right;
+				case Enumerations.Direction.Right:
+					currentDirection = Enumerations.Direction.Left;
+					break;
+
+				case Enumerations.Direction.Left:
+					currentDirection = Enumerations.Direction.Right;
+					break;
 			}
 		}
 
+		// Also change player direction when it reaches sreen borders
 		if (transform.position.x > (CameraController.rightBorder - borderOffset))
 		{
-			currentDirection = Direction.Left;
+			currentDirection = Enumerations.Direction.Left;
 		}
 		else if (transform.position.x < (CameraController.leftBorder + borderOffset))
 		{
-			currentDirection = Direction.Right;
+			currentDirection = Enumerations.Direction.Right;
 		}
 
+		// Calculate player base speed
 		speed = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed, minSpeed, maxSpeed);
 
+		// Move player up
 		transform.Translate(Vector2.up * speed * Time.deltaTime * (1 - speedXOnYRatio));
 
+		// Move player sideways
 		if (CameraController.rightBorder != 0f)
 		{
 			transform.Translate
 			(
-				(currentDirection == Direction.Right ? Vector2.right : Vector2.left) * Time.deltaTime * speed * speedXOnYRatio
+				(currentDirection == Enumerations.Direction.Right ? Vector2.right : Vector2.left) * Time.deltaTime * speed * speedXOnYRatio
 			);
 		}
 	}

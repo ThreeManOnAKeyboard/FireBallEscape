@@ -30,15 +30,15 @@ public class FuelRainController : MonoBehaviour
 
 		switch (GameManager.Instance.controlType)
 		{
-			case GameManager.ControlType.FREE:
+			case Enumerations.ControlType.Free:
 				enableMethod = FindObjectOfType<FreeControlSpawner>().ChangeCurrentDrops;
 				resetMethod = FindObjectOfType<FreeControlSpawner>().ResetDrops;
 				break;
-			case GameManager.ControlType.SIDEWAYS:
+			case Enumerations.ControlType.Sideways:
 				enableMethod = FindObjectOfType<LeftRightSpawner>().ChangeCurrentDrops;
 				resetMethod = FindObjectOfType<LeftRightSpawner>().ResetDrops;
 				break;
-			case GameManager.ControlType.ZIGZAG:
+			case Enumerations.ControlType.ZigZag:
 				enableMethod = FindObjectOfType<ZigZagSpawner>().ChangeCurrentDrops;
 				resetMethod = FindObjectOfType<ZigZagSpawner>().ResetDrops;
 				break;

@@ -10,6 +10,7 @@ public class PoisonDrop : Drop
 		if (col.tag == Tags.PLAYER)
 		{
 			playerController.StartHealthDrain(amount, healthDrainSpeed);
+			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Poison);
 		}
 
 		DoCollisionEffect(col.tag);
