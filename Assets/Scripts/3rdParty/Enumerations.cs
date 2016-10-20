@@ -2,10 +2,10 @@
 {
 	public enum DropType : byte
 	{
+		Empty,
 		Fuel,
 		Water,
-		Poison,
-		Empty
+		Poison
 	}
 
 	public enum ControlType : byte

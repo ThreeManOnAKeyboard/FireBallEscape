@@ -8,6 +8,15 @@ public class Ability : ScriptableObject
 	public AudioClip soundEffect;
 	public GameObject prefab;
 
+	public void OnValidate()
+	{
+		if (combination.Length != 3)
+		{
+			Debug.LogWarning("Don't resize this array!!!");
+			System.Array.Resize(ref combination, 3);
+		}
+	}
+
 	public void TriggerAbility()
 	{
 		ObjectPool.Instance.GetPooledObject(prefab).SetActive(true);
