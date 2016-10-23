@@ -174,6 +174,7 @@
     <Compile Include="Assets\Scripts\Abilities\StrikeController.cs" />
     <Compile Include="Assets\Scripts\Abilities\SuperShieldController.cs" />
     <Compile Include="Assets\Scripts\Abilities\WaveBlastController.cs" />
+    <Compile Include="Assets\Scripts\Level\Assistance\LavaFlowController.cs" />
     <Compile Include="Assets\Scripts\Level\CameraController.cs" />
     <Compile Include="Assets\Scripts\Level\CollisionEffectController.cs" />
     <Compile Include="Assets\Scripts\Level\Destroyer.cs" />
@@ -185,7 +186,7 @@
     <Compile Include="Assets\Scripts\Level\FacebookHolder.cs" />
     <Compile Include="Assets\Scripts\Level\FacetedWater.cs" />
     <Compile Include="Assets\Scripts\Level\HealthBarController.cs" />
-    <Compile Include="Assets\Scripts\Level\Obstacles\GeyserController.cs" />
+    <Compile Include="Assets\Scripts\Level\Obstacles\SteamGeyserController.cs" />
     <Compile Include="Assets\Scripts\Level\Obstacles\StoneController.cs" />
     <Compile Include="Assets\Scripts\Level\Obstacles\StoneRainController.cs" />
     <Compile Include="Assets\Scripts\Level\Spawner\BackgroundSpawner.cs" />

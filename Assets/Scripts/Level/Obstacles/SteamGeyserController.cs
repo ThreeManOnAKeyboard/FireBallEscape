@@ -1,10 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class GeyserController : MonoBehaviour
+public class SteamGeyserController : MonoBehaviour
 {
-	public bool isHealing;
-
 	public float ejectDuration;
 	public float ejectCooldown;
 	public float angleRange = 40f;
@@ -78,14 +76,7 @@ public class GeyserController : MonoBehaviour
 	{
 		if (col.gameObject.tag == Tags.PLAYER && !playerController.isUnderSuperShield)
 		{
-			if (isHealing)
-			{
-				playerController.FullHeal();
-			}
-			else
-			{
-				playerController.Damage();
-			}
+			playerController.Damage();
 		}
 	}
 }
