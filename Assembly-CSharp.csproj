@@ -123,14 +123,14 @@
      <Compile Include="Assets\Scripts\Level\Drops\Drop.cs" />
      <Compile Include="Assets\Scripts\Level\Drops\DropsHolder.cs" />
      <Compile Include="Assets\Scripts\Level\Drops\FuelDrop.cs" />
-     <Compile Include="Assets\Scripts\Level\Drops\GeyserController.cs" />
      <Compile Include="Assets\Scripts\Level\Drops\PoisonDrop.cs" />
-     <Compile Include="Assets\Scripts\Level\Drops\StoneController.cs" />
-     <Compile Include="Assets\Scripts\Level\Drops\StoneRainController.cs" />
      <Compile Include="Assets\Scripts\Level\Drops\WaterDrop.cs" />
      <Compile Include="Assets\Scripts\Level\FacebookHolder.cs" />
      <Compile Include="Assets\Scripts\Level\FacetedWater.cs" />
      <Compile Include="Assets\Scripts\Level\HealthBarController.cs" />
+     <Compile Include="Assets\Scripts\Level\Obstacles\GeyserController.cs" />
+     <Compile Include="Assets\Scripts\Level\Obstacles\StoneController.cs" />
+     <Compile Include="Assets\Scripts\Level\Obstacles\StoneRainController.cs" />
      <Compile Include="Assets\Scripts\Level\Spawner\BackgroundSpawner.cs" />
      <Compile Include="Assets\Scripts\Level\Spawner\FreeControlSpawner.cs" />
      <Compile Include="Assets\Scripts\Level\Spawner\LeftRightSpawner.cs" />
