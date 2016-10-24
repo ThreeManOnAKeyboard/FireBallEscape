@@ -6,13 +6,11 @@ public class LavaFlowController : MonoBehaviour
 	public float leftBorderZAngle;
 	public float rightBorderZAngle;
 
-	private BoxCollider2D thisCollider2D;
 	private PlayerController playerController;
 	private Transform meshTransform;
 
 	void Awake()
 	{
-		thisCollider2D = GetComponent<BoxCollider2D>();
 		playerController = FindObjectOfType<PlayerController>();
 		meshTransform = GetComponentInChildren<MeshFilter>().gameObject.transform;
 	}
@@ -45,14 +43,6 @@ public class LavaFlowController : MonoBehaviour
 
 		// Change the rotation of x axis of mesh object so it looks different
 		meshTransform.Rotate(Vector3.right * Random.Range(0f, 359f));
-
-		// Enable the lava flow
-		thisCollider2D.enabled = true;
-	}
-
-	void OnDisable()
-	{
-		thisCollider2D.enabled = false;
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)

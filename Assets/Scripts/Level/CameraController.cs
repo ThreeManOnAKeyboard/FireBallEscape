@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 
 public class CameraController : MonoBehaviour
@@ -11,14 +12,36 @@ public class CameraController : MonoBehaviour
 	public float followSpeed;
 	public float yPositionOffset;
 
-#if UNITY_ANDROID && !UNITY_EDITOR
+	public Text bloomText;
+	public Text optimizedText;
+
 	void Awake()
 	{
+		if (GetComponent<BloomOptimized>().CheckResources())
+		{
+			optimizedText.text = "Bloom Optimized is supported!!!";
+		}
+		else
+		{
+			optimizedText.text = "Bloom Optimized is not supported : p";
+		}
+
+		if (GetComponent<Bloom>().CheckResources())
+		{
+			bloomText.text = "Bloom is supported!!!";
+		}
+		else
+		{
+			bloomText.text = "Bloom is not supported : p";
+		}
+
+#if UNITY_ANDROID && !UNITY_EDITOR
 		// Set Quality settings for android build
 		QualitySettings.vSyncCount = 0;
+
 		Application.targetFrameRate = 60;
-}
 #endif
+	}
 
 	// Use this for initialization
 	void Start()
