@@ -32,13 +32,13 @@ public class SteamGeyserController : MonoBehaviour
 		if (Random.Range(0, 2) == 0)
 		{
 			// Right side
-			position.x = CameraController.rightBorder - offset;
+			position.x = CameraController.Instance.rightBorder - offset;
 			transform.rotation = Quaternion.Euler(0f, 0f, Random.Range(-angleRange, angleRange));
 		}
 		else
 		{
 			// Left side
-			position.x = CameraController.leftBorder + offset;
+			position.x = CameraController.Instance.leftBorder + offset;
 			transform.rotation = Quaternion.Euler(0f, 0f, 180f + Random.Range(-angleRange, angleRange));
 		}
 

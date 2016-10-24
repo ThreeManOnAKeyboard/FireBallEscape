@@ -1,39 +1,25 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Collections;
+using UnityEngine;
 using UnityStandardAssets.ImageEffects;
 
 public class CameraController : MonoBehaviour
 {
-	public static float leftBorder;
-	public static float rightBorder;
-
-	private Transform target;
+	public static CameraController Instance;
 
 	public float followSpeed;
 	public float yPositionOffset;
 
-	public Text bloomText;
-	public Text optimizedText;
+	private float _leftBorder;
+	private float _rightBorder;
 
-	void Awake()
+	public float leftBorder { get { return _leftBorder; } }
+	public float rightBorder { get { return _rightBorder; } }
+
+	private Transform target;
+
+	private void Awake()
 	{
-		if (GetComponent<BloomOptimized>().CheckResources())
-		{
-			optimizedText.text = "Bloom Optimized is supported!!!";
-		}
-		else
-		{
-			optimizedText.text = "Bloom Optimized is not supported : p";
-		}
-
-		if (GetComponent<Bloom>().CheckResources())
-		{
-			bloomText.text = "Bloom is supported!!!";
-		}
-		else
-		{
-			bloomText.text = "Bloom is not supported : p";
-		}
+		Instance = this;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 		// Set Quality settings for android build
@@ -44,17 +30,17 @@ public class CameraController : MonoBehaviour
 	}
 
 	// Use this for initialization
-	void Start()
+	private void Start()
 	{
 		// Calculate visible track borders positions in world space coordinates
 		target = GameObject.FindGameObjectWithTag(Tags.PLAYER).transform;
 		float distance = (target.position - Camera.main.transform.position).z;
-		leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance)).x;
-		rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance)).x;
+		_leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance)).x;
+		_rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance)).x;
 	}
 
 	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
 		if (target != null)
 		{
@@ -64,6 +50,24 @@ public class CameraController : MonoBehaviour
 				Mathf.Lerp(transform.position.y, target.position.y + yPositionOffset, followSpeed * Time.deltaTime),
 				transform.position.z
 			);
+		}
+	}
+
+	public void Shake(float duration, float intensity)
+	{
+		StartCoroutine(PerformShake(duration, intensity));
+	}
+
+	private IEnumerator PerformShake(float duration, float intensity)
+	{
+		float time = 0f;
+
+		while (time < duration)
+		{
+			// Cutremur
+
+			time += Time.deltaTime;
+			yield return null;
 		}
 	}
 

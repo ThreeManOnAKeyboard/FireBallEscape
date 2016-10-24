@@ -65,8 +65,8 @@ public class TouchFollowMovement : MonoBehaviour
 				Mathf.Clamp
 				(
 					Mathf.MoveTowards(transform.position.x, touchPosition.x, speed.x * Time.deltaTime),
-					CameraController.leftBorder + GameManager.Instance.bordersOffset,
-					CameraController.rightBorder - GameManager.Instance.bordersOffset
+					CameraController.Instance.leftBorder + GameManager.Instance.bordersOffset,
+					CameraController.Instance.rightBorder - GameManager.Instance.bordersOffset
 				),
 				Mathf.Lerp(transform.position.y, touchPosition.y, speed.y * Time.deltaTime),
 				transform.position.z

@@ -25,14 +25,14 @@ public class LavaFlowController : MonoBehaviour
 		if (Random.Range(0, 2) == 0)
 		{
 			// Right side
-			position.x = CameraController.rightBorder - borderOffset;
+			position.x = CameraController.Instance.rightBorder - borderOffset;
 			transform.rotation = Quaternion.Euler(0f, 0f, rightBorderZAngle);
 			localScale.x = 1f;
 		}
 		else
 		{
 			// Left side
-			position.x = CameraController.leftBorder + borderOffset;
+			position.x = CameraController.Instance.leftBorder + borderOffset;
 			transform.rotation = Quaternion.Euler(0f, 0f, leftBorderZAngle);
 			localScale.x = -1f;
 		}

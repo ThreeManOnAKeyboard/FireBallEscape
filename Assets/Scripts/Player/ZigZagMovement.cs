@@ -43,11 +43,11 @@ public class ZigZagMovement : MonoBehaviour
 		}
 
 		// Also change player direction when it reaches sreen borders
-		if (transform.position.x > (CameraController.rightBorder - borderOffset))
+		if (transform.position.x > (CameraController.Instance.rightBorder - borderOffset))
 		{
 			currentDirection = Enumerations.Direction.Left;
 		}
-		else if (transform.position.x < (CameraController.leftBorder + borderOffset))
+		else if (transform.position.x < (CameraController.Instance.leftBorder + borderOffset))
 		{
 			currentDirection = Enumerations.Direction.Right;
 		}
@@ -59,7 +59,7 @@ public class ZigZagMovement : MonoBehaviour
 		transform.Translate(Vector2.up * speed * Time.deltaTime * (1 - speedXOnYRatio));
 
 		// Move player sideways
-		if (CameraController.rightBorder != 0f)
+		if (CameraController.Instance.rightBorder != 0f)
 		{
 			transform.Translate
 			(

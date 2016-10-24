@@ -24,9 +24,9 @@ public class LeftRightMovement : MonoBehaviour
 		bandIndex = (bandsCount - 1) / 2;
 
 		// The width of visible track in units
-		float segmentLength = (CameraController.rightBorder * 2f - GameManager.Instance.bordersOffset * 2f) / (bandsCount - 1);
+		float segmentLength = (CameraController.Instance.rightBorder * 2f - GameManager.Instance.bordersOffset * 2f) / (bandsCount - 1);
 
-		bandsPositions[0] = CameraController.leftBorder + GameManager.Instance.bordersOffset;
+		bandsPositions[0] = CameraController.Instance.leftBorder + GameManager.Instance.bordersOffset;
 
 		// Initialise bands x positions
 		for (int i = 1; i < bandsCount; i++)
