@@ -8,11 +8,7 @@ public class WaterDrop : Drop
 		{
 			playerController.Damage();
 			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Water);
-
-			if (!PlayerController.isInvincible)
-			{
-				ScoreManager.Instance.ResetMultiplier();
-			}
+			ScoreManager.Instance.ResetMultiplier();
 		}
 
 		// Remove this drop from targets list if Strike ability is activated

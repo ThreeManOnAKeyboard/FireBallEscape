@@ -15,11 +15,10 @@ public class Element
 public class AbilitiesController : MonoBehaviour
 {
 	#region Fields
-	// Elements references
 	private const int ELEMENTS_COUNT = 3;
+
 	[Header("Elements properties")]
-	// Should be transparent
-	public Color defaultElementColor;
+	public Color defaultElementColor;   // Should be transparent
 	public List<Element> elements = new List<Element>(ELEMENTS_COUNT);
 	public Image[] elementsImages = new Image[ELEMENTS_COUNT];
 
@@ -38,12 +37,12 @@ public class AbilitiesController : MonoBehaviour
 	// Ability references
 	private Enumerations.DropType[] currentCombination = new Enumerations.DropType[ELEMENTS_COUNT];
 	private Ability currentAbility;
+	#endregion
 
 	private void Awake()
 	{
 		Instance = this;
 	}
-	#endregion
 
 	// Update is called once per frame
 	private void Update()

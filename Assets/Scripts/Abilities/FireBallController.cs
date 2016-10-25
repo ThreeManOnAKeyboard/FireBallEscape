@@ -6,7 +6,7 @@ public class FireBallController : MonoBehaviour
 {
 	public float collisionTime;
 
-	public float yScreenRatioLimit;
+	public float minScreenHeightRatio;
 
 	public GameObject strikeableObject;
 	public GameObject fireBallExplosion;
@@ -31,8 +31,13 @@ public class FireBallController : MonoBehaviour
 		animator = GetComponentInChildren<Animator>();
 	}
 
-	void OnEnable()
+	private void OnEnable()
 	{
+		if (playerTransform != null)
+		{
+			transform.position = playerTransform.position;
+		}
+
 		target = null;
 		collisionPoint = Vector3.zero;
 		startPosition = Vector3.zero;
@@ -40,18 +45,42 @@ public class FireBallController : MonoBehaviour
 		StartCoroutine(StrikeTarget());
 	}
 
-	public void OnTriggerEnter2D(Collider2D col)
+	private IEnumerator StrikeTarget()
 	{
-		if (target != null && col.gameObject == target.gameObject)
+		while (true)
 		{
-			// Explosion effect
-			GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(fireBallExplosion);
-			collisionEffect.transform.position = transform.position;
-			collisionEffect.SetActive(true);
-			animator.Stop();
+			if (target == null || !target.gameObject.activeInHierarchy)
+			{
+				target = GetTarget();
 
-			// Deactivate current fireball
-			gameObject.SetActive(false);
+				if (target == null)
+				{
+					animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, -1, 0f);
+				}
+
+				if (playerTransform == null)
+				{
+					gameObject.SetActive(false);
+				}
+				else
+				{
+					transform.position = playerTransform.position;
+				}
+			}
+			else
+			{
+				// Translate fireball to target
+				transform.position = new Vector3
+				(
+					startPosition.x + (collisionPoint.x - startPosition.x) * (time / collisionTime),
+					startPosition.y + (collisionPoint.y - startPosition.y) * (time / collisionTime),
+					transform.position.z
+				);
+
+				time += Time.deltaTime;
+			}
+
+			yield return null;
 		}
 	}
 
@@ -61,14 +90,15 @@ public class FireBallController : MonoBehaviour
 
 		GameObject nearestTarget = null;
 
-		foreach (GameObject posibleTarget in targetOptions)
+		foreach (GameObject targetOption in targetOptions)
 		{
 			// Check if target is active in hierarchy and it is enough far away from player
-			if (posibleTarget.activeInHierarchy && Camera.main.WorldToScreenPoint(posibleTarget.transform.position).y / Screen.height > yScreenRatioLimit && !StrikeController.targets.Contains(posibleTarget))
+			float targetScreenHeightRatio = Camera.main.WorldToScreenPoint(targetOption.transform.position).y / Screen.height;
+			if (targetOption.activeInHierarchy && targetScreenHeightRatio > minScreenHeightRatio && !StrikeController.targets.Contains(targetOption))
 			{
-				if ((nearestTarget == null) || posibleTarget.transform.position.y < nearestTarget.transform.position.y)
+				if (nearestTarget == null || targetOption.transform.position.y < nearestTarget.transform.position.y)
 				{
-					nearestTarget = posibleTarget;
+					nearestTarget = targetOption;
 				}
 			}
 		}
@@ -101,41 +131,18 @@ public class FireBallController : MonoBehaviour
 		return nearestTarget;
 	}
 
-	private IEnumerator StrikeTarget()
+	public void OnTriggerEnter2D(Collider2D col)
 	{
-		while (true)
+		if (target != null && col.gameObject == target.gameObject)
 		{
-			if (target == null || !target.gameObject.activeInHierarchy)
-			{
-				target = GetTarget();
-				animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, -1, 0f);
+			// Explosion effect
+			GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(fireBallExplosion);
+			collisionEffect.transform.position = transform.position;
+			collisionEffect.SetActive(true);
+			animator.Stop();
 
-				if (playerTransform == null)
-				{
-					gameObject.SetActive(false);
-				}
-				else
-				{
-					transform.position = playerTransform.position;
-				}
-			}
-			else
-			{
-				//if (Vector3.Distance())
-				//{
-
-				//}
-				transform.position = new Vector3
-				(
-					startPosition.x + (collisionPoint.x - startPosition.x) * (time / collisionTime),
-					startPosition.y + (collisionPoint.y - startPosition.y) * (time / collisionTime),
-					transform.position.z
-				);
-
-				time += Time.deltaTime;
-			}
-
-			yield return null;
+			// Deactivate current fireball
+			gameObject.SetActive(false);
 		}
 	}
 }

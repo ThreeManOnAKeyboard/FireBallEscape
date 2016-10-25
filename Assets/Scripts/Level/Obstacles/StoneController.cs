@@ -51,7 +51,10 @@ public class StoneController : MonoBehaviour
 
 	public void OnCollisionEnter2D(Collision2D col)
 	{
-		CameraShake.Instance.StartShake(duration, speed, magnitude, zoomDistance);
+		if (duration != 0f)
+		{
+			CameraShake.Instance.StartShake(duration, speed, magnitude, zoomDistance);
+		}
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)

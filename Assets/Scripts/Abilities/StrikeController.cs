@@ -6,7 +6,7 @@ public class StrikeController : MonoBehaviour
 {
 	public GameObject fireBall;
 	public int fireballsAmount = 1;
-	public float cooldown = 1f;
+	public float fireRate = 1f;
 
 	public static List<GameObject> targets;
 
@@ -31,7 +31,7 @@ public class StrikeController : MonoBehaviour
 			// Activate fireball
 			fireBallInstance.SetActive(true);
 
-			yield return new WaitForSeconds(cooldown);
+			yield return new WaitForSeconds(1f / fireRate);
 		}
 
 		// Deactivate ability when all fireballs reached their target

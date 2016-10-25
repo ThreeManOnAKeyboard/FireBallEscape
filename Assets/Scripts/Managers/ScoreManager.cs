@@ -56,7 +56,10 @@ public class ScoreManager : MonoBehaviour
 
 	public void ResetMultiplier()
 	{
-		scoreMultiplier = 1;
+		if (!PlayerController.isInvincible)
+		{
+			scoreMultiplier = 1;
+		}
 	}
 
 	public float GetScore()

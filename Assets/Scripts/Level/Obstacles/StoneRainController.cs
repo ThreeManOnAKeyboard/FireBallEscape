@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class StoneRainController : MonoBehaviour
 {
+	[Header("Camera Shake Paramters")]
+	public float shakeDuration;
+	public float shakeSpeed;
+	public float shakeMagnitude;
+	public float zoomDistance;
+
+	[Header("Earth Shake Parameters")]
 	public List<DropHolder> stoneRainDrops;
 	public float duration;
 
@@ -42,15 +49,23 @@ public class StoneRainController : MonoBehaviour
 			gameObject.SetActive(false);
 		}
 
-		isActive = true;
-		enableMethod(stoneRainDrops);
-
-		StartCoroutine(ResetDrops());
+		StartCoroutine(StartEarthshake());
 	}
 
 	private void OnDisable()
 	{
 		isActive = false;
+	}
+
+	private IEnumerator StartEarthshake()
+	{
+		CameraShake.Instance.StartShake(shakeDuration, shakeSpeed, shakeMagnitude, zoomDistance);
+
+		yield return new WaitForSeconds(shakeDuration);
+
+		enableMethod(stoneRainDrops);
+		StartCoroutine(ResetDrops());
+		isActive = true;
 	}
 
 	private IEnumerator ResetDrops()
