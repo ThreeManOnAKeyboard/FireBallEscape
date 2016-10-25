@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityStandardAssets.ImageEffects;
 
 public class CameraController : MonoBehaviour
 {
 	public static CameraController Instance;
 
+	[Header("Camera Follow Parameters")]
 	public float followSpeed;
 	public float yPositionOffset;
 
@@ -42,32 +42,24 @@ public class CameraController : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
+		Follow();
+	}
+
+	public void Follow()
+	{
 		if (target != null)
 		{
 			transform.position = new Vector3
 			(
 				transform.position.x,
-				Mathf.Lerp(transform.position.y, target.position.y + yPositionOffset, followSpeed * Time.deltaTime),
+				Mathf.Lerp
+				(
+					transform.position.y,
+					target.position.y + yPositionOffset,
+					followSpeed * Time.deltaTime
+				),
 				transform.position.z
 			);
-		}
-	}
-
-	public void Shake(float duration, float intensity)
-	{
-		StartCoroutine(PerformShake(duration, intensity));
-	}
-
-	private IEnumerator PerformShake(float duration, float intensity)
-	{
-		float time = 0f;
-
-		while (time < duration)
-		{
-			// Cutremur
-
-			time += Time.deltaTime;
-			yield return null;
 		}
 	}
 

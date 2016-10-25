@@ -18,6 +18,12 @@ public class Cheats : MonoBehaviour
 		{
 			playerController.Heal();
 		}
+
+		// Simulate camera shake
+		if (Input.GetButtonUp("Submit"))
+		{
+			Camera.main.gameObject.GetComponent<PerlinShake>().PlayShake();
+		}
 	}
 #endif
 }

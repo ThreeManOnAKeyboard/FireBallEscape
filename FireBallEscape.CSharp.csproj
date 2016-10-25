@@ -200,11 +200,15 @@
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Purchaser.cs" />
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\PeriodicShake.cs" />
+    <Compile Include="Assets\Scripts\PerlinShake.cs" />
     <Compile Include="Assets\Scripts\Player\Cheats.cs" />
     <Compile Include="Assets\Scripts\Player\LeftRightMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\TouchFollowMovement.cs" />
     <Compile Include="Assets\Scripts\Player\ZigZagMovement.cs" />
+    <Compile Include="Assets\Scripts\RandomShake.cs" />
+    <Compile Include="Assets\Scripts\Util_Noise.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
