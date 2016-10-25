@@ -66,6 +66,7 @@ public class CameraController : MonoBehaviour
 	public void EnableApplyRootMotion()
 	{
 		GetComponent<Animator>().applyRootMotion = true;
+		GetComponent<CameraShake>().originZ = transform.position.z;
 	}
 
 	public void SetDownSample(int value)

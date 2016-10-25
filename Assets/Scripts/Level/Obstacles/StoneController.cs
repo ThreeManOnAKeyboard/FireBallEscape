@@ -2,10 +2,19 @@
 
 public class StoneController : MonoBehaviour
 {
-	public Vector2 impulseForce;
-	public GameObject explosionEffect;
-	private Transform[] stonePieces;
+	[Header("Shake Parameters")]
+	public float duration;
+	public float speed;
+	public float magnitude;
+	public float zoomDistance;
 
+	[Header("Instantiation Parameters")]
+	public float yOffset;
+	public Vector2 impulseForce;
+
+	public GameObject explosionEffect;
+
+	private Transform[] stonePieces;
 	private Rigidbody2D thisRigidBody;
 	private PlayerController playerController;
 	private bool onStoneRain;
@@ -38,6 +47,11 @@ public class StoneController : MonoBehaviour
 		);
 
 		thisRigidBody.AddForce(impulseForce * (Random.Range(0, 2) == 0 ? 1f : -1f), ForceMode2D.Impulse);
+	}
+
+	public void OnCollisionEnter2D(Collision2D col)
+	{
+		CameraShake.Instance.StartShake(duration, speed, magnitude, zoomDistance);
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)

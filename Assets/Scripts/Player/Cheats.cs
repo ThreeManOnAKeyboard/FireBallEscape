@@ -22,7 +22,13 @@ public class Cheats : MonoBehaviour
 		// Simulate camera shake
 		if (Input.GetButtonUp("Submit"))
 		{
-			Camera.main.gameObject.GetComponent<PerlinShake>().PlayShake();
+			Camera.main.gameObject.GetComponent<CameraShake>().StartShake
+			(
+				Random.Range(0.5f, 2f),
+				Random.Range(10f, 15f),
+				Random.Range(0.2f, 0.5f),
+				Random.Range(1f, 2f)
+			);
 		}
 	}
 #endif

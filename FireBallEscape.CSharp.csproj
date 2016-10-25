@@ -166,6 +166,7 @@
     <Compile Include="Assets\Scripts\3rdParty\PlayerPrefsKeys.cs" />
     <Compile Include="Assets\Scripts\3rdParty\Tags.cs" />
     <Compile Include="Assets\Scripts\3rdParty\TouchManager.cs" />
+    <Compile Include="Assets\Scripts\3rdParty\Util_Noise.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilitiesController.cs" />
     <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
     <Compile Include="Assets\Scripts\Abilities\FireBallController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Assets\Scripts\Abilities\WaveBlastController.cs" />
     <Compile Include="Assets\Scripts\Level\Assistance\LavaFlowController.cs" />
     <Compile Include="Assets\Scripts\Level\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Level\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Level\CollisionEffectController.cs" />
     <Compile Include="Assets\Scripts\Level\Destroyer.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\Drop.cs" />
@@ -200,15 +202,11 @@
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Purchaser.cs" />
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
-    <Compile Include="Assets\Scripts\PeriodicShake.cs" />
-    <Compile Include="Assets\Scripts\PerlinShake.cs" />
     <Compile Include="Assets\Scripts\Player\Cheats.cs" />
     <Compile Include="Assets\Scripts\Player\LeftRightMovement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\TouchFollowMovement.cs" />
     <Compile Include="Assets\Scripts\Player\ZigZagMovement.cs" />
-    <Compile Include="Assets\Scripts\RandomShake.cs" />
-    <Compile Include="Assets\Scripts\Util_Noise.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
