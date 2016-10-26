@@ -6,7 +6,7 @@ public class WaterDrop : Drop
 	{
 		if (col.tag == Tags.PLAYER)
 		{
-			playerController.Damage();
+			playerController.Damage(healthMultiplier);
 			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Water);
 			ScoreManager.Instance.ResetMultiplier();
 		}

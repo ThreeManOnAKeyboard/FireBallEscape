@@ -5,6 +5,7 @@ public abstract class Drop : MonoBehaviour
 	public GameObject collisionEffect;
 	public float fallSpeed;
 	public float scoreAmount;
+	public float healthMultiplier = 1f;
 
 	protected PlayerController playerController;
 

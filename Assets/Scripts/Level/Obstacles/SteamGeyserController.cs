@@ -4,6 +4,7 @@ using UnityEngine;
 public class SteamGeyserController : MonoBehaviour
 {
 	[Header("Configuration parameters")]
+	public float damageMultiplier = 1f;
 	public float ejectDuration;
 	public float ejectCooldown;
 	public float angleRange = 40f;
@@ -82,7 +83,7 @@ public class SteamGeyserController : MonoBehaviour
 	{
 		if (col.gameObject.tag == Tags.PLAYER && !playerController.isUnderSuperShield)
 		{
-			playerController.Damage();
+			playerController.Damage(damageMultiplier);
 		}
 	}
 }

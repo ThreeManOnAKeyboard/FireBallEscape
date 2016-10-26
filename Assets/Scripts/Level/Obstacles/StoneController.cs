@@ -2,6 +2,8 @@
 
 public class StoneController : MonoBehaviour
 {
+	public float damageMultiplier = 1f;
+
 	[Header("Shake Parameters")]
 	public float duration;
 	public float speed;
@@ -12,9 +14,7 @@ public class StoneController : MonoBehaviour
 	public float yOffset;
 	public Vector2 impulseForce;
 
-	public GameObject explosionEffect;
-
-	private Transform[] stonePieces;
+	private Rigidbody2D[] stonePieces;
 	private Rigidbody2D thisRigidBody;
 	private PlayerController playerController;
 	private bool onStoneRain;
@@ -24,7 +24,7 @@ public class StoneController : MonoBehaviour
 	{
 		playerController = FindObjectOfType<PlayerController>();
 		thisRigidBody = GetComponent<Rigidbody2D>();
-		stonePieces = GetComponentsInChildren<Transform>(true);
+		stonePieces = GetComponentsInChildren<Rigidbody2D>(true);
 	}
 
 	void OnEnable()
@@ -65,7 +65,7 @@ public class StoneController : MonoBehaviour
 			{
 				if (!playerController.isUnderSuperShield)
 				{
-					playerController.Damage();
+					playerController.Damage(damageMultiplier);
 					playerController.OnStoneCollision();
 				}
 			}
@@ -74,13 +74,16 @@ public class StoneController : MonoBehaviour
 				playerController.Kill();
 			}
 
-			for (int i = 0; i < stonePieces.Length; i++)
+			// Detach stone pieces if they are present
+			transform.DetachChildren();
+
+			// Add force to each child piece
+			foreach (Rigidbody2D piece in stonePieces)
 			{
-				stonePieces[i].gameObject.SetActive(true);
+				piece.gameObject.SetActive(true);
+				piece.AddForce(new Vector2(8f * (Random.Range(0, 2) == 0 ? 1f : -1f), Random.Range(4f, 9f)), ForceMode2D.Impulse);
 			}
 
-			transform.DetachChildren();
-			//explosionEffect.SetActive(true);
 			gameObject.SetActive(false);
 		}
 	}

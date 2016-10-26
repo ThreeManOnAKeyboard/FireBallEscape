@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
 	}
 
 	#region Health related methods
-	public void Damage()
+	public void Damage(float multiplier)
 	{
 		#region Calculus example
 		////
@@ -88,11 +88,11 @@ public class PlayerController : MonoBehaviour
 
 		if (!isInvincible)
 		{
-			health -= maxHealth * Mathf.Clamp((health / maxHealth) * maxDamagePercent, minDamagePercent, maxDamagePercent);
+			health -= multiplier * maxHealth * Mathf.Clamp((health / maxHealth) * maxDamagePercent, minDamagePercent, maxDamagePercent);
 		}
 	}
 
-	public void Heal()
+	public void Heal(float multiplier)
 	{
 		if (!isInvincible)
 		{
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else
 			{
-				health += maxHealth * Mathf.Clamp((1 - health / maxHealth) * maxHealPercent, minHealPercent, maxHealPercent);
+				health += multiplier * maxHealth * Mathf.Clamp((1 - health / maxHealth) * maxHealPercent, minHealPercent, maxHealPercent);
 			}
 		}
 	}

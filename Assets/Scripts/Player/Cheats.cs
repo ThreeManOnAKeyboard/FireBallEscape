@@ -16,7 +16,7 @@ public class Cheats : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.UpArrow))
 		{
-			playerController.Heal();
+			playerController.Heal(1f);
 		}
 
 		// Simulate camera shake
