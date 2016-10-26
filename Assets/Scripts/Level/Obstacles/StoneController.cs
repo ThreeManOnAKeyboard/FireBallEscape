@@ -66,6 +66,7 @@ public class StoneController : MonoBehaviour
 				if (!playerController.isUnderSuperShield)
 				{
 					playerController.Damage();
+					playerController.OnStoneCollision();
 				}
 			}
 			else

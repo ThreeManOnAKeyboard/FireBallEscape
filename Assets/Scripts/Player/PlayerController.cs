@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 	public GameObject defaultParticleSystem;
 	public GameObject maxPowerParticleSystem;
 	public GameObject deathExplosion;
+	public GameObject onStoneCollisionEffect;
 
 	public static bool isInvincible;
 	public bool isUnderSuperShield;
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
 			);
 		}
 
-		if (health < 0)
+		if (health <= 0)
 		{
 			gameOverScreen.SetActive(true);
 			gameUI.SetActive(false);
@@ -195,6 +196,15 @@ public class PlayerController : MonoBehaviour
 		}
 
 		targetHealth = maximumHealth;
+	}
+	#endregion
+
+	#region Collision Effects
+	public void OnStoneCollision()
+	{
+		GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(onStoneCollisionEffect);
+		collisionEffect.transform.position = transform.position;
+		collisionEffect.SetActive(true);
 	}
 	#endregion
 }
