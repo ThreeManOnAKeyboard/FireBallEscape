@@ -2,6 +2,7 @@
 
 public class StoneController : MonoBehaviour
 {
+	public GameObject collisionEffectPrefab;
 	public float damageMultiplier = 1f;
 
 	[Header("Shake Parameters")]
@@ -14,7 +15,6 @@ public class StoneController : MonoBehaviour
 	public float yOffset;
 	public Vector2 impulseForce;
 
-	private Rigidbody2D[] stonePieces;
 	private Rigidbody2D thisRigidBody;
 	private PlayerController playerController;
 	private bool onStoneRain;
@@ -24,7 +24,6 @@ public class StoneController : MonoBehaviour
 	{
 		playerController = FindObjectOfType<PlayerController>();
 		thisRigidBody = GetComponent<Rigidbody2D>();
-		stonePieces = GetComponentsInChildren<Rigidbody2D>(true);
 	}
 
 	void OnEnable()
@@ -74,14 +73,12 @@ public class StoneController : MonoBehaviour
 				playerController.Kill();
 			}
 
-			// Detach stone pieces if they are present
-			transform.DetachChildren();
-
-			// Add force to each child piece
-			foreach (Rigidbody2D piece in stonePieces)
+			// If this type of stone has an collision effect attached to then instiantiate it
+			if (collisionEffectPrefab != null)
 			{
-				piece.gameObject.SetActive(true);
-				piece.AddForce(new Vector2(8f * (Random.Range(0, 2) == 0 ? 1f : -1f), Random.Range(4f, 9f)), ForceMode2D.Impulse);
+				GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(collisionEffectPrefab);
+				collisionEffect.transform.position = playerController.transform.position;
+				collisionEffect.SetActive(true);
 			}
 
 			gameObject.SetActive(false);

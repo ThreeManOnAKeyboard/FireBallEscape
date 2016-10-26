@@ -171,6 +171,7 @@
     <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
     <Compile Include="Assets\Scripts\Abilities\FireBallController.cs" />
     <Compile Include="Assets\Scripts\Abilities\FuelRainController.cs" />
+    <Compile Include="Assets\Scripts\Abilities\MagnetController.cs" />
     <Compile Include="Assets\Scripts\Abilities\ShieldController.cs" />
     <Compile Include="Assets\Scripts\Abilities\StrikeController.cs" />
     <Compile Include="Assets\Scripts\Abilities\SuperShieldController.cs" />
@@ -182,6 +183,7 @@
     <Compile Include="Assets\Scripts\Level\Drops\PoisonDrop.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\WaterDrop.cs" />
     <Compile Include="Assets\Scripts\Level\Obstacles\SteamGeyserController.cs" />
+    <Compile Include="Assets\Scripts\Level\Obstacles\StoneCollisionEffectController.cs" />
     <Compile Include="Assets\Scripts\Level\Obstacles\StoneController.cs" />
     <Compile Include="Assets\Scripts\Level\Obstacles\StoneRainController.cs" />
     <Compile Include="Assets\Scripts\Level\Other\CameraController.cs" />
