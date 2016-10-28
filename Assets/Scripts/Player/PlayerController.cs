@@ -48,16 +48,6 @@ public class PlayerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (isInvincible)
-		{
-			transform.position = new Vector3
-			(
-				Mathf.Lerp(transform.position.x, 0, invincibleSpeed * Time.deltaTime),
-				transform.position.y + invincibleSpeed * Time.deltaTime,
-				transform.position.z
-			);
-		}
-
 		if (health <= 0)
 		{
 			gameOverScreen.SetActive(true);

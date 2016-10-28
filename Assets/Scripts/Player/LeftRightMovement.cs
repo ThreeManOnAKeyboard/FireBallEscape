@@ -43,12 +43,6 @@ public class LeftRightMovement : MonoBehaviour
 			return;
 		}
 
-		if (PlayerController.isInvincible)
-		{
-			bandIndex = (bandsCount - 1) / 2;
-			return;
-		}
-
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 		if (!EventSystem.current.IsPointerOverGameObject() && Input.GetButtonDown("Horizontal"))
 #elif UNITY_ANDROID

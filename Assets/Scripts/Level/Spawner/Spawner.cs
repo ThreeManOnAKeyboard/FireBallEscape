@@ -21,12 +21,6 @@ public class Spawner : MonoBehaviour
 		currentDrops = drops;
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
-
 	public void ChangeCurrentDrops(List<DropHolder> fuelRainDrops)
 	{
 		currentDrops = fuelRainDrops;

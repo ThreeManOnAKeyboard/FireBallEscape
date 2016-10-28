@@ -38,12 +38,6 @@ public class TouchFollowMovement : MonoBehaviour
 			return;
 		}
 
-		if (PlayerController.isInvincible)
-		{
-			touchPosition = transform.position;
-			return;
-		}
-
 		speed.y = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y);
 
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
@@ -53,7 +47,7 @@ public class TouchFollowMovement : MonoBehaviour
 		//}
 		//else
 		//{
-			ProcessComputerInput();
+		ProcessComputerInput();
 		//}
 #elif UNITY_ANDROID
 		ProcessMobileInput();

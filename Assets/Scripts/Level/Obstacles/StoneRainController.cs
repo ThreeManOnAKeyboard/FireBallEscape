@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StoneRainController : MonoBehaviour
 {
-	[Header("Camera Shake Paramters")]
+	[Header("Camera Shake Parameters")]
 	public float shakeDuration;
 	public float shakeSpeed;
 	public float shakeMagnitude;

@@ -77,7 +77,8 @@ public class StoneController : MonoBehaviour
 			if (collisionEffectPrefab != null)
 			{
 				GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(collisionEffectPrefab);
-				collisionEffect.transform.position = playerController.transform.position;
+				collisionEffect.transform.position = transform.position;
+				collisionEffect.transform.rotation = transform.rotation;
 				collisionEffect.SetActive(true);
 			}
 

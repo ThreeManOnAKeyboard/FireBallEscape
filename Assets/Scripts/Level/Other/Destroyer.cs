@@ -2,7 +2,6 @@
 
 public class Destroyer : MonoBehaviour
 {
-
 	public Enumerations.DestroyerType type;
 
 	public void OnTriggerEnter2D(Collider2D col)

@@ -18,11 +18,6 @@ public class ZigZagMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (PlayerController.isInvincible)
-		{
-			return;
-		}
-
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 		if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
 #elif UNITY_ANDROID
