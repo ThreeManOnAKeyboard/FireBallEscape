@@ -11,6 +11,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: Plane
     4300002: Cube
+    4300004: Lava
     7400000: Default Take
     9500000: //RootNode
   materials:
