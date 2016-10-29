@@ -32,6 +32,9 @@ public class StoneCollisionEffectController : MonoBehaviour
 
 	private void OnEnable()
 	{
+		// Apply angle offset because of the dumb 3D modeler...
+		transform.Rotate(Vector3.forward * zAngleOffset);
+
 		// Set the default transform properties
 		for (int i = 0; i < pieces.Length; i++)
 		{
@@ -52,8 +55,5 @@ public class StoneCollisionEffectController : MonoBehaviour
 			// Apply angular velocity
 			pieces[i].angularVelocity = angularVelocity * (Random.Range(0, 2) == 0 ? 1f : -1f);
 		}
-
-		// Apply angle offset because of the dumb 3D modeler...
-		transform.Rotate(Vector3.forward * zAngleOffset);
 	}
 }

@@ -11,6 +11,9 @@ public class FuelDrop : Drop
 			ScoreManager.Instance.AddScore(scoreAmount);
 		}
 
-		DoCollisionEffect(col.tag);
+		if (col.tag != Tags.MAGNET)
+		{
+			DoCollisionEffect(col.tag);
+		}
 	}
 }

@@ -8,4 +8,5 @@
 	public static string DESTROYER = "Destroyer";
 	public static string GAMEUI = "GameUI";
 	public static string FIREBALL = "Fireball";
+	public static string MAGNET = "Magnet";
 }
