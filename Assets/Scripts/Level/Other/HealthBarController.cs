@@ -6,6 +6,7 @@ public class HealthBarController : MonoBehaviour
 	public float healthBarFillSpeed;
 	public float poisonBarFillSpeed;
 	public Image poisonBar;
+	public Image sparkle;
 	private Image healthBar;
 
 	void Awake()
@@ -38,5 +39,9 @@ public class HealthBarController : MonoBehaviour
 			1f - PlayerController.targetHealth / PlayerController.maximumHealth,
 			poisonBarFillSpeed * Time.deltaTime
 		);
+
+		//Update the Sparkle Image position
+		sparkle.rectTransform.anchoredPosition = new Vector3 ( healthBar.rectTransform.sizeDelta.x * healthBar.fillAmount, 12,0);
+
 	}
 }
