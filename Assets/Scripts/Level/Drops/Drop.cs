@@ -7,6 +7,9 @@ public abstract class Drop : MonoBehaviour
 	public float scoreAmount;
 	public float healthMultiplier = 1f;
 
+	[HideInInspector]
+	public bool canMove;
+
 	protected PlayerController playerController;
 
 	// Use this for initialization
@@ -15,10 +18,18 @@ public abstract class Drop : MonoBehaviour
 		playerController = FindObjectOfType<PlayerController>();
 	}
 
+	private void OnEnable()
+	{
+		canMove = true;
+	}
+
 	// Update is called once per frame
 	protected void Update()
 	{
-		transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+		if (canMove)
+		{
+			transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+		}
 	}
 
 	// Perform a post effect for respective drop

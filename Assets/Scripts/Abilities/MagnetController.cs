@@ -30,6 +30,7 @@ public class MagnetController : MonoBehaviour
 	{
 		if ((col.transform.position.y - transform.position.y) > maxYOffset)
 		{
+			col.gameObject.GetComponent<FuelDrop>().canMove = false;
 			StartCoroutine(MagnetizeDrop(col.transform));
 		}
 	}
@@ -41,13 +42,8 @@ public class MagnetController : MonoBehaviour
 
 		while (target.gameObject.activeInHierarchy)
 		{
-			//target.position = new Vector3
-			//(
-
-			//);
-
 			// Aproach target fuel drop to player
-			target.position = Vector3.Lerp
+			target.position = Vector3.MoveTowards
 			(
 				target.position,
 				playerTransform.position,
