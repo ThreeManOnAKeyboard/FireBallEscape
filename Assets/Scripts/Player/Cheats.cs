@@ -51,11 +51,11 @@ public class Cheats : MonoBehaviour
 
 		if (Input.GetKeyDown(toggleInvincabilityKeyCode))
 		{
-			PlayerController.isInvincible = !PlayerController.isInvincible;
+			PlayerController.isConstHealth = !PlayerController.isConstHealth;
 
 			if (bifa)
 			{
-				if (PlayerController.isInvincible)
+				if (PlayerController.isConstHealth)
 				{
 					invincibleText.text = "Press " + toggleInvincabilityKeyCode.ToString() + " to disable invincible state";
 				}

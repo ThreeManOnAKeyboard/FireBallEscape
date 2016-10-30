@@ -21,6 +21,15 @@ public class CameraController : MonoBehaviour
 	{
 		Instance = this;
 
+		// Enable the supported bloom
+		Bloom thisBloom = GetComponent<Bloom>();
+		if (thisBloom.enabled && !thisBloom.CheckResources())
+		{
+			thisBloom.enabled = false;
+
+			GetComponent<BloomOptimized>().enabled = true;
+		}
+
 #if UNITY_ANDROID && !UNITY_EDITOR
 		// Set Quality settings for android build
 		QualitySettings.vSyncCount = 0;

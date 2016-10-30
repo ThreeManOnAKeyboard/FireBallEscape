@@ -23,7 +23,14 @@ public class MagnetController : MonoBehaviour
 
 	private void Update()
 	{
-		transform.position = playerTransform.position;
+		if (playerTransform != null)
+		{
+			transform.position = playerTransform.position;
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)
@@ -42,13 +49,20 @@ public class MagnetController : MonoBehaviour
 
 		while (target.gameObject.activeInHierarchy)
 		{
-			// Aproach target fuel drop to player
-			target.position = Vector3.MoveTowards
-			(
-				target.position,
-				playerTransform.position,
-				speed * Time.deltaTime
-			);
+			if (playerTransform != null)
+			{
+				// Aproach target fuel drop to player
+				target.position = Vector3.MoveTowards
+				(
+					target.position,
+					playerTransform.position,
+					speed * Time.deltaTime
+				);
+			}
+			else
+			{
+				Destroy(gameObject);
+			}
 
 			// Increase speed each frame
 			speed += acceleration * Time.deltaTime;

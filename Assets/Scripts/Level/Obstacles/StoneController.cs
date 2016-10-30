@@ -60,13 +60,11 @@ public class StoneController : MonoBehaviour
 	{
 		if (col.gameObject.tag == Tags.PLAYER)
 		{
+			playerController.OnStoneCollisionEffect();
+
 			if (onStoneRain)
 			{
-				if (!playerController.isUnderSuperShield)
-				{
-					playerController.Damage(damageMultiplier);
-					playerController.OnStoneCollision();
-				}
+				playerController.Damage(damageMultiplier);
 			}
 			else
 			{

@@ -47,7 +47,7 @@ public class LavaFlowController : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.gameObject.tag == Tags.PLAYER && !playerController.isUnderSuperShield)
+		if (col.gameObject.tag == Tags.PLAYER)
 		{
 			playerController.FullHeal();
 		}

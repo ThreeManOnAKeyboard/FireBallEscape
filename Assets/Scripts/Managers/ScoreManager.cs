@@ -56,7 +56,7 @@ public class ScoreManager : MonoBehaviour
 
 	public void ResetMultiplier()
 	{
-		if (!PlayerController.isInvincible)
+		if (!PlayerController.isConstHealth)
 		{
 			scoreMultiplier = 1;
 		}

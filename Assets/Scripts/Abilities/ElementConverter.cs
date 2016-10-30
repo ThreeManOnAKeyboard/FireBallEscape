@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ElementConverterController : MonoBehaviour
+public class ElementConverter : MonoBehaviour
 {
 	public float duration;
 	public GameObject fuelDropPrefab;
@@ -16,23 +16,33 @@ public class ElementConverterController : MonoBehaviour
 
 	private void OnEnable()
 	{
-
-	}
-
-	private void OnDisable()
-	{
-
+		StartCoroutine(DisableAfterDelay());
 	}
 
 	// Update is called once per frame
 	private void Update()
 	{
-		transform.position = playerTransform.position;
+		if (playerTransform != null)
+		{
+			transform.position = playerTransform.position;
+		}
+		else
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
 		GameObject fuelDrop = ObjectPool.Instance.GetPooledObject(fuelDropPrefab);
 		fuelDrop.transform.position = col.transform.position;
+		fuelDrop.SetActive(true);
+	}
+
+	private IEnumerator DisableAfterDelay()
+	{
+		yield return new WaitForSeconds(duration);
+
+		gameObject.SetActive(false);
 	}
 }

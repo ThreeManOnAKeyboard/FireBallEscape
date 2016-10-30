@@ -3,52 +3,55 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-	public static float health = 10;
-	public float startHealth;
+	public static float health = 10f;
 	public static float maximumHealth;
+
+	[Header("Health Parameters")]
+	public float startHealth;
 	public float maxHealth;
 
-	[Range(0, 1)]
-	public float minDamagePercent = 0;
-	[Range(0, 1)]
-	public float maxDamagePercent = 0;
-	[Range(0, 1)]
-	public float minHealPercent = 0;
-	[Range(0, 1)]
-	public float maxHealPercent = 0;
+	[Range(0f, 1f)]
+	public float minDamagePercent = 0f;
+	[Range(0f, 1f)]
+	public float maxDamagePercent = 0f;
+	[Range(0f, 1f)]
+	public float minHealPercent = 0f;
+	[Range(0f, 1f)]
+	public float maxHealPercent = 0f;
 
-	// Some UI gameobjects
+	[Header("On Stone Collision Parameters")]
+	[Range(0f, 1f)]
+	public float defaultRadius;
+	[Range(0f, 1f)]
+	public float onStoneCollisionRadius;
+	[Range(0f, 1f)]
+	public float radiusChangeSpeed;
+
+	[Header("Game UI References")]
 	public GameObject gameUI;
 	public GameObject gameOverScreen;
 
-	// Particle systems
-	public GameObject defaultParticleSystem;
-	public GameObject maxPowerParticleSystem;
+	[Header("Death Explosion Prefab")]
 	public GameObject deathExplosion;
-	public GameObject onStoneCollisionEffect;
 
-	public static bool isInvincible;
-	public bool isUnderSuperShield;
-
-	private Vector3 previousPosition;
-
-	// The maximum speed when player is invincible
-	private float invincibleSpeed;
-
+	public static bool isConstHealth;
 	public static float targetHealth;
+
+	private ParticleSystem.ShapeModule defaultShape;
 
 	void Awake()
 	{
+		defaultShape = GetComponentInChildren<ParticleSystem>().shape;
 		health = startHealth;
 		maximumHealth = maxHealth;
 		targetHealth = maximumHealth;
-		isInvincible = false;
+		isConstHealth = false;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (health <= 0)
+		if (health <= 0f)
 		{
 			gameOverScreen.SetActive(true);
 			gameUI.SetActive(false);
@@ -76,7 +79,7 @@ public class PlayerController : MonoBehaviour
 		////
 		#endregion
 
-		if (!isInvincible)
+		if (!isConstHealth)
 		{
 			health -= multiplier * maxHealth * Mathf.Clamp((health / maxHealth) * maxDamagePercent, minDamagePercent, maxDamagePercent);
 		}
@@ -84,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
 	public void Heal(float multiplier)
 	{
-		if (!isInvincible)
+		if (!isConstHealth)
 		{
 			if (targetHealth != maximumHealth)
 			{
@@ -99,13 +102,16 @@ public class PlayerController : MonoBehaviour
 
 	public void FullHeal()
 	{
-		targetHealth = maximumHealth;
-		health = maximumHealth;
+		if (!isConstHealth)
+		{
+			targetHealth = maximumHealth;
+			health = maximumHealth;
+		}
 	}
 
 	public void Kill()
 	{
-		if (!isInvincible)
+		if (!isConstHealth)
 		{
 			health = 0;
 		}
@@ -140,23 +146,6 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
-	#region Ultimate effect
-	public void ActivateUltimate(float speed)
-	{
-		isInvincible = true;
-		defaultParticleSystem.SetActive(false);
-		maxPowerParticleSystem.SetActive(true);
-		invincibleSpeed = speed;
-	}
-
-	public void DeactivateUltimate()
-	{
-		isInvincible = false;
-		defaultParticleSystem.SetActive(true);
-		maxPowerParticleSystem.SetActive(false);
-	}
-	#endregion
-
 	#region Poison drop effect
 	public void StartHealthDrain(float amount, float drainSpeed)
 	{
@@ -178,7 +167,7 @@ public class PlayerController : MonoBehaviour
 
 	private IEnumerator DrainHealth(float drainSpeed)
 	{
-		while (health > targetHealth)
+		while (health > targetHealth && !isConstHealth)
 		{
 			health -= drainSpeed * Time.deltaTime;
 
@@ -189,12 +178,30 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
-	#region Collision Effects
-	public void OnStoneCollision()
+	#region
+	public void OnStoneCollisionEffect()
 	{
-		GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(onStoneCollisionEffect);
-		collisionEffect.transform.position = transform.position;
-		collisionEffect.SetActive(true);
+		if (defaultShape.radius == defaultRadius)
+		{
+			defaultShape.radius = onStoneCollisionRadius;
+			StartCoroutine(DoStoneCollisionEffect());
+		}
+		else
+		{
+			defaultShape.radius = onStoneCollisionRadius;
+		}
+	}
+
+	private IEnumerator DoStoneCollisionEffect()
+	{
+		while (defaultShape.radius > defaultRadius)
+		{
+			defaultShape.radius -= radiusChangeSpeed * Time.deltaTime;
+
+			yield return null;
+		}
+
+		defaultShape.radius = defaultRadius;
 	}
 	#endregion
 }
