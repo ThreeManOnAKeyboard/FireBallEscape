@@ -41,7 +41,7 @@ public class HealthBarController : MonoBehaviour
 		);
 
 		//Update the Sparkle Image position
-		sparkle.rectTransform.anchoredPosition = new Vector3 ( healthBar.rectTransform.sizeDelta.x * healthBar.fillAmount, 12,0);
+		sparkle.rectTransform.anchoredPosition = new Vector3 (healthBar.rectTransform.sizeDelta.x * (healthBar.fillAmount - 0.01f), 12,0);
 
 	}
 }
