@@ -170,6 +170,7 @@
     <Compile Include="Assets\PlayServicesResolver\Editor\SampleDependencies.cs" />
     <Compile Include="Assets\PlayServicesResolver\Editor\SettingsDialog.cs" />
     <Compile Include="Assets\PlayServicesResolver\Editor\TextAreaDialog.cs" />
+    <Compile Include="Assets\Scripts\Editor\SpawnerEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />

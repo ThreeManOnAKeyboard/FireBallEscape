@@ -25,10 +25,10 @@ public class ZigZagSpawner : Spawner
 			// Pool new random drop
 			do
 			{
-				drop = ObjectPool.Instance.GetPooledObject(GetRandomDrop());
-			} while (drop == null);
+				objectToSpawn = ObjectPool.Instance.GetPooledObject(GetRandomSpawnable());
+			} while (objectToSpawn == null);
 
-			drop.transform.position = new Vector3
+			objectToSpawn.transform.position = new Vector3
 			(
 				Random.Range
 				(
@@ -38,7 +38,7 @@ public class ZigZagSpawner : Spawner
 				transform.position.y,
 				transform.position.z
 			);
-			drop.SetActive(true);
+			objectToSpawn.SetActive(true);
 		}
 	}
 }

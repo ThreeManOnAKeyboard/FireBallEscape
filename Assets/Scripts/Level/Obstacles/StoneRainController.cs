@@ -28,15 +28,15 @@ public class StoneRainController : MonoBehaviour
 		switch (GameManager.Instance.controlType)
 		{
 			case Enumerations.ControlType.Free:
-				enableMethod = FindObjectOfType<FreeControlSpawner>().ChangeCurrentDrops;
+				enableMethod = FindObjectOfType<FreeControlSpawner>().ChangeSpawnables;
 				resetMethod = FindObjectOfType<FreeControlSpawner>().ResetDrops;
 				break;
 			case Enumerations.ControlType.Sideways:
-				enableMethod = FindObjectOfType<LeftRightSpawner>().ChangeCurrentDrops;
+				enableMethod = FindObjectOfType<LeftRightSpawner>().ChangeSpawnables;
 				resetMethod = FindObjectOfType<LeftRightSpawner>().ResetDrops;
 				break;
 			case Enumerations.ControlType.ZigZag:
-				enableMethod = FindObjectOfType<ZigZagSpawner>().ChangeCurrentDrops;
+				enableMethod = FindObjectOfType<ZigZagSpawner>().ChangeSpawnables;
 				resetMethod = FindObjectOfType<ZigZagSpawner>().ResetDrops;
 				break;
 		}

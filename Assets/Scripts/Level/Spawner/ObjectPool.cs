@@ -70,7 +70,6 @@ public class ObjectPool : MonoBehaviour
 			}
 		}
 
-
 		// Check if gameobject can grow in amount
 		for (int i = 0; i < pooledObjectTypes.Length; i++)
 		{

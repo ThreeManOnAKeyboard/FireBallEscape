@@ -78,14 +78,7 @@ public class ShieldController : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.gameObject.layer == LayerMask.NameToLayer("FuelDrop"))
-		{
-			if (++leftSlots > slotsCount)
-			{
-				leftSlots = slotsCount;
-			}
-		}
-		else if (--leftSlots == 0)
+		if (--leftSlots == 0)
 		{
 			gameObject.SetActive(false);
 		}
@@ -159,6 +152,10 @@ public class ShieldController : MonoBehaviour
 
 	private float ClampAngle(float angle)
 	{
+		if (angle < 0)
+		{
+			print(angle);
+		}
 		if (angle > maxAngle && angle < (360f - maxAngle))
 		{
 			if ((angle - maxAngle) < (360f - maxAngle - angle))

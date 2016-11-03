@@ -36,11 +36,11 @@ public class LeftRightSpawner : Spawner
 			// Pool new random drop
 			do
 			{
-				drop = ObjectPool.Instance.GetPooledObject(GetRandomDrop());
-			} while (drop == null);
+				objectToSpawn = ObjectPool.Instance.GetPooledObject(GetRandomSpawnable());
+			} while (objectToSpawn == null);
 
-			drop.transform.position = new Vector3(spawnPosition, transform.position.y, transform.position.z);
-			drop.SetActive(true);
+			objectToSpawn.transform.position = new Vector3(spawnPosition, transform.position.y, transform.position.z);
+			objectToSpawn.SetActive(true);
 		}
 	}
 }

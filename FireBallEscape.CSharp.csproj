@@ -178,7 +178,7 @@
     <Compile Include="Assets\Scripts\Abilities\WaveBlastController.cs" />
     <Compile Include="Assets\Scripts\Level\Assistance\LavaFlowController.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\Drop.cs" />
-    <Compile Include="Assets\Scripts\Level\Drops\DropsHolder.cs" />
+    <Compile Include="Assets\Scripts\Level\Drops\DropSpawnProperties.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\DummyDropController.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\FuelDrop.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\PoisonDrop.cs" />

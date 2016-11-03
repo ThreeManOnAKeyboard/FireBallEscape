@@ -17,13 +17,6 @@ public class WaterDrop : Drop
 			StrikeController.targets.Remove(gameObject);
 		}
 
-		//if (col.tag != Tags.ELEMENT_IGNORE)
-		//{
 		DoCollisionEffect(col.tag);
-		//}
-		//else
-		//{
-		//	gameObject.SetActive(false);
-		//}
 	}
 }

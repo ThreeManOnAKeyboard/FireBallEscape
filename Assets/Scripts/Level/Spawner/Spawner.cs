@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Spawner : MonoBehaviour
 {
@@ -9,84 +10,92 @@ public class Spawner : MonoBehaviour
 	public float minSpawnInterval;
 	public float maxSpawnInterval;
 
-	protected List<DropSpawnProperties> currentDrops;
-	protected GameObject drop;
+	protected List<DropSpawnProperties> currentSpawnables;
+	protected GameObject objectToSpawn;
+	protected float priorityTotal;
 	protected bool isCooldownDone = true;
 
 	// Use this for initialization
 	protected void Start()
 	{
-		OrderByProbability();
-		currentDrops = spawnableObjects;
+		currentSpawnables = spawnableObjects;
+		OrderByPriority();
 	}
 
-	protected void OnValidate()
+	public void ChangeSpawnables(List<DropSpawnProperties> newSpawnables)
 	{
-		// Order spawnable objects by their spawn probability
-		OrderByProbability();
-	}
-
-	public void ChangeCurrentDrops(List<DropSpawnProperties> fuelRainDrops)
-	{
-		currentDrops = fuelRainDrops;
+		currentSpawnables = newSpawnables;
+		OrderByPriority();
 	}
 
 	public void ResetDrops()
 	{
-		currentDrops = spawnableObjects;
+		currentSpawnables = spawnableObjects;
+		OrderByPriority();
 	}
 
-	protected void OrderByProbability()
+	public void OrderByPriorityEditor()
 	{
-		// Order drops by probability
+		currentSpawnables = spawnableObjects;
+		OrderByPriority();
+		spawnableObjects = currentSpawnables;
+	}
+
+	public void OrderByPriority()
+	{
+		// Order drops by priority
 		int minIndex;
 		float minValue;
-		for (int i = 0; i < spawnableObjects.Count - 1; i++)
+		for (int i = 0; i < currentSpawnables.Count - 1; i++)
 		{
-			minValue = spawnableObjects[i].probability;
+			minValue = currentSpawnables[i].priority;
 			minIndex = i;
-			for (int j = i + 1; j < spawnableObjects.Count; j++)
+			for (int j = i + 1; j < currentSpawnables.Count; j++)
 			{
-				if (spawnableObjects[j].probability < minValue)
+				if (currentSpawnables[j].priority < minValue)
 				{
 					minIndex = j;
-					minValue = spawnableObjects[j].probability;
+					minValue = currentSpawnables[j].priority;
 				}
 			}
 
 			if (minIndex != i)
 			{
-				DropSpawnProperties tempDrop = spawnableObjects[i];
-				spawnableObjects[i] = spawnableObjects[minIndex];
-				spawnableObjects[minIndex] = tempDrop;
+				DropSpawnProperties tempDrop = currentSpawnables[i];
+				currentSpawnables[i] = currentSpawnables[minIndex];
+				currentSpawnables[minIndex] = tempDrop;
 			}
 		}
+
+		priorityTotal = currentSpawnables.Sum(spawnable => spawnable.priority);
 	}
 
-	protected GameObject GetRandomDrop()
+	protected GameObject GetRandomSpawnable()
 	{
-		float randomResult = Random.Range(0f, 1f);
+		float randomResult = Random.Range(0f, priorityTotal);
+		float prioritySubTotal = 0f;
 
-		for (int i = 0; i < currentDrops.Count; i++)
+		for (int i = 0; i < currentSpawnables.Count; i++)
 		{
-			if (randomResult <= currentDrops[i].probability)
+			prioritySubTotal += currentSpawnables[i].priority;
+			if (randomResult <= prioritySubTotal)
 			{
-				if (currentDrops[i].cooldownDuration != 0f)
+				if (currentSpawnables[i].cooldown != 0f)
 				{
 					if (isCooldownDone)
 					{
-						StartCoroutine(StartCooldown(currentDrops[i].cooldownDuration));
-						return currentDrops[i].drop;
+						StartCoroutine(StartCooldown(currentSpawnables[i].cooldown));
+						return currentSpawnables[i].spawnable;
 					}
 					else
 					{
-						// If a drop that requiries cooldown is not ready then try to get another drop type
-						return GetRandomDrop();
+						// Retry until it will return an available spawnable
+						return GetRandomSpawnable();
 					}
 				}
 				else
 				{
-					return currentDrops[i].drop;
+					return currentSpawnables[i].spawnable;
 				}
 			}
 		}
@@ -94,10 +103,10 @@ public class Spawner : MonoBehaviour
 		return null;
 	}
 
-	private IEnumerator StartCooldown(float cooldownDuration)
+	private IEnumerator StartCooldown(float cooldown)
 	{
 		isCooldownDone = false;
-		yield return new WaitForSeconds(cooldownDuration);
+		yield return new WaitForSeconds(cooldown);
 		isCooldownDone = true;
 	}
 }

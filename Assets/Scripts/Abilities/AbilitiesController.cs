@@ -46,12 +46,12 @@ public class AbilitiesController : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-		#if UNITY_EDITOR
+#if UNITY_EDITOR
 		if (Input.GetButtonDown("Jump"))
 		{
 			OnAbilityClick();
 		}
-		#endif
+#endif
 	}
 
 	public void OnValidate()
@@ -90,6 +90,7 @@ public class AbilitiesController : MonoBehaviour
 				// Clean current ability
 				currentAbility = null;
 				abilityIconHolder.sprite = defaultAbilityImage;
+				ResetElements();
 			}
 			catch (Exception)
 			{
@@ -120,7 +121,6 @@ public class AbilitiesController : MonoBehaviour
 		if (currentCombination[currentCombination.Length - 1] != Enumerations.DropType.Empty)
 		{
 			UpdateCurrentAbility();
-			ResetElements();
 		}
 	}
 
