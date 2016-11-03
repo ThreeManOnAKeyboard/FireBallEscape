@@ -7,7 +7,7 @@ public class LeftRightSpawner : Spawner
 	private LeftRightMovement LRMScript;
 
 	// Use this for initialization
-	new void Start()
+	new private void Start()
 	{
 		base.Start();
 

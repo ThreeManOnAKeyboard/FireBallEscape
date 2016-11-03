@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class FuelRainController : MonoBehaviour
 {
 	public float speed;
-	public List<DropHolder> fuelRainDrops;
+	public List<DropSpawnProperties> fuelRainDrops;
 	public float duration;
 
 	private Image splashEffectImage;
 	[Range(0.01f, 1f)]
 	public float splashDuration;
 
-	private delegate void EnableMethod(List<DropHolder> fuelRainDrops);
+	private delegate void EnableMethod(List<DropSpawnProperties> fuelRainDrops);
 	private EnableMethod enableMethod;
 
 	private delegate void ResetMethod();

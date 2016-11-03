@@ -4,56 +4,61 @@ using System.Collections.Generic;
 
 public class Spawner : MonoBehaviour
 {
-	public List<DropHolder> drops;
-	[HideInInspector]
-	public List<DropHolder> currentDrops;
+	public List<DropSpawnProperties> spawnableObjects;
 
 	public float minSpawnInterval;
 	public float maxSpawnInterval;
 
+	protected List<DropSpawnProperties> currentDrops;
 	protected GameObject drop;
 	protected bool isCooldownDone = true;
 
 	// Use this for initialization
-	public void Start()
+	protected void Start()
 	{
-		OrderDropsByProbability();
-		currentDrops = drops;
+		OrderByProbability();
+		currentDrops = spawnableObjects;
 	}
 
-	public void ChangeCurrentDrops(List<DropHolder> fuelRainDrops)
+	protected void OnValidate()
+	{
+		// Order spawnable objects by their spawn probability
+		OrderByProbability();
+	}
+
+	public void ChangeCurrentDrops(List<DropSpawnProperties> fuelRainDrops)
 	{
 		currentDrops = fuelRainDrops;
 	}
 
 	public void ResetDrops()
 	{
-		currentDrops = drops;
+		currentDrops = spawnableObjects;
 	}
 
-	protected void OrderDropsByProbability()
+	protected void OrderByProbability()
 	{
 		// Order drops by probability
 		int minIndex;
 		float minValue;
-		for (int i = 0; i < drops.Count - 1; i++)
+		for (int i = 0; i < spawnableObjects.Count - 1; i++)
 		{
-			minValue = drops[i].probability;
+			minValue = spawnableObjects[i].probability;
 			minIndex = i;
-			for (int j = i + 1; j < drops.Count; j++)
+			for (int j = i + 1; j < spawnableObjects.Count; j++)
 			{
-				if (drops[j].probability < minValue)
+				if (spawnableObjects[j].probability < minValue)
 				{
 					minIndex = j;
-					minValue = drops[j].probability;
+					minValue = spawnableObjects[j].probability;
 				}
 			}
 
 			if (minIndex != i)
 			{
-				DropHolder tempDrop = drops[i];
-				drops[i] = drops[minIndex];
-				drops[minIndex] = tempDrop;
+				DropSpawnProperties tempDrop = spawnableObjects[i];
+				spawnableObjects[i] = spawnableObjects[minIndex];
+				spawnableObjects[minIndex] = tempDrop;
 			}
 		}
 	}
@@ -66,7 +71,7 @@ public class Spawner : MonoBehaviour
 		{
 			if (randomResult <= currentDrops[i].probability)
 			{
-				if (currentDrops[i].needCooldown)
+				if (currentDrops[i].cooldownDuration != 0f)
 				{
 					if (isCooldownDone)
 					{

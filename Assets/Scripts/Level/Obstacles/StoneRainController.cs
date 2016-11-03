@@ -11,12 +11,12 @@ public class StoneRainController : MonoBehaviour
 	public float zoomDistance;
 
 	[Header("Earth Shake Parameters")]
-	public List<DropHolder> stoneRainDrops;
+	public List<DropSpawnProperties> stoneRainDrops;
 	public float duration;
 
 	public static bool isActive;
 
-	private delegate void EnableMethod(List<DropHolder> stoneRainDrops);
+	private delegate void EnableMethod(List<DropSpawnProperties> stoneRainDrops);
 	private EnableMethod enableMethod;
 
 	private delegate void ResetMethod();
