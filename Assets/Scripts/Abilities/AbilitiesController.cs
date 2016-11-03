@@ -9,7 +9,7 @@ using System.Linq;
 public class Element
 {
 	public Enumerations.DropType dropType;
-	public Color color;
+	public Sprite image;
 }
 
 public class AbilitiesController : MonoBehaviour
@@ -18,7 +18,7 @@ public class AbilitiesController : MonoBehaviour
 	private const int ELEMENTS_COUNT = 3;
 
 	[Header("Elements properties")]
-	public Color defaultElementColor;   // Should be transparent
+	public Sprite defaultElementImage;
 	public List<Element> elements = new List<Element>(ELEMENTS_COUNT);
 	public Image[] elementsImages = new Image[ELEMENTS_COUNT];
 
@@ -32,7 +32,6 @@ public class AbilitiesController : MonoBehaviour
 
 	// UI references
 	public Image abilityIconHolder;
-	public Image abilityIconBackground;
 
 	// Ability references
 	private Enumerations.DropType[] currentCombination = new Enumerations.DropType[ELEMENTS_COUNT];
@@ -47,12 +46,12 @@ public class AbilitiesController : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-#if UNITY_EDITOR
+		#if UNITY_EDITOR
 		if (Input.GetButtonDown("Jump"))
 		{
 			OnAbilityClick();
 		}
-#endif
+		#endif
 	}
 
 	public void OnValidate()
@@ -111,7 +110,7 @@ public class AbilitiesController : MonoBehaviour
 			if (currentCombination[i] == Enumerations.DropType.Empty)
 			{
 				currentCombination[i] = dropType;
-				elementsImages[i].color = elements.Find(element => element.dropType == dropType).color;
+				elementsImages[i].sprite = elements.Find(element => element.dropType == dropType).image;
 
 				break;
 			}
@@ -155,7 +154,7 @@ public class AbilitiesController : MonoBehaviour
 	{
 		foreach (Image elementObject in elementsImages)
 		{
-			elementObject.color = defaultElementColor;
+			elementObject.sprite = defaultElementImage;
 		}
 	}
 
