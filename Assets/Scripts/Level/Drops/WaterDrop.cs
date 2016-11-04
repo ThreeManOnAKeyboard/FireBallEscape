@@ -17,6 +17,9 @@ public class WaterDrop : Drop
 			StrikeController.targets.Remove(gameObject);
 		}
 
-		DoCollisionEffect(col.tag);
+		if (col.tag != Tags.FIRESPIRITS)
+		{
+			DoCollisionEffect(col.tag);
+		}
 	}
 }

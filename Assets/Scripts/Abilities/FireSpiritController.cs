@@ -18,7 +18,7 @@ public class FireSpiritController : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
-		if (target != null)
+		if (target != null && target.gameObject.activeInHierarchy)
 		{
 			// Move towards a terget
 			transform.position = Vector3.Lerp
@@ -32,6 +32,17 @@ public class FireSpiritController : MonoBehaviour
 		{
 			// target was destroyed before fire spirit reached it
 			gameObject.SetActive(false);
+		}
+		else
+		{
+			//timer += Time.deltaTime;
+			//angle = timer;
+			//transform.position = new Vector3
+			//(
+			//	(centerx + Mathf.Sin(angle) * rad),
+			//	centery,
+			//	((centerz + Mathf.Cos(angle) * rad))
+			//);
 		}
 	}
 
@@ -49,6 +60,7 @@ public class FireSpiritController : MonoBehaviour
 			Debug.Log("Boom dat target!");
 
 			// Disable fire spirit
+			col.gameObject.GetComponent<Drop>().DoCollisionEffect(col.tag);
 			gameObject.SetActive(false);
 		}
 	}

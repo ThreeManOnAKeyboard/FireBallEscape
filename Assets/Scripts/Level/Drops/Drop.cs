@@ -33,7 +33,7 @@ public abstract class Drop : MonoBehaviour
 	}
 
 	// Perform a post effect for respective drop
-	protected void DoCollisionEffect(string colTag)
+	public void DoCollisionEffect(string colTag)
 	{
 		if (colTag != Tags.DESTROYER && collisionEffect != null)
 		{

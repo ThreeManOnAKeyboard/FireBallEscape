@@ -13,6 +13,9 @@ public class PoisonDrop : Drop
 			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Poison);
 		}
 
-		DoCollisionEffect(col.tag);
+		if (col.tag != Tags.FIRESPIRITS)
+		{
+			DoCollisionEffect(col.tag);
+		}
 	}
 }

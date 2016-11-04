@@ -2,8 +2,6 @@
 
 public class FireSpiritsController : MonoBehaviour
 {
-	public float rotationSpeed;
-
 	private FireSpiritController[] fireSpirits;
 	private Transform playerTransform;
 
@@ -27,8 +25,14 @@ public class FireSpiritsController : MonoBehaviour
 	// Update is called once per frame
 	private void Update()
 	{
+		// Check if player is still alive
+		if (playerTransform == null)
+		{
+			gameObject.SetActive(false);
+			return;
+		}
+
 		transform.position = playerTransform.position;
-		transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
 
 		// Verify if each fire spirit reached their target
 		foreach (FireSpiritController fireSpirit in fireSpirits)
