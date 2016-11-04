@@ -171,6 +171,8 @@
     <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
     <Compile Include="Assets\Scripts\Abilities\ElementConverter.cs" />
     <Compile Include="Assets\Scripts\Abilities\FireBallController.cs" />
+    <Compile Include="Assets\Scripts\Abilities\FireSpiritController.cs" />
+    <Compile Include="Assets\Scripts\Abilities\FireSpiritsController.cs" />
     <Compile Include="Assets\Scripts\Abilities\FuelRainController.cs" />
     <Compile Include="Assets\Scripts\Abilities\MagnetController.cs" />
     <Compile Include="Assets\Scripts\Abilities\ShieldController.cs" />

@@ -4,15 +4,21 @@ using UnityEngine.UI;
 public class Cheats : MonoBehaviour
 {
 #if UNITY_EDITOR
-	public KeyCode healKeyCode;
-	public KeyCode shakeKeyCode;
-	public KeyCode toggleInvincabilityKeyCode;
+	[Header("Key Codes")]
+	public KeyCode heal;
+	public KeyCode shake;
+	public KeyCode toggleInvincability;
+	public KeyCode fuelElement;
+	public KeyCode waterElement;
+	public KeyCode poisonElement;
 
+	[Header("Help Texts")]
 	public Text healText;
 	public Text shakeText;
 	public Text invincibleText;
 
-	public bool bifa;
+	[Header("Turn off to hide tips")]
+	public bool showTips;
 
 	private PlayerController playerController;
 
@@ -21,24 +27,24 @@ public class Cheats : MonoBehaviour
 	{
 		playerController = FindObjectOfType<PlayerController>();
 
-		if (bifa)
+		if (showTips)
 		{
-			healText.text = "Press " + healKeyCode.ToString() + " to heal";
-			shakeText.text = "Press " + shakeKeyCode.ToString() + " to shake camera";
-			invincibleText.text = "Press " + toggleInvincabilityKeyCode.ToString() + " to enable invincible state";
+			healText.text = "Press " + heal.ToString() + " to heal";
+			shakeText.text = "Press " + shake.ToString() + " to shake camera";
+			invincibleText.text = "Press " + toggleInvincability.ToString() + " to enable invincible state";
 		}
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetKey(healKeyCode))
+		if (Input.GetKey(heal))
 		{
 			playerController.Heal(0.4f);
 		}
 
 		// Simulate camera shake
-		if (Input.GetKeyDown(shakeKeyCode))
+		if (Input.GetKeyDown(shake))
 		{
 			Camera.main.gameObject.GetComponent<CameraShake>().StartShake
 			(
@@ -49,21 +55,36 @@ public class Cheats : MonoBehaviour
 			);
 		}
 
-		if (Input.GetKeyDown(toggleInvincabilityKeyCode))
+		if (Input.GetKeyDown(toggleInvincability))
 		{
 			PlayerController.isConstHealth = !PlayerController.isConstHealth;
 
-			if (bifa)
+			if (showTips)
 			{
 				if (PlayerController.isConstHealth)
 				{
-					invincibleText.text = "Press " + toggleInvincabilityKeyCode.ToString() + " to disable invincible state";
+					invincibleText.text = "Press " + toggleInvincability.ToString() + " to disable invincible state";
 				}
 				else
 				{
-					invincibleText.text = "Press " + toggleInvincabilityKeyCode.ToString() + " to enable invincible state";
+					invincibleText.text = "Press " + toggleInvincability.ToString() + " to enable invincible state";
 				}
 			}
+		}
+
+		if (Input.GetKeyDown(fuelElement))
+		{
+			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Fuel);
+		}
+
+		if (Input.GetKeyDown(waterElement))
+		{
+			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Water);
+		}
+
+		if (Input.GetKeyDown(poisonElement))
+		{
+			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Poison);
 		}
 	}
 #endif

@@ -1,12 +1,13 @@
 ﻿public class Tags
 {
-	public static string PLAYER = "Player";
-	public static string BACKGROUND = "Background";
-	public static string DROP = "Drop";
-	public static string MAXPOWERWAVE = "MaxPowerWave";
-	public static string SHIELD = "Shield";
-	public static string DESTROYER = "Destroyer";
-	public static string GAMEUI = "GameUI";
-	public static string FIREBALL = "Fireball";
-	public static string ELEMENT_IGNORE = "ElementIgnore";
+	public const string PLAYER = "Player";
+	public const string BACKGROUND = "Background";
+	public const string DROP = "Drop";
+	public const string MAXPOWERWAVE = "MaxPowerWave";
+	public const string SHIELD = "Shield";
+	public const string DESTROYER = "Destroyer";
+	public const string GAMEUI = "GameUI";
+	public const string FIREBALL = "Fireball";
+	public const string ELEMENT_IGNORE = "ElementIgnore";
+	public const string FIRESPIRIT = "FireSpirit";
 }
