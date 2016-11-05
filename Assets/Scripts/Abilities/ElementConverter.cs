@@ -41,7 +41,7 @@ public class ElementConverter : MonoBehaviour
 
 	private IEnumerator DisableAfterDelay()
 	{
-		yield return new WaitForSeconds(duration);
+		yield return new WaitForSecondsRealtime(duration);
 
 		gameObject.SetActive(false);
 	}

@@ -77,7 +77,7 @@ public class FireBallController : MonoBehaviour
 					transform.position.z
 				);
 
-				time += Time.deltaTime;
+				time += Time.unscaledDeltaTime;
 			}
 
 			yield return null;
@@ -110,7 +110,7 @@ public class FireBallController : MonoBehaviour
 			collisionPoint = new Vector3
 			(
 				nearestTarget.transform.position.x,
-				nearestTarget.transform.position.y - targetDrop.fallSpeed * collisionTime,
+				nearestTarget.transform.position.y - targetDrop.fallSpeed * collisionTime * Time.timeScale,
 				nearestTarget.transform.position.z
 			);
 

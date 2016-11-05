@@ -37,7 +37,7 @@ public class StrikeController : MonoBehaviour
 		// Deactivate ability when all fireballs reached their target
 		while (GameObject.FindGameObjectsWithTag(Tags.FIREBALL).Length != 0)
 		{
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSecondsRealtime(0.5f);
 		}
 
 		gameObject.SetActive(false);

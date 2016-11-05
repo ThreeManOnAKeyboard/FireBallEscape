@@ -6,10 +6,7 @@ public class FPSDisplay : MonoBehaviour
 
 	void Update()
 	{
-		if (Time.timeScale != 0f)
-		{
-			deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-		}
+		deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 	}
 
 	void OnGUI()

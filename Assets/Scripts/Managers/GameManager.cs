@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 
 	public void UnpauseGame()
 	{
-		Time.timeScale = 1;
+		Time.timeScale = 1f;
 	}
 
 	public void GoToMenu()

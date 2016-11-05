@@ -61,7 +61,7 @@ public class FuelRainController : MonoBehaviour
 
 	private IEnumerator ResetDrops()
 	{
-		yield return new WaitForSeconds(duration);
+		yield return new WaitForSecondsRealtime(duration);
 
 		resetMethod();
 		gameObject.SetActive(false);

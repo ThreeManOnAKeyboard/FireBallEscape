@@ -34,7 +34,7 @@ public class WaveBlastController : MonoBehaviour
 	{
 		while (Camera.main.WorldToViewportPoint(transform.position).y <= 1.3f && Camera.main.WorldToViewportPoint(transform.position).y >= -0.3f)
 		{
-			transform.Translate(Vector2.up * speed * Time.deltaTime);
+			transform.Translate(Vector2.up * speed * Time.unscaledDeltaTime);
 
 			yield return null;
 		}

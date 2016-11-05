@@ -65,7 +65,7 @@ public class CameraController : MonoBehaviour
 				(
 					transform.position.y,
 					target.position.y + yPositionOffset,
-					followSpeed * Time.deltaTime
+					followSpeed * Time.unscaledDeltaTime
 				),
 				transform.position.z
 			);

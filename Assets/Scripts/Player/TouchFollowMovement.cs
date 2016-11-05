@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TouchFollowMovement : MonoBehaviour
+public class TouchFollowMovement : Movement
 {
 	// For test purposes in case if a mobile device is connected to Unity via Unity Remote 5
 	public bool isUnityRemote;
@@ -38,7 +38,7 @@ public class TouchFollowMovement : MonoBehaviour
 			return;
 		}
 
-		speed.y = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y);
+		speed.y = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y) * speedMultiplier;
 
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 		//if (isUnityRemote)
@@ -58,11 +58,11 @@ public class TouchFollowMovement : MonoBehaviour
 			(
 				Mathf.Clamp
 				(
-					Mathf.MoveTowards(transform.position.x, touchPosition.x, speed.x * Time.deltaTime),
+					Mathf.MoveTowards(transform.position.x, touchPosition.x, speed.x * speedMultiplier * Time.deltaTime),
 					CameraController.Instance.leftBorder + GameManager.Instance.bordersOffset,
 					CameraController.Instance.rightBorder - GameManager.Instance.bordersOffset
 				),
-				Mathf.Lerp(transform.position.y, touchPosition.y, speed.y * Time.deltaTime),
+				Mathf.Lerp(transform.position.y, touchPosition.y, speed.y * speedMultiplier * Time.deltaTime),
 				transform.position.z
 			);
 		}
@@ -189,7 +189,7 @@ public class TouchFollowMovement : MonoBehaviour
 	{
 		speed.x = 0f;
 		touchPosition = transform.position;
-		touchPosition.y += noTouchSpeedRate * speed.y * Time.deltaTime;
+		touchPosition.y += noTouchSpeedRate * speed.y * speedMultiplier * Time.deltaTime;
 		transform.position = touchPosition;
 	}
 }

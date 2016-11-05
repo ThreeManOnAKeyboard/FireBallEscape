@@ -177,6 +177,7 @@
     <Compile Include="Assets\Scripts\Abilities\MagnetController.cs" />
     <Compile Include="Assets\Scripts\Abilities\ShieldController.cs" />
     <Compile Include="Assets\Scripts\Abilities\StrikeController.cs" />
+    <Compile Include="Assets\Scripts\Abilities\SuperSpeedController.cs" />
     <Compile Include="Assets\Scripts\Abilities\WaveBlastController.cs" />
     <Compile Include="Assets\Scripts\Level\Assistance\LavaFlowController.cs" />
     <Compile Include="Assets\Scripts\Level\Drops\Drop.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Player\Cheats.cs" />
     <Compile Include="Assets\Scripts\Player\LeftRightMovement.cs" />
+    <Compile Include="Assets\Scripts\Player\Movement.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\TouchFollowMovement.cs" />
     <Compile Include="Assets\Scripts\Player\ZigZagMovement.cs" />

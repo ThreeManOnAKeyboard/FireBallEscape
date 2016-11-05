@@ -106,7 +106,7 @@ public class Spawner : MonoBehaviour
 	private IEnumerator StartCooldown(float cooldown)
 	{
 		isCooldownDone = false;
-		yield return new WaitForSeconds(cooldown);
+		yield return new WaitForSecondsRealtime(cooldown);
 		isCooldownDone = true;
 	}
 }

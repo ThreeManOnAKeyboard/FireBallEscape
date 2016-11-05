@@ -144,7 +144,7 @@ public class AbilitiesController : MonoBehaviour
 		Text refuseText = GameObject.Find("RefuseText").GetComponent<Text>();
 		refuseText.enabled = true;
 
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSecondsRealtime(2f);
 
 		refuseText.enabled = false;
 	}

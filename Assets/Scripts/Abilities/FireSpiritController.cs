@@ -25,7 +25,7 @@ public class FireSpiritController : MonoBehaviour
 			(
 				transform.position,
 				target.position,
-				speed * Time.deltaTime
+				speed * Time.unscaledDeltaTime
 			);
 		}
 		else if (!isAvailable)

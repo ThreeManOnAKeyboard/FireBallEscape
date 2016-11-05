@@ -20,7 +20,7 @@ public class ZigZagSpawner : Spawner
 		while (true)
 		{
 			// Wait the random amount of time till next drop instantiation
-			yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
+			yield return new WaitForSecondsRealtime(Random.Range(minSpawnInterval, maxSpawnInterval));
 
 			// Pool new random drop
 			do

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class LeftRightMovement : MonoBehaviour
+public class LeftRightMovement : Movement
 {
 	// The number of divisions in which the screen will be devided
 	public int bandsCount;
@@ -58,6 +58,8 @@ public class LeftRightMovement : MonoBehaviour
 			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.x, minSpeed.x, maxSpeed.x),
 			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y)
 		);
+
+		speed *= speedMultiplier;
 
 		// Move sideways
 		transform.position = Vector3.MoveTowards

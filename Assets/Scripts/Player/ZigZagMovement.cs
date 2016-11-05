@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ZigZagMovement : MonoBehaviour
+public class ZigZagMovement : Movement
 {
 	[HideInInspector]
 	public Enumerations.Direction currentDirection = Enumerations.Direction.Right;
@@ -48,7 +48,7 @@ public class ZigZagMovement : MonoBehaviour
 		}
 
 		// Calculate player base speed
-		speed = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed, minSpeed, maxSpeed);
+		speed = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed, minSpeed, maxSpeed) * speedMultiplier;
 
 		// Move player up
 		transform.Translate(Vector2.up * speed * Time.deltaTime * (1 - speedXOnYRatio));

@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour
 	{
 		if (health <= 0f)
 		{
+			Time.timeScale = 1f;
+			Time.fixedDeltaTime = 0.02f;
 			gameOverScreen.SetActive(true);
 			gameUI.SetActive(false);
 			ScoreManager.Instance.ProcessScore();
@@ -178,7 +180,7 @@ public class PlayerController : MonoBehaviour
 	}
 	#endregion
 
-	#region
+	#region Stone Collision Effect
 	public void OnStoneCollisionEffect()
 	{
 		if (defaultShape.radius == defaultRadius)

@@ -29,7 +29,7 @@ public class HealthBarController : MonoBehaviour
 		(
 			healthBar.fillAmount,
 			PlayerController.health / PlayerController.maximumHealth,
-			healthBarFillSpeed * Time.deltaTime
+			healthBarFillSpeed * Time.unscaledDeltaTime
 		);
 
 		// Update the poison bar UI
@@ -37,7 +37,7 @@ public class HealthBarController : MonoBehaviour
 		(
 			poisonBar.fillAmount,
 			1f - PlayerController.targetHealth / PlayerController.maximumHealth,
-			poisonBarFillSpeed * Time.deltaTime
+			poisonBarFillSpeed * Time.unscaledDeltaTime
 		);
 
 		//Update the Sparkle Image position
