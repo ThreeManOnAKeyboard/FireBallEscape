@@ -34,13 +34,14 @@ public class SuperSpeedController : MonoBehaviour
 	private IEnumerator Perform()
 	{
 		float time = 0f;
+		Movement.speedMultiplier = playerSpeedMultiplier / 4f;
 
 		// Perform fade in
 		while (time < fadeDuration)
 		{
 			Time.timeScale = 1f - time / fadeDuration * (1f - timeScale);
 			Time.fixedDeltaTime = 0.02f - time / fadeDuration * (0.02f - fixedDeltaTime);
-			Movement.speedMultiplier = Mathf.Clamp(time / fadeDuration * playerSpeedMultiplier, 1f, playerSpeedMultiplier);
+			//Movement.speedMultiplier = Mathf.Clamp(time / fadeDuration * playerSpeedMultiplier, 1f, playerSpeedMultiplier);
 
 			time += Time.unscaledDeltaTime;
 			yield return null;
@@ -53,13 +54,14 @@ public class SuperSpeedController : MonoBehaviour
 		yield return new WaitForSecondsRealtime(duration - 2f * fadeDuration);
 
 		time = 0f;
+		Movement.speedMultiplier = 1f;
 
 		// Perform fade out
 		while (time < fadeDuration)
 		{
 			Time.timeScale = 1f - (1f - time / fadeDuration) * (1f - timeScale);
 			Time.fixedDeltaTime = 0.02f - (1f - time / fadeDuration) * (0.02f - fixedDeltaTime);
-			Movement.speedMultiplier = Mathf.Clamp((1f - time / fadeDuration) * playerSpeedMultiplier, 1f, playerSpeedMultiplier);
+			//Movement.speedMultiplier = Mathf.Clamp((1f - time / fadeDuration) * playerSpeedMultiplier, 1f, playerSpeedMultiplier);
 
 			time += Time.unscaledDeltaTime;
 			yield return null;
@@ -67,7 +69,6 @@ public class SuperSpeedController : MonoBehaviour
 
 		Time.timeScale = 1f;
 		Time.fixedDeltaTime = 0.02f;
-		Movement.speedMultiplier = 1f;
 
 		gameObject.SetActive(false);
 	}

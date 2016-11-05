@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MagnetController : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class MagnetController : MonoBehaviour
 	public float maxYOffset = -2f;
 
 	private Transform playerTransform;
+	private List<Transform> targets;
+	private bool isActive;
 
 	// Use this for initialization
 	private void Awake()
@@ -18,6 +21,8 @@ public class MagnetController : MonoBehaviour
 
 	private void OnEnable()
 	{
+		targets = new List<Transform>();
+		isActive = true;
 		StartCoroutine(DisableAfterDelay());
 	}
 
@@ -35,9 +40,10 @@ public class MagnetController : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D col)
 	{
-		if ((col.transform.position.y - transform.position.y) > maxYOffset)
+		if (isActive && (col.transform.position.y - transform.position.y) > maxYOffset)
 		{
 			col.gameObject.GetComponent<FuelDrop>().canMove = false;
+			targets.Add(col.transform);
 			StartCoroutine(MagnetizeDrop(col.transform));
 		}
 	}
@@ -69,11 +75,22 @@ public class MagnetController : MonoBehaviour
 
 			yield return null;
 		}
+
+		targets.Remove(target);
 	}
 
 	private IEnumerator DisableAfterDelay()
 	{
 		yield return new WaitForSecondsRealtime(duration);
+
+		// Disable magnet to not magnetize any other fuel drops
+		isActive = false;
+
+		// Wait until all targets are magnetized
+		while (targets.Count > 0)
+		{
+			yield return null;
+		}
 
 		gameObject.SetActive(false);
 	}
