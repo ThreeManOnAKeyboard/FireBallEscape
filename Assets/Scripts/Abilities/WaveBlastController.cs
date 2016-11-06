@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class WaveBlastController : MonoBehaviour
+public class WaveBlastController : AbilityController
 {
 	public float speed;
 	public float finalRadiusDeltaTime;

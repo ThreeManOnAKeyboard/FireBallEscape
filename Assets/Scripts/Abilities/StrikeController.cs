@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrikeController : MonoBehaviour
+public class StrikeController : AbilityController
 {
 	public GameObject fireBall;
 	public int fireballsAmount = 1;

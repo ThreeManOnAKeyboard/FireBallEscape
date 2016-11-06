@@ -151,10 +151,6 @@ public class ShieldController : MonoBehaviour
 
 	private float ClampAngle(float angle)
 	{
-		if (angle < 0)
-		{
-			print(angle);
-		}
 		if (angle > maxAngle && angle < (360f - maxAngle))
 		{
 			if ((angle - maxAngle) < (360f - maxAngle - angle))

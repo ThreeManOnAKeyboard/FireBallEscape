@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SuperSpeedController : MonoBehaviour
+public class SuperSpeedController : AbilityController
 {
 	public float duration;
 	public float fadeDuration;

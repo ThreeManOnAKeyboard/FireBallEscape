@@ -8,7 +8,6 @@ public class WaterDrop : Drop
 		{
 			playerController.Damage(healthMultiplier);
 			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Water);
-			ScoreManager.Instance.ResetMultiplier();
 		}
 
 		// Remove this drop from targets list if Strike ability is activated

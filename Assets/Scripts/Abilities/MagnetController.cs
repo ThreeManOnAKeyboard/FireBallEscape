@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
-public class MagnetController : MonoBehaviour
+public class MagnetController : AbilityController
 {
 	public float duration;
 	public float startSpeed = 5f;

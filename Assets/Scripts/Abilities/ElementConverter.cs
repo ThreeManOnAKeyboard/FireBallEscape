@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ElementConverter : MonoBehaviour
+public class ElementConverter : AbilityController
 {
 	public float duration;
 	public GameObject fuelDropPrefab;

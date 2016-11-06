@@ -3,21 +3,25 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
+	public static ScoreManager Instance;
+
 	public Text currentScoreText;
 	public Text finalScoreText;
 	public Text highScoreText;
-	public float scoreRate = 1f;
-	private int scoreMultiplier = 1;
-	private float score = 0f;
+	public Text multiplierText;
+	public float scoreRate;
+
+	private float score;
+	private int scoreMultiplier;
+
 	private Vector3 previousPosition;
-
-	public static ScoreManager Instance;
-
 	private Transform playerTransform;
 
 	// Use this for initialization
-	void Awake()
+	private void Awake()
 	{
+		scoreMultiplier = 1;
+
 		if (Instance == null)
 		{
 			Instance = this;
@@ -27,7 +31,7 @@ public class ScoreManager : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
+	private void Update()
 	{
 		if (playerTransform != null)
 		{
@@ -42,29 +46,22 @@ public class ScoreManager : MonoBehaviour
 
 	public void AddScore(float scoreAmount)
 	{
-		score += scoreAmount * scoreMultiplier++ * scoreRate;
+		score += scoreAmount * scoreMultiplier * scoreRate;
 	}
 
-	public void AddMultiplier(int amount)
+	public void AddMultiplier()
 	{
-		scoreMultiplier += amount;
-		if (scoreMultiplier < 1)
+		scoreMultiplier *= 2;
+		multiplierText.text = scoreMultiplier.ToString();
+	}
+
+	public void SubstractMultiplier()
+	{
+		if (scoreMultiplier != 1)
 		{
-			scoreMultiplier = 0;
+			scoreMultiplier /= 2;
+			multiplierText.text = scoreMultiplier.ToString();
 		}
-	}
-
-	public void ResetMultiplier()
-	{
-		if (!PlayerController.isConstHealth)
-		{
-			scoreMultiplier = 1;
-		}
-	}
-
-	public float GetScore()
-	{
-		return score;
 	}
 
 	public void ProcessScore()

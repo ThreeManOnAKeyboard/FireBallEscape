@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class FireSpiritsController : MonoBehaviour
+public class FireSpiritsController : AbilityController
 {
 	private FireSpiritController[] fireSpirits;
 	private Transform playerTransform;
