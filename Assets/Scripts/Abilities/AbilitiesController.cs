@@ -136,6 +136,10 @@ public class AbilitiesController : MonoBehaviour
 			// Update UI
 			abilityIconHolder.sprite = currentAbility.icon;
 		}
+		else
+		{
+			ResetElements();
+		}
 	}
 
 	// This is just for development stage
