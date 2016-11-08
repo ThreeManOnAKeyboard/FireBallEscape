@@ -94,6 +94,9 @@
     <Reference Include="winrt">
       <HintPath>Assets\Plugins\UnityPurchasing\winrt\winrt.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-UnityScript-firstpass">
+      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="FireBallEscape.CSharp.Plugins.csproj">
@@ -161,6 +164,30 @@
     <Compile Include="Assets\GoogleMobileAds\Platforms\iOS\NativeExpressAdClient.cs" />
     <Compile Include="Assets\GoogleMobileAds\Platforms\iOS\RewardBasedVideoAdClient.cs" />
     <Compile Include="Assets\GoogleMobileAds\Platforms\iOS\Utils.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Demo\MyGui.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Prefabs\Balls\AddMaterialOnHit.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Prefabs\Balls\LazyLoad.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Prefabs\Balls\ProjectileCollisionBehaviour.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Prefabs\Buffs\ShieldCollisionBehaviour.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Prefabs\Buffs\WaterUvAnimation.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Prefabs\Buffs\WaterWaveUvAnimation.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Prefabs\Shots\LineRendererBehaviour.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\CollisionActiveBehaviour.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\DeadTime.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\DistortionMobile.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\EffectSettings.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\FadeInOutLight.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\FadeInOutParticles.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\FadeInOutScale.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\FadeInOutShaderColor.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\FadeInOutShaderFloat.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\FadeInOutStatus.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\FixShaderQueue.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\OnStartSendCollision.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\QueueUvAnimation.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\RandomRotate.cs" />
+    <Compile Include="Assets\Realistic Effects Pack\Scripts\Share\UVTextureAnimator.cs" />
+    <Compile Include="Assets\Scripts\3rdParty\Disabler.cs" />
     <Compile Include="Assets\Scripts\3rdParty\Enumerations.cs" />
     <Compile Include="Assets\Scripts\3rdParty\FPSDisplay.cs" />
     <Compile Include="Assets\Scripts\3rdParty\PlayerPrefsKeys.cs" />
@@ -176,6 +203,7 @@
     <Compile Include="Assets\Scripts\Abilities\FireSpiritsController.cs" />
     <Compile Include="Assets\Scripts\Abilities\FuelRainController.cs" />
     <Compile Include="Assets\Scripts\Abilities\MagnetController.cs" />
+    <Compile Include="Assets\Scripts\Abilities\ProtectionAuraController.cs" />
     <Compile Include="Assets\Scripts\Abilities\ScoreMultiplierController.cs" />
     <Compile Include="Assets\Scripts\Abilities\ShieldController.cs" />
     <Compile Include="Assets\Scripts\Abilities\StrikeController.cs" />
@@ -222,6 +250,33 @@
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Android\GoogleMobileAdsPlugin\AndroidManifest.xml" />
+    <None Include="Assets\Realistic Effects Pack\Readme.txt" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\AlphaBlended.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\AlphaBlendedNoSmooth.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\DiffuseRim.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Distortion\DistortionCullBack.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Distortion\DistortionCullOff.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Distortion\DistortionParticlesCutout.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Distortion\Free\FreeDistortionCullBack.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Distortion\Free\FreeDistortionCullOff.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Distortion\Free\FreeDistortionCutOut.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Explosion.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\GlowAdditive.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\GlowAdditiveSimple.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\GlowAdditiveTwoColor.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Matrix\Additive.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Matrix\GlowAdditive.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Matrix\GlowAdditiveSimple.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Mobile\Distortion\DistortionCullBack.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Mobile\Distortion\DistortionCullOff.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Mobile\Distortion\DistortionParticlesCutout.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Mobile\Water.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\ParticleAdd.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\ParticleAddNoSmooth.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Particles.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Rim.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\Water.shader" />
+    <None Include="Assets\Realistic Effects Pack\Shaders\WaterFree.shader" />
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />

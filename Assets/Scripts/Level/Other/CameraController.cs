@@ -9,6 +9,10 @@ public class CameraController : MonoBehaviour
 	public float followSpeed;
 	public float yPositionOffset;
 
+	[Header("Blooms")]
+	public Bloom bloom;
+	public BloomOptimized bloomOptimized;
+
 	private float _leftBorder;
 	private float _rightBorder;
 
@@ -22,14 +26,11 @@ public class CameraController : MonoBehaviour
 		Instance = this;
 
 		// Enable the supported bloom
-		Bloom thisBloom = GetComponent<Bloom>();
-		if (thisBloom.enabled && !thisBloom.CheckResources())
-		{
-			thisBloom.enabled = false;
-
-			GetComponent<BloomOptimized>().enabled = true;
-		}
-
+		//if (bloom.enabled && !bloom.CheckResources())
+		//{
+		//	bloom.enabled = false;
+		//	bloomOptimized.enabled = true;
+		//}
 #if UNITY_ANDROID && !UNITY_EDITOR
 		// Set Quality settings for android build
 		QualitySettings.vSyncCount = 0;
