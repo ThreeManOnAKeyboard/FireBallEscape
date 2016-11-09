@@ -26,11 +26,11 @@ public class CameraController : MonoBehaviour
 		Instance = this;
 
 		// Enable the supported bloom
-		//if (bloom.enabled && !bloom.CheckResources())
-		//{
-		//	bloom.enabled = false;
-		//	bloomOptimized.enabled = true;
-		//}
+		if (bloom.enabled && !bloom.CheckResources())
+		{
+			bloom.enabled = false;
+			bloomOptimized.enabled = true;
+		}
 #if UNITY_ANDROID && !UNITY_EDITOR
 		// Set Quality settings for android build
 		QualitySettings.vSyncCount = 0;
@@ -81,6 +81,6 @@ public class CameraController : MonoBehaviour
 
 	public void SetDownSample(int value)
 	{
-		GetComponent<BlurOptimized>().downsample = value;
+		//GetComponent<BlurOptimized>().downsample = value;
 	}
 }
