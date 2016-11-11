@@ -12,6 +12,11 @@ public class SpawnerEditor : Editor
 
 		spawner = (Spawner)target;
 
+		if (GUILayout.Button("Add New Spawnable"))
+		{
+			spawner.AddNewSpawnable(0);
+		}
+
 		if (GUILayout.Button("Order By Priority"))
 		{
 			spawner.OrderByPriorityEditor();

@@ -19,14 +19,6 @@ public class PlayerController : MonoBehaviour
 	[Range(0f, 1f)]
 	public float maxHealPercent = 0f;
 
-	[Header("On Stone Collision Parameters")]
-	[Range(0f, 1f)]
-	public float defaultRadius;
-	[Range(0f, 1f)]
-	public float onStoneCollisionRadius;
-	[Range(0f, 1f)]
-	public float radiusChangeSpeed;
-
 	[Header("Game UI References")]
 	public GameObject gameUI;
 	public GameObject gameOverScreen;
@@ -37,11 +29,11 @@ public class PlayerController : MonoBehaviour
 	public static bool isConstHealth;
 	public static float targetHealth;
 
-	private ParticleSystem.ShapeModule defaultShape;
+	private ParticleSystem.ShapeModule thisShape;
 
 	void Awake()
 	{
-		defaultShape = GetComponentInChildren<ParticleSystem>().shape;
+		thisShape = GetComponentInChildren<ParticleSystem>().shape;
 		health = startHealth;
 		maximumHealth = maxHealth;
 		targetHealth = maximumHealth;
@@ -181,29 +173,21 @@ public class PlayerController : MonoBehaviour
 	#endregion
 
 	#region Stone Collision Effect
-	public void OnStoneCollisionEffect()
+	public void OnStoneCollisionEffect(float effectDuration)
 	{
-		if (defaultShape.radius == defaultRadius)
+		if (thisShape.shapeType != ParticleSystemShapeType.Cone)
 		{
-			defaultShape.radius = onStoneCollisionRadius;
-			StartCoroutine(DoStoneCollisionEffect());
-		}
-		else
-		{
-			defaultShape.radius = onStoneCollisionRadius;
+			StartCoroutine(DoStoneCollisionEffect(effectDuration));
 		}
 	}
 
-	private IEnumerator DoStoneCollisionEffect()
+	private IEnumerator DoStoneCollisionEffect(float effectDuration)
 	{
-		while (defaultShape.radius > defaultRadius)
-		{
-			defaultShape.radius -= radiusChangeSpeed * Time.deltaTime;
+		thisShape.shapeType = ParticleSystemShapeType.ConeVolume;
 
-			yield return null;
-		}
+		yield return new WaitForSeconds(effectDuration);
 
-		defaultShape.radius = defaultRadius;
+		thisShape.shapeType = ParticleSystemShapeType.Sphere;
 	}
 	#endregion
 }

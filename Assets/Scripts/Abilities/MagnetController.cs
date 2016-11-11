@@ -62,7 +62,7 @@ public class MagnetController : AbilityController
 				(
 					target.position,
 					playerTransform.position,
-					speed * Time.deltaTime
+					speed * Time.unscaledDeltaTime
 				);
 			}
 			else
@@ -71,7 +71,7 @@ public class MagnetController : AbilityController
 			}
 
 			// Increase speed each frame
-			speed += acceleration * Time.deltaTime;
+			speed += acceleration * Time.unscaledDeltaTime;
 
 			yield return null;
 		}
@@ -81,7 +81,7 @@ public class MagnetController : AbilityController
 
 	private IEnumerator DisableAfterDelay()
 	{
-		yield return new WaitForSecondsRealtime(duration);
+		yield return new WaitForSeconds(duration);
 
 		// Disable magnet to not magnetize any other fuel drops
 		isActive = false;

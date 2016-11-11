@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 	// The x axis offset for both left / right borders to limit the player
 	public float bordersOffset;
 
+	private float currentTimeScale;
+
 	void Awake()
 	{
 		if (Instance == null)
@@ -33,12 +35,6 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
-
 	public void SetFreeControlType()
 	{
 		controlType = Enumerations.ControlType.Free;
@@ -56,12 +52,13 @@ public class GameManager : MonoBehaviour
 
 	public void PauseGame()
 	{
+		currentTimeScale = Time.timeScale;
 		Time.timeScale = 0f;
 	}
 
 	public void UnpauseGame()
 	{
-		Time.timeScale = 1f;
+		Time.timeScale = currentTimeScale;
 	}
 
 	public void GoToMenu()

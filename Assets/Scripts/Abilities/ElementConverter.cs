@@ -41,7 +41,7 @@ public class ElementConverter : AbilityController
 
 	private IEnumerator DisableAfterDelay()
 	{
-		yield return new WaitForSecondsRealtime(duration);
+		yield return new WaitForSeconds(duration);
 
 		gameObject.SetActive(false);
 	}

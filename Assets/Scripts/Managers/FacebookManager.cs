@@ -24,6 +24,8 @@ public class FacebookManager : MonoBehaviour
 	public Sprite profilePicture { get; set; }
 	public string appLinkURL { get; set; }
 
+	private float currentTimeScale;
+
 	void Awake()
 	{
 		_instance = this;
@@ -63,11 +65,12 @@ public class FacebookManager : MonoBehaviour
 	{
 		if (!isGameShown)
 		{
+			currentTimeScale = Time.timeScale;
 			Time.timeScale = 0;
 		}
 		else
 		{
-			Time.timeScale = 1;
+			Time.timeScale = currentTimeScale;
 		}
 	}
 

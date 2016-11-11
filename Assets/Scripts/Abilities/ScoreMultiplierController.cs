@@ -13,7 +13,7 @@ public class ScoreMultiplierController : AbilityController
 
 	private IEnumerator SubstractMultiplier()
 	{
-		yield return new WaitForSecondsRealtime(duration);
+		yield return new WaitForSeconds(duration);
 		ScoreManager.Instance.SubstractMultiplier();
 		gameObject.SetActive(false);
 	}

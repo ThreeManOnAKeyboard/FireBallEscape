@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FireBallController : MonoBehaviour
 {
+	public static int fireballCount;
+
 	public float collisionTime;
 
 	public float minScreenHeightRatio;
@@ -33,6 +35,8 @@ public class FireBallController : MonoBehaviour
 
 	private void OnEnable()
 	{
+		fireballCount++;
+
 		if (playerTransform != null)
 		{
 			transform.position = playerTransform.position;
@@ -45,11 +49,20 @@ public class FireBallController : MonoBehaviour
 		StartCoroutine(StrikeTarget());
 	}
 
+	private void OnDisable()
+	{
+		fireballCount--;
+	}
+
 	private IEnumerator StrikeTarget()
 	{
 		while (true)
 		{
-			if (target == null || !target.gameObject.activeInHierarchy)
+			if (Time.timeScale != 1f)
+			{
+				gameObject.SetActive(false);
+			}
+			else if (target == null || !target.gameObject.activeInHierarchy)
 			{
 				target = GetTarget();
 
@@ -110,7 +123,7 @@ public class FireBallController : MonoBehaviour
 			collisionPoint = new Vector3
 			(
 				nearestTarget.transform.position.x,
-				nearestTarget.transform.position.y - targetDrop.fallSpeed * collisionTime * Time.timeScale,
+				nearestTarget.transform.position.y - targetDrop.fallSpeed * collisionTime,
 				nearestTarget.transform.position.z
 			);
 

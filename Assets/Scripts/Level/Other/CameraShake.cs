@@ -57,7 +57,7 @@ public class CameraShake : MonoBehaviour
 			x *= magnitude * damper;
 			y *= magnitude * damper;
 
-			if (elapsedRate < 0.25f)
+			if (elapsedRate < 0.25f && zoom < (zoomDistance * elapsedRate / 0.25f))
 			{
 				zoom = zoomDistance * elapsedRate / 0.25f;
 			}

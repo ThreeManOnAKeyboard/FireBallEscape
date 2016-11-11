@@ -32,15 +32,15 @@ public class FuelRainController : MonoBehaviour
 		{
 			case Enumerations.ControlType.Free:
 				enableMethod = FindObjectOfType<FreeControlSpawner>().ChangeSpawnables;
-				resetMethod = FindObjectOfType<FreeControlSpawner>().ResetDrops;
+				resetMethod = FindObjectOfType<FreeControlSpawner>().ResetSpawnables;
 				break;
 			case Enumerations.ControlType.Sideways:
 				enableMethod = FindObjectOfType<LeftRightSpawner>().ChangeSpawnables;
-				resetMethod = FindObjectOfType<LeftRightSpawner>().ResetDrops;
+				resetMethod = FindObjectOfType<LeftRightSpawner>().ResetSpawnables;
 				break;
 			case Enumerations.ControlType.ZigZag:
 				enableMethod = FindObjectOfType<ZigZagSpawner>().ChangeSpawnables;
-				resetMethod = FindObjectOfType<ZigZagSpawner>().ResetDrops;
+				resetMethod = FindObjectOfType<ZigZagSpawner>().ResetSpawnables;
 				break;
 		}
 	}

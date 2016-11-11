@@ -20,18 +20,12 @@ public class LeftRightSpawner : Spawner
 		}
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
-
 	private IEnumerator SpawnDrop(float spawnPosition)
 	{
 		while (true)
 		{
 			// Wait the random amount of time till next drop instantiation
-			yield return new WaitForSecondsRealtime(Random.Range(minSpawnInterval, maxSpawnInterval));
+			yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
 
 			// Pool new random drop
 			do

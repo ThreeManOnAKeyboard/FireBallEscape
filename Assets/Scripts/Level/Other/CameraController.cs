@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityStandardAssets.ImageEffects;
 
 public class CameraController : MonoBehaviour
@@ -8,10 +9,6 @@ public class CameraController : MonoBehaviour
 	[Header("Camera Follow Parameters")]
 	public float followSpeed;
 	public float yPositionOffset;
-
-	[Header("Blooms")]
-	public Bloom bloom;
-	public BloomOptimized bloomOptimized;
 
 	private float _leftBorder;
 	private float _rightBorder;
@@ -24,19 +21,6 @@ public class CameraController : MonoBehaviour
 	private void Awake()
 	{
 		Instance = this;
-
-		// Enable the supported bloom
-		if (bloom.enabled && !bloom.CheckResources())
-		{
-			bloom.enabled = false;
-			bloomOptimized.enabled = true;
-		}
-#if UNITY_ANDROID && !UNITY_EDITOR
-		// Set Quality settings for android build
-		QualitySettings.vSyncCount = 0;
-
-		Application.targetFrameRate = 60;
-#endif
 	}
 
 	// Use this for initialization
@@ -66,7 +50,7 @@ public class CameraController : MonoBehaviour
 				(
 					transform.position.y,
 					target.position.y + yPositionOffset,
-					followSpeed * Time.unscaledDeltaTime
+					Time.timeScale == 0 ? 0f : followSpeed * Time.unscaledDeltaTime
 				),
 				transform.position.z
 			);
@@ -77,10 +61,5 @@ public class CameraController : MonoBehaviour
 	{
 		GetComponent<Animator>().applyRootMotion = true;
 		GetComponent<CameraShake>().originZ = transform.position.z;
-	}
-
-	public void SetDownSample(int value)
-	{
-		//GetComponent<BlurOptimized>().downsample = value;
 	}
 }

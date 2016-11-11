@@ -3,8 +3,15 @@ using UnityEngine;
 
 public class WaveBlastController : AbilityController
 {
+	[Header("Ability Parameters")]
 	public float speed;
 	public float finalRadiusDeltaTime;
+
+	[Header("Shake Parameters")]
+	public float duration;
+	public float shakeSpeed;
+	public float magnitude;
+	public float zoomDistance;
 
 	private float finalShapeRadius = 7f;
 	private float finalColliderRadius = 8f;
@@ -26,6 +33,8 @@ public class WaveBlastController : AbilityController
 	{
 		transform.position = player.transform.position;
 
+		CameraShake.Instance.StartShake(duration, shakeSpeed, magnitude, zoomDistance);
+
 		StartCoroutine(SelfDestroy());
 		StartCoroutine(ChangeRadiusSmoothly());
 	}
@@ -34,7 +43,10 @@ public class WaveBlastController : AbilityController
 	{
 		while (Camera.main.WorldToViewportPoint(transform.position).y <= 1.3f && Camera.main.WorldToViewportPoint(transform.position).y >= -0.3f)
 		{
-			transform.Translate(Vector2.up * speed * Time.unscaledDeltaTime);
+			if (Time.timeScale != 0)
+			{
+				transform.Translate(Vector2.up * speed * Time.unscaledDeltaTime);
+			}
 
 			yield return null;
 		}
@@ -53,7 +65,10 @@ public class WaveBlastController : AbilityController
 
 			yield return null;
 
-			time += Time.deltaTime;
+			if (Time.timeScale != 0)
+			{
+				time += Time.unscaledDeltaTime;
+			}
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StoneRainController : MonoBehaviour
@@ -16,45 +17,18 @@ public class StoneRainController : MonoBehaviour
 
 	public static bool isActive;
 
-	private delegate void EnableMethod(List<DropSpawnProperties> stoneRainDrops);
-	private EnableMethod enableMethod;
-
-	private delegate void ResetMethod();
-	private ResetMethod resetMethod;
+	private Spawner currentSpawner;
 
 	// Use this for initialization
 	private void Awake()
 	{
-		switch (GameManager.Instance.controlType)
-		{
-			case Enumerations.ControlType.Free:
-				enableMethod = FindObjectOfType<FreeControlSpawner>().ChangeSpawnables;
-				resetMethod = FindObjectOfType<FreeControlSpawner>().ResetDrops;
-				break;
-			case Enumerations.ControlType.Sideways:
-				enableMethod = FindObjectOfType<LeftRightSpawner>().ChangeSpawnables;
-				resetMethod = FindObjectOfType<LeftRightSpawner>().ResetDrops;
-				break;
-			case Enumerations.ControlType.ZigZag:
-				enableMethod = FindObjectOfType<ZigZagSpawner>().ChangeSpawnables;
-				resetMethod = FindObjectOfType<ZigZagSpawner>().ResetDrops;
-				break;
-		}
+		currentSpawner = GameObject.FindWithTag(Tags.SPAWNER).GetComponents<Spawner>().Single(spawner => spawner.enabled);
 	}
 
 	private void OnEnable()
 	{
-		if (FindObjectOfType<FuelRainController>() != null)
-		{
-			gameObject.SetActive(false);
-		}
-
+		isActive = true;
 		StartCoroutine(StartEarthshake());
-	}
-
-	private void OnDisable()
-	{
-		isActive = false;
 	}
 
 	private IEnumerator StartEarthshake()
@@ -63,16 +37,18 @@ public class StoneRainController : MonoBehaviour
 
 		yield return new WaitForSeconds(shakeDuration);
 
-		enableMethod(stoneRainDrops);
+		currentSpawner.ChangeSpawnables(stoneRainDrops);
+		Spawner.canChangeSpawnables = false;
 		StartCoroutine(ResetDrops());
-		isActive = true;
 	}
 
 	private IEnumerator ResetDrops()
 	{
 		yield return new WaitForSeconds(duration);
 
-		resetMethod();
+		currentSpawner.ResetSpawnables();
+		Spawner.canChangeSpawnables = true;
+		isActive = false;
 		gameObject.SetActive(false);
 	}
 }

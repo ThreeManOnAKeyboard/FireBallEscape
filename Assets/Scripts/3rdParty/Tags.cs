@@ -6,6 +6,7 @@
 	public const string MAXPOWERWAVE = "MaxPowerWave";
 	public const string SHIELD = "Shield";
 	public const string DESTROYER = "Destroyer";
+	public const string SPAWNER = "Spawner";
 	public const string GAMEUI = "GameUI";
 	public const string FIREBALL = "Fireball";
 	public const string ELEMENT_IGNORE = "ElementIgnore";

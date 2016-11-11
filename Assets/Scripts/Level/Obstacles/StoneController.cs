@@ -14,6 +14,7 @@ public class StoneController : MonoBehaviour
 	[Header("Instantiation Parameters")]
 	public float yOffset;
 	public Vector2 impulseForce;
+	public float collisionEffectDuration;
 
 	private Rigidbody2D thisRigidBody;
 	private PlayerController playerController;
@@ -41,7 +42,7 @@ public class StoneController : MonoBehaviour
 		transform.position = new Vector3
 		(
 			0f,
-			transform.position.y,
+			transform.position.y + yOffset,
 			transform.position.z
 		);
 
@@ -60,7 +61,7 @@ public class StoneController : MonoBehaviour
 	{
 		if (col.gameObject.tag == Tags.PLAYER)
 		{
-			playerController.OnStoneCollisionEffect();
+			playerController.OnStoneCollisionEffect(collisionEffectDuration);
 
 			if (onStoneRain)
 			{
@@ -80,7 +81,10 @@ public class StoneController : MonoBehaviour
 				collisionEffect.SetActive(true);
 			}
 
-			gameObject.SetActive(false);
+			if (onStoneRain)
+			{
+				gameObject.SetActive(false);
+			}
 		}
 	}
 }
