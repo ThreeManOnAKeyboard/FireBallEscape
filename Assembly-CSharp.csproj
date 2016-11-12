@@ -104,6 +104,7 @@
      <Compile Include="Assets\GoogleMobileAds\Platforms\iOS\NativeExpressAdClient.cs" />
      <Compile Include="Assets\GoogleMobileAds\Platforms\iOS\RewardBasedVideoAdClient.cs" />
      <Compile Include="Assets\GoogleMobileAds\Platforms\iOS\Utils.cs" />
+     <Compile Include="Assets\Scripts\3rdParty\Disabler.cs" />
      <Compile Include="Assets\Scripts\3rdParty\Enumerations.cs" />
      <Compile Include="Assets\Scripts\3rdParty\FPSDisplay.cs" />
      <Compile Include="Assets\Scripts\3rdParty\PlayerPrefsKeys.cs" />
@@ -112,12 +113,15 @@
      <Compile Include="Assets\Scripts\3rdParty\Util_Noise.cs" />
      <Compile Include="Assets\Scripts\Abilities\AbilitiesController.cs" />
      <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
+     <Compile Include="Assets\Scripts\Abilities\AbilityController.cs" />
      <Compile Include="Assets\Scripts\Abilities\ElementConverter.cs" />
      <Compile Include="Assets\Scripts\Abilities\FireBallController.cs" />
      <Compile Include="Assets\Scripts\Abilities\FireSpiritController.cs" />
      <Compile Include="Assets\Scripts\Abilities\FireSpiritsController.cs" />
      <Compile Include="Assets\Scripts\Abilities\FuelRainController.cs" />
      <Compile Include="Assets\Scripts\Abilities\MagnetController.cs" />
+     <Compile Include="Assets\Scripts\Abilities\ProtectionAuraController.cs" />
+     <Compile Include="Assets\Scripts\Abilities\ScoreMultiplierController.cs" />
      <Compile Include="Assets\Scripts\Abilities\ShieldController.cs" />
      <Compile Include="Assets\Scripts\Abilities\StrikeController.cs" />
      <Compile Include="Assets\Scripts\Abilities\SuperSpeedController.cs" />
@@ -129,6 +133,8 @@
      <Compile Include="Assets\Scripts\Level\Drops\FuelDrop.cs" />
      <Compile Include="Assets\Scripts\Level\Drops\PoisonDrop.cs" />
      <Compile Include="Assets\Scripts\Level\Drops\WaterDrop.cs" />
+     <Compile Include="Assets\Scripts\Level\Obstacles\GeyserController.cs" />
+     <Compile Include="Assets\Scripts\Level\Obstacles\PoisonGeyserController.cs" />
      <Compile Include="Assets\Scripts\Level\Obstacles\SteamGeyserController.cs" />
      <Compile Include="Assets\Scripts\Level\Obstacles\StoneCollisionEffectController.cs" />
      <Compile Include="Assets\Scripts\Level\Obstacles\StoneController.cs" />
@@ -149,6 +155,7 @@
      <Compile Include="Assets\Scripts\Level\Spawner\ZigZagSpawner.cs" />
      <Compile Include="Assets\Scripts\Managers\FacebookManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\PerformanceManager.cs" />
      <Compile Include="Assets\Scripts\Managers\Purchaser.cs" />
      <Compile Include="Assets\Scripts\Managers\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\Player\Cheats.cs" />
@@ -193,7 +200,6 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CreaseApply.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\ChromaticAberrationShader.shader" />
-     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\GlobalFog.shader" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
