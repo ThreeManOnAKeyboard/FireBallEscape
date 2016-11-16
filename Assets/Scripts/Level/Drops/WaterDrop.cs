@@ -4,11 +4,29 @@ public class WaterDrop : Drop
 {
 	public override void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.tag == Tags.PLAYER)
+		switch (col.tag)
 		{
-			playerController.Damage(healthMultiplier);
-			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Water);
+			case Tags.PLAYER:
+				playerController.Damage(healthMultiplier);
+				AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Water);
+				break;
+
+			case Tags.FIREBALL:
+				if (dropBooker != null)
+				{
+					if (dropBooker != col.gameObject)
+					{
+						return;
+					}
+				}
+				else
+				{
+					return;
+				}
+				break;
 		}
+
+		dropBooker = null;
 
 		// Remove this drop from targets list if Strike ability is activated
 		if (StrikeController.targets != null)
@@ -19,15 +37,6 @@ public class WaterDrop : Drop
 		if (col.tag != Tags.FIRESPIRITS)
 		{
 			DoCollisionEffect(col.tag);
-		}
-	}
-
-	private void OnDisable()
-	{
-		if (dropBooker != null)
-		{
-			dropBooker.GetComponent<FireBallController>().ResetTarget();
-			dropBooker = null;
 		}
 	}
 }
