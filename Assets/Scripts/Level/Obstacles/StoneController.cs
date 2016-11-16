@@ -13,6 +13,9 @@ public class StoneController : MonoBehaviour
 
 	[Header("Instantiation Parameters")]
 	public float yOffset;
+	public Vector2 xScaleRandomRange;
+	public Vector2 yScaleRandomRange;
+	public Vector2 zScaleRandomRange;
 	public Vector2 impulseForce;
 	public float collisionEffectDuration;
 
@@ -44,6 +47,13 @@ public class StoneController : MonoBehaviour
 			0f,
 			transform.position.y + yOffset,
 			transform.position.z
+		);
+
+		transform.localScale = new Vector3
+		(
+			Random.Range(xScaleRandomRange.x, xScaleRandomRange.y),
+			Random.Range(yScaleRandomRange.x, yScaleRandomRange.y),
+			Random.Range(zScaleRandomRange.x, zScaleRandomRange.y)
 		);
 
 		thisRigidBody.AddForce(impulseForce * (Random.Range(0, 2) == 0 ? 1f : -1f), ForceMode2D.Impulse);
@@ -78,6 +88,7 @@ public class StoneController : MonoBehaviour
 				GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(collisionEffectPrefab);
 				collisionEffect.transform.position = transform.position;
 				collisionEffect.transform.rotation = transform.rotation;
+				collisionEffect.transform.localScale = transform.localScale;
 				collisionEffect.SetActive(true);
 			}
 

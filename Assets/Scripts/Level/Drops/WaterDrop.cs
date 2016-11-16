@@ -21,4 +21,13 @@ public class WaterDrop : Drop
 			DoCollisionEffect(col.tag);
 		}
 	}
+
+	private void OnDisable()
+	{
+		if (dropBooker != null)
+		{
+			dropBooker.GetComponent<FireBallController>().ResetTarget();
+			dropBooker = null;
+		}
+	}
 }

@@ -9,6 +9,8 @@ public abstract class Drop : MonoBehaviour
 
 	[HideInInspector]
 	public bool canMove;
+	[HideInInspector]
+	public GameObject dropBooker;
 
 	protected PlayerController playerController;
 

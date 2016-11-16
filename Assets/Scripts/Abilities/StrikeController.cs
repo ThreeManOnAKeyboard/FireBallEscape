@@ -37,7 +37,7 @@ public class StrikeController : AbilityController
 		// Deactivate ability when all fireballs reached their target
 		while (FireBallController.fireballCount != 0)
 		{
-			yield return new WaitForSecondsRealtime(0.5f);
+			yield return new WaitForSecondsRealtime(0.2f);
 		}
 
 		gameObject.SetActive(false);

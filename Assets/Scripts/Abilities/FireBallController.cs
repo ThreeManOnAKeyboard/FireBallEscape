@@ -15,6 +15,7 @@ public class FireBallController : MonoBehaviour
 
 	// The target to follow
 	private GameObject target;
+	private Drop targetDropController;
 	private Transform playerTransform;
 	private Animator animator;
 	private Vector3 collisionPoint;
@@ -23,12 +24,7 @@ public class FireBallController : MonoBehaviour
 
 	private void Awake()
 	{
-		GameObject player = GameObject.FindWithTag(Tags.PLAYER);
-
-		if (player != null)
-		{
-			playerTransform = player.transform;
-		}
+		playerTransform = GameObject.FindWithTag(Tags.PLAYER).transform;
 
 		animator = GetComponentInChildren<Animator>();
 	}
@@ -41,6 +37,10 @@ public class FireBallController : MonoBehaviour
 		{
 			transform.position = playerTransform.position;
 		}
+		else
+		{
+			gameObject.SetActive(false);
+		}
 
 		target = null;
 		collisionPoint = Vector3.zero;
@@ -52,33 +52,24 @@ public class FireBallController : MonoBehaviour
 	private void OnDisable()
 	{
 		fireballCount--;
+		StopAllCoroutines();
 	}
 
 	private IEnumerator StrikeTarget()
 	{
 		while (true)
 		{
-			if (Time.timeScale != 1f)
+			// Disable fireball because it is not compatible with super speed ability
+			if (Time.timeScale != 1f || playerTransform == null)
 			{
 				gameObject.SetActive(false);
 			}
-			else if (target == null || !target.gameObject.activeInHierarchy)
+
+			if (target == null || !target.gameObject.activeInHierarchy)
 			{
+				animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, -1, 0f);
+				transform.position = playerTransform.position;
 				target = GetTarget();
-
-				if (target == null)
-				{
-					animator.Play(animator.GetCurrentAnimatorStateInfo(0).fullPathHash, -1, 0f);
-				}
-
-				if (playerTransform == null)
-				{
-					gameObject.SetActive(false);
-				}
-				else
-				{
-					transform.position = playerTransform.position;
-				}
 			}
 			else
 			{
@@ -90,7 +81,7 @@ public class FireBallController : MonoBehaviour
 					transform.position.z
 				);
 
-				time += Time.unscaledDeltaTime;
+				time += Time.deltaTime;
 			}
 
 			yield return null;
@@ -118,12 +109,12 @@ public class FireBallController : MonoBehaviour
 
 		if (nearestTarget != null)
 		{
-			Drop targetDrop = nearestTarget.gameObject.GetComponent<Drop>();
-
+			targetDropController = nearestTarget.gameObject.GetComponent<Drop>();
+			targetDropController.dropBooker = gameObject;
 			collisionPoint = new Vector3
 			(
 				nearestTarget.transform.position.x,
-				nearestTarget.transform.position.y - targetDrop.fallSpeed * collisionTime,
+				nearestTarget.transform.position.y - targetDropController.fallSpeed * collisionTime,
 				nearestTarget.transform.position.z
 			);
 
@@ -132,14 +123,14 @@ public class FireBallController : MonoBehaviour
 			StrikeController.targets.Add(nearestTarget.gameObject);
 
 			time = 0f;
-		}
 
-		transform.localScale = new Vector3
-		(
-			(Random.Range(0, 2) == 0 ? 1 : -1) * transform.localScale.x,
-			transform.localScale.y,
-			transform.localScale.z
-		);
+			transform.localScale = new Vector3
+			(
+				(Random.Range(0, 2) == 0 ? 1 : -1) * transform.localScale.x,
+				transform.localScale.y,
+				transform.localScale.z
+			);
+		}
 
 		return nearestTarget;
 	}
@@ -153,9 +144,15 @@ public class FireBallController : MonoBehaviour
 			collisionEffect.transform.position = transform.position;
 			collisionEffect.SetActive(true);
 			animator.Stop();
+			targetDropController.dropBooker = null;
 
 			// Deactivate current fireball
 			gameObject.SetActive(false);
 		}
+	}
+
+	public void ResetTarget()
+	{
+		target = null;
 	}
 }
