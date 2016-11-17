@@ -4,6 +4,7 @@ using System.Collections;
 public class GeyserController : MonoBehaviour
 {
 	[Header("Configuration parameters")]
+	public float efirstEjectDelay;
 	public float ejectDuration;
 	public float ejectCooldown;
 	public float angleRange = 40f;
@@ -60,6 +61,8 @@ public class GeyserController : MonoBehaviour
 
 	protected IEnumerator Eject()
 	{
+		yield return new WaitForSeconds(Random.Range(0f, efirstEjectDelay));
+
 		while (true)
 		{
 			// Eject the geyser
