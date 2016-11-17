@@ -57,7 +57,8 @@ public class PerformanceManager : MonoBehaviour
 		int averageFPS = (int)((Time.frameCount - lastFrameCount) / (Time.unscaledTime - lastUnscaledTime));
 		int targetFPS;
 
-		targetFPS = (averageFPS % 10 > 5) ? ((averageFPS / 10 + 1) * 10) : ((averageFPS / 10) * 10);
+		targetFPS = (averageFPS / 10 + 1) * 10;
+		//targetFPS = (averageFPS % 10 > 5) ? ((averageFPS / 10 + 1) * 10) : ((averageFPS / 10) * 10);
 
 		Application.targetFrameRate = Mathf.Clamp
 		(

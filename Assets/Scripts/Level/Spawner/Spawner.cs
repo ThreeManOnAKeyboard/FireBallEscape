@@ -100,28 +100,7 @@ public class Spawner : MonoBehaviour
 	public void OrderByPriority()
 	{
 		// Order drops by priority
-		int minIndex;
-		float minValue;
-		for (int i = 0; i < currentSpawnables.Count - 1; i++)
-		{
-			minValue = currentSpawnables[i].priority;
-			minIndex = i;
-			for (int j = i + 1; j < currentSpawnables.Count; j++)
-			{
-				if (currentSpawnables[j].priority < minValue)
-				{
-					minIndex = j;
-					minValue = currentSpawnables[j].priority;
-				}
-			}
-
-			if (minIndex != i)
-			{
-				DropSpawnProperties tempDrop = currentSpawnables[i];
-				currentSpawnables[i] = currentSpawnables[minIndex];
-				currentSpawnables[minIndex] = tempDrop;
-			}
-		}
+		currentSpawnables = currentSpawnables.OrderBy(spawnable => spawnable.priority).ToList();
 
 		priorityTotal = currentSpawnables.Sum(spawnable => spawnable.priority);
 	}

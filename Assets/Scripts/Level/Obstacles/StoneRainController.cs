@@ -33,12 +33,18 @@ public class StoneRainController : MonoBehaviour
 
 	private IEnumerator StartEarthshake()
 	{
+		// Wait until spawner can be changed
+		while (!Spawner.canChangeSpawnables)
+		{
+			yield return null;
+		}
+		Spawner.canChangeSpawnables = false;
+
 		CameraShake.Instance.StartShake(shakeDuration, shakeSpeed, shakeMagnitude, zoomDistance);
 
 		yield return new WaitForSeconds(shakeDuration);
 
 		currentSpawner.ChangeSpawnables(stoneRainDrops);
-		Spawner.canChangeSpawnables = false;
 		StartCoroutine(ResetDrops());
 	}
 

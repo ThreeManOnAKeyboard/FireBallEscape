@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 		health = startHealth;
 		maximumHealth = maxHealth;
 		targetHealth = maximumHealth;
-		isConstHealth = true;
+		isConstHealth = false;
 	}
 
 	// Update is called once per frame

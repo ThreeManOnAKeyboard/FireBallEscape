@@ -61,14 +61,21 @@ public class GeyserController : MonoBehaviour
 	{
 		yield return new WaitForSeconds(Random.Range(0f, firstEjectDelay));
 
-		while (true)
+		float worldToViewPortRatio;
+
+		do
 		{
 			Start();
 			yield return new WaitForSeconds(ejectDuration);
 
 			Stop();
+
 			yield return new WaitForSeconds(ejectCooldown);
-		}
+
+			worldToViewPortRatio = Camera.main.WorldToViewportPoint(transform.position).y;
+		} while (worldToViewPortRatio >= -0.25f);
+
+		gameObject.SetActive(false);
 	}
 
 	private void Start()

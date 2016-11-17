@@ -43,6 +43,7 @@ public class FireBallController : MonoBehaviour
 		else
 		{
 			gameObject.SetActive(false);
+			return;
 		}
 
 		target = null;
@@ -61,8 +62,11 @@ public class FireBallController : MonoBehaviour
 	private void OnDisable()
 	{
 		// Destroy old trail after it's fade to transparent
-		thisTrail.transform.parent = null;
-		Destroy(thisTrail.gameObject, thisTrail.time);
+		if (thisTrail != null)
+		{
+			thisTrail.transform.parent = null;
+			Destroy(thisTrail.gameObject, thisTrail.time);
+		}
 
 		fireballCount--;
 		StopAllCoroutines();

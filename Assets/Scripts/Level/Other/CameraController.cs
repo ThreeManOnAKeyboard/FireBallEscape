@@ -41,7 +41,7 @@ public class CameraController : MonoBehaviour
 
 	public void Follow()
 	{
-		if (target != null)
+		if (target != null && Time.timeScale != 0 && Application.isPlaying)
 		{
 			transform.position = new Vector3
 			(
@@ -50,7 +50,7 @@ public class CameraController : MonoBehaviour
 				(
 					transform.position.y,
 					target.position.y + yPositionOffset,
-					Time.timeScale == 0 ? 0f : followSpeed * Time.unscaledDeltaTime
+					followSpeed * Time.unscaledDeltaTime
 				),
 				transform.position.z
 			);
