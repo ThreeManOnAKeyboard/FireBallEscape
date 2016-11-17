@@ -4,7 +4,7 @@ using System.Collections;
 public class GeyserController : MonoBehaviour
 {
 	[Header("Configuration parameters")]
-	public float efirstEjectDelay;
+	public float firstEjectDelay;
 	public float ejectDuration;
 	public float ejectCooldown;
 	public float angleRange = 40f;
@@ -49,35 +49,41 @@ public class GeyserController : MonoBehaviour
 		// Change the rotation of x axis of mesh object so it looks different
 		meshTransform.Rotate(Vector3.right * Random.Range(0f, 359f));
 
-		StartCoroutine(Eject());
+		StartCoroutine(EjectProcess());
 	}
 
 	protected void OnDisable()
 	{
-		activeParticleSystem.Stop();
-		inactiveParticleSystem.Play();
-		thisCollider2D.enabled = false;
+		Stop();
 	}
 
-	protected IEnumerator Eject()
+	protected IEnumerator EjectProcess()
 	{
-		yield return new WaitForSeconds(Random.Range(0f, efirstEjectDelay));
+		yield return new WaitForSeconds(Random.Range(0f, firstEjectDelay));
 
 		while (true)
 		{
-			// Eject the geyser
-			activeParticleSystem.Play();
-			inactiveParticleSystem.Stop();
-			thisCollider2D.enabled = true;
-
+			Start();
 			yield return new WaitForSeconds(ejectDuration);
 
-			// Stop ejection
-			activeParticleSystem.Stop();
-			inactiveParticleSystem.Play();
-			thisCollider2D.enabled = false;
-
+			Stop();
 			yield return new WaitForSeconds(ejectCooldown);
 		}
+	}
+
+	private void Start()
+	{
+		// Eject
+		activeParticleSystem.Play();
+		inactiveParticleSystem.Stop();
+		thisCollider2D.enabled = true;
+	}
+
+	private void Stop()
+	{
+		// Stop ejection
+		activeParticleSystem.Stop();
+		inactiveParticleSystem.Play();
+		thisCollider2D.enabled = false;
 	}
 }
