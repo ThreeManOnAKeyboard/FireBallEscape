@@ -134,6 +134,7 @@
      <Compile Include="Assets\Scripts\Level\Drops\PoisonDrop.cs" />
      <Compile Include="Assets\Scripts\Level\Drops\WaterDrop.cs" />
      <Compile Include="Assets\Scripts\Level\Obstacles\GeyserController.cs" />
+     <Compile Include="Assets\Scripts\Level\Obstacles\MultipleGeysersController.cs" />
      <Compile Include="Assets\Scripts\Level\Obstacles\PoisonGeyserController.cs" />
      <Compile Include="Assets\Scripts\Level\Obstacles\SteamGeyserController.cs" />
      <Compile Include="Assets\Scripts\Level\Obstacles\StoneCollisionEffectController.cs" />
