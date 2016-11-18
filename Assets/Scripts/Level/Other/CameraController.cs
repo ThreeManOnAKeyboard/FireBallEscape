@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityStandardAssets.ImageEffects;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {

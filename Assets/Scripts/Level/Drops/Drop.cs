@@ -2,7 +2,8 @@
 
 public abstract class Drop : MonoBehaviour
 {
-	public GameObject collisionEffect;
+	public GameObject defaultCollisionEffect;
+	public GameObject geyserCollisionEffect;
 	public float fallSpeed;
 	public float scoreAmount;
 	public float healthMultiplier = 1f;
@@ -37,9 +38,26 @@ public abstract class Drop : MonoBehaviour
 	// Perform a post effect for respective drop
 	public void DoCollisionEffect(string colTag)
 	{
-		if (colTag != Tags.DESTROYER && collisionEffect != null)
+		// Collision Effect
+		GameObject collisionParticleSystem = null;
+
+		// Choose collision effect
+		switch (colTag)
 		{
-			GameObject collisionParticleSystem = ObjectPool.Instance.GetPooledObject(collisionEffect);
+			case Tags.DESTROYER:
+				break;
+
+			case Tags.GEYSER:
+				collisionParticleSystem = ObjectPool.Instance.GetPooledObject(geyserCollisionEffect);
+				break;
+
+			default:
+				collisionParticleSystem = ObjectPool.Instance.GetPooledObject(defaultCollisionEffect);
+				break;
+		}
+
+		if (collisionParticleSystem != null)
+		{
 			collisionParticleSystem.transform.position = transform.position;
 			collisionParticleSystem.SetActive(true);
 		}

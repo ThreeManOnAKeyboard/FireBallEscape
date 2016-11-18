@@ -12,4 +12,5 @@
 	public const string ELEMENT_IGNORE = "ElementIgnore";
 	public const string FIRESPIRIT = "FireSpirit";
 	public const string FIRESPIRITS = "FireSpirits";
+	public const string GEYSER = "Geyser";
 }

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance { get; private set; }
 
+	[HideInInspector]
 	public Enumerations.ControlType controlType;
 
 	// The x axis offset for both left / right borders to limit the player

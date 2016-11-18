@@ -10,7 +10,7 @@ public class MagnetController : AbilityController
 	public float maxYOffset = -2f;
 
 	private Transform playerTransform;
-	private List<Transform> targets;
+	private List<Drop> targets;
 	private bool isActive;
 
 	// Use this for initialization
@@ -21,7 +21,7 @@ public class MagnetController : AbilityController
 
 	private void OnEnable()
 	{
-		targets = new List<Transform>();
+		targets = new List<Drop>();
 		isActive = true;
 		StartCoroutine(DisableAfterDelay());
 	}
@@ -34,7 +34,8 @@ public class MagnetController : AbilityController
 		}
 		else
 		{
-			Destroy(gameObject);
+			targets.ForEach(target => target.canMove = true);
+			gameObject.SetActive(false);
 		}
 	}
 
@@ -42,32 +43,34 @@ public class MagnetController : AbilityController
 	{
 		if (isActive && (col.transform.position.y - transform.position.y) > maxYOffset)
 		{
-			col.gameObject.GetComponent<FuelDrop>().canMove = false;
-			targets.Add(col.transform);
-			StartCoroutine(MagnetizeDrop(col.transform));
+			StartCoroutine(MagnetizeDrop(col.gameObject.GetComponent<Drop>()));
 		}
 	}
 
-	private IEnumerator MagnetizeDrop(Transform target)
+	private IEnumerator MagnetizeDrop(Drop target)
 	{
 		// Initialize speed
 		float speed = startSpeed;
+
+		// Apply changes on target Drop
+		target.canMove = false;
+		targets.Add(target);
 
 		while (target.gameObject.activeInHierarchy)
 		{
 			if (playerTransform != null)
 			{
 				// Aproach target fuel drop to player
-				target.position = Vector3.MoveTowards
+				target.transform.position = Vector3.MoveTowards
 				(
-					target.position,
+					target.transform.position,
 					playerTransform.position,
 					speed * Time.unscaledDeltaTime
 				);
 			}
 			else
 			{
-				Destroy(gameObject);
+				gameObject.SetActive(false);
 			}
 
 			// Increase speed each frame
