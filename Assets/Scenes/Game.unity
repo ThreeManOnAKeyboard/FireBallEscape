@@ -1350,10 +1350,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4975a6e437fc3b149a8cd508ce5bdd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 0.14
-  intensity: 1.8
+  threshold: 0.15
+  intensity: 1.7
   blurSize: 5.5
-  blurIterations: 2
+  blurIterations: 3
   blurType: 0
   fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
 --- !u!95 &308564356
@@ -1646,7 +1646,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 373777405}
   m_OnClick:
     m_PersistentCalls:
@@ -8594,7 +8594,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 162478, guid: d7d0d771b15117f42b96096fd1655dfd, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d7d0d771b15117f42b96096fd1655dfd, type: 2}
@@ -10260,13 +10260,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b75d6277255904438de0b7e287b4895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUnityRemote: 1
-  minSpeed: {x: 7, y: 1}
-  maxSpeed: {x: 14, y: 1}
+  isUnityRemote: 0
+  minSpeed: {x: 7, y: 3}
+  maxSpeed: {x: 14, y: 6}
   xAxisLerpSpeed: 7
-  noTouchSpeedRate: 0.405
-  yOffset: 10
-  yTouchLimitRatio: 0.1
+  noTouchSpeedRate: 1.3
+  yOffset: 4.5
+  yTouchLimitRatio: 0.25
 --- !u!114 &1990575705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10853,6 +10853,10 @@ MonoBehaviour:
         type: 2}
       priority: 0
       cooldown: 0
+    - spawnable: {fileID: 1000011276710058, guid: 512d7234d2be7454899a69fc74a5cb86,
+        type: 2}
+      priority: 0
+      cooldown: 0.01
     - spawnable: {fileID: 1000013386290952, guid: 8b9d824563ae4b043a6c5404f664f135,
         type: 2}
       priority: 2
@@ -10872,18 +10876,10 @@ MonoBehaviour:
       cooldown: 0
     - spawnable: {fileID: 1000010219493002, guid: 426ed7ec32a955348b6a8aa5498167a6,
         type: 2}
-      priority: 100
+      priority: 200
       cooldown: 0
-    - spawnable: {fileID: 1000011276710058, guid: 512d7234d2be7454899a69fc74a5cb86,
-        type: 2}
-      priority: 150
-      cooldown: 0.01
     nextDistance: 0
   - spawnables:
-    - spawnable: {fileID: 1000011276710058, guid: 512d7234d2be7454899a69fc74a5cb86,
-        type: 2}
-      priority: 0
-      cooldown: 0
     - spawnable: {fileID: 1000011815062182, guid: 139d7dcac94efe94295d99c3a8481412,
         type: 2}
       priority: 1
@@ -10914,16 +10910,16 @@ MonoBehaviour:
         type: 2}
       priority: 25
       cooldown: 0
+    - spawnable: {fileID: 1000011276710058, guid: 512d7234d2be7454899a69fc74a5cb86,
+        type: 2}
+      priority: 30
+      cooldown: 0.01
     - spawnable: {fileID: 196322, guid: 4302c46833f793c4eb66af2ba3d3b6d2, type: 2}
       priority: 100
       cooldown: 0
-    nextDistance: 500
+    nextDistance: 200
   - spawnables:
     - spawnable: {fileID: 1000010219493002, guid: 426ed7ec32a955348b6a8aa5498167a6,
-        type: 2}
-      priority: 0
-      cooldown: 0
-    - spawnable: {fileID: 1000011276710058, guid: 512d7234d2be7454899a69fc74a5cb86,
         type: 2}
       priority: 0
       cooldown: 0
@@ -10933,7 +10929,7 @@ MonoBehaviour:
       cooldown: 10
     - spawnable: {fileID: 1000013386290952, guid: 8b9d824563ae4b043a6c5404f664f135,
         type: 2}
-      priority: 20
+      priority: 25
       cooldown: 6
     - spawnable: {fileID: 1000013462611160, guid: e48e673bee3b2ce42bdcd1c66974b218,
         type: 2}
@@ -10949,6 +10945,10 @@ MonoBehaviour:
     - spawnable: {fileID: 196322, guid: 88da59ab6dbe7ab4487c818ca2ebb678, type: 2}
       priority: 25
       cooldown: 0
+    - spawnable: {fileID: 1000011276710058, guid: 512d7234d2be7454899a69fc74a5cb86,
+        type: 2}
+      priority: 40
+      cooldown: 0.01
     - spawnable: {fileID: 1000010663082260, guid: 7dbc5f748da575f459febfaf297aa9a7,
         type: 2}
       priority: 60
@@ -10956,7 +10956,7 @@ MonoBehaviour:
     - spawnable: {fileID: 196322, guid: 4302c46833f793c4eb66af2ba3d3b6d2, type: 2}
       priority: 130
       cooldown: 0
-    nextDistance: 1000
+    nextDistance: 500
   minSpawnInterval: 0.2
   maxSpawnInterval: 1
   currentState: 0
@@ -10972,7 +10972,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e3875802d75804eb86f9a551971f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnableStates: []
+  spawnableStates:
+  - spawnables:
+    - spawnable: {fileID: 196322, guid: 4302c46833f793c4eb66af2ba3d3b6d2, type: 2}
+      priority: 1
+      cooldown: 0
+    - spawnable: {fileID: 196322, guid: 557774de885d85549af0ab68acd6781b, type: 2}
+      priority: 1
+      cooldown: 0
+    - spawnable: {fileID: 1000011276710058, guid: 512d7234d2be7454899a69fc74a5cb86,
+        type: 2}
+      priority: 1
+      cooldown: 0.01
+    - spawnable: {fileID: 1000010219493002, guid: 426ed7ec32a955348b6a8aa5498167a6,
+        type: 2}
+      priority: 10
+      cooldown: 0
+    nextDistance: 0
   minSpawnInterval: 0.05
   maxSpawnInterval: 0.35
   currentState: 0

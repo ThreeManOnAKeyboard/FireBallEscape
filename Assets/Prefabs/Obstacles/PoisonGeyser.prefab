@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f9bab8f7684a14181003b67276ea0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstEjectDelay: 0.3
+  firstEjectDelay: 1
   ejectDuration: 0.2
   ejectCooldown: 1.5
   angleRange: 20

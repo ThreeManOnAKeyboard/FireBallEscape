@@ -22,7 +22,7 @@ GameObject:
   - 33: {fileID: 33000012735258082}
   - 23: {fileID: 23000013653171100}
   - 50: {fileID: 50000011770265248}
-  - 60: {fileID: 60000012037148166}
+  - 58: {fileID: 58000013474430580}
   - 114: {fileID: 114000013910135512}
   m_Layer: 16
   m_Name: Stone
@@ -88,17 +88,17 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013386290952}
   m_UseAutoMass: 0
-  m_Mass: 2
+  m_Mass: 0.6
   m_LinearDrag: 0
-  m_AngularDrag: 0.6
+  m_AngularDrag: 1
   m_GravityScale: 0.6
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60000012037148166
-PolygonCollider2D:
+--- !u!58 &58000013474430580
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -108,21 +108,9 @@ PolygonCollider2D:
   m_Material: {fileID: 6200000, guid: 180843a6fe29c8b40bce027f312d433e, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: -1.8586166, y: 0.41650707}
-      - {x: -1.5720594, y: 0.64118284}
-      - {x: -1.4104353, y: 0.9752597}
-      - {x: -1.0360895, y: 1.0746107}
-      - {x: -0.72843885, y: 0.9813652}
-      - {x: -0.3045056, y: 0.4411842}
-      - {x: -0.37999344, y: -0.025492027}
-      - {x: -0.30463243, y: -0.28503916}
-      - {x: -0.4074298, y: -0.49940565}
-      - {x: -1.0966525, y: -1.1260709}
-      - {x: -1.3871253, y: -0.9226891}
-      - {x: -1.6042658, y: -0.57256055}
+  m_Offset: {x: -1.0815225, y: -0.01602453}
+  serializedVersion: 2
+  m_Radius: 0.9
 --- !u!114 &114000013910135512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,8 +129,8 @@ MonoBehaviour:
   magnitude: 0.2
   zoomDistance: 0.25
   yOffset: 15
-  xScaleRandomRange: {x: 0.75, y: 1.25}
-  yScaleRandomRange: {x: 0.4, y: 1}
-  zScaleRandomRange: {x: 0.5, y: 1.5}
+  xScaleRandomRange: {x: 1, y: 1.8}
+  yScaleRandomRange: {x: 0.6, y: 1}
+  zScaleRandomRange: {x: 1, y: 1.8}
   impulseForce: {x: 16, y: 0}
   collisionEffectDuration: 0

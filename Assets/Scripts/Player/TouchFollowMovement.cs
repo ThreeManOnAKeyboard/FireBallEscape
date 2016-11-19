@@ -10,7 +10,7 @@ public class TouchFollowMovement : Movement
 	public Vector2 minSpeed;
 	public Vector2 maxSpeed;
 	public float xAxisLerpSpeed;
-	[Range(0.01f, 1f)]
+	[Range(0.01f, 2f)]
 	public float noTouchSpeedRate;
 
 	public float yOffset;
@@ -189,7 +189,7 @@ public class TouchFollowMovement : Movement
 	{
 		speed.x = 0f;
 		touchPosition = transform.position;
-		touchPosition.y += noTouchSpeedRate * speed.y * speedMultiplier * Time.deltaTime;
+		touchPosition.y += noTouchSpeedRate * speed.y * Time.deltaTime;
 		transform.position = touchPosition;
 	}
 }

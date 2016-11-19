@@ -41,15 +41,7 @@ public class PerformanceManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds(performanceFirstTestDelay);
 
-		do
-		{
-			SetTargetFrameRate();
-
-			lastFrameCount = Time.frameCount;
-			lastUnscaledTime = Time.unscaledTime;
-
-			yield return new WaitForSeconds(performanceTestDelay);
-		} while (true);
+		SetTargetFrameRate();
 	}
 
 	private void SetTargetFrameRate()
@@ -57,14 +49,15 @@ public class PerformanceManager : MonoBehaviour
 		int averageFPS = (int)((Time.frameCount - lastFrameCount) / (Time.unscaledTime - lastUnscaledTime));
 		int targetFPS;
 
-		targetFPS = (averageFPS / 10 + 1) * 10;
+		//targetFPS = (averageFPS / 10 + 1) * 10;
 		//targetFPS = (averageFPS % 10 > 5) ? ((averageFPS / 10 + 1) * 10) : ((averageFPS / 10) * 10);
+		Application.targetFrameRate = averageFPS > 45 ? 60 : 30;
 
-		Application.targetFrameRate = Mathf.Clamp
-		(
-			targetFPS,
-			30,
-			60
-		);
+		//Application.targetFrameRate = Mathf.Clamp
+		//(
+		//	targetFPS,
+		//	30,
+		//	60
+		//);
 	}
 }
