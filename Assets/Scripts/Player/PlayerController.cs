@@ -11,13 +11,13 @@ public class PlayerController : MonoBehaviour
 	public float maxHealth;
 
 	[Range(0f, 1f)]
-	public float minDamagePercent = 0f;
+	public float minDamagePercent;
 	[Range(0f, 1f)]
-	public float maxDamagePercent = 0f;
+	public float maxDamagePercent;
 	[Range(0f, 1f)]
-	public float minHealPercent = 0f;
+	public float minHealPercent;
 	[Range(0f, 1f)]
-	public float maxHealPercent = 0f;
+	public float maxHealPercent;
 
 	[Header("Game UI References")]
 	public GameObject gameUI;

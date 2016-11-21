@@ -6,12 +6,8 @@ public class LeftRightMovement : Movement
 	// The number of divisions in which the screen will be devided
 	public int bandsCount;
 
-	// The speed for each axis
-	public Vector2 minSpeed;
-	public Vector2 maxSpeed;
-	private Vector2 speed;
-
 	// x position for each band
+	[HideInInspector]
 	public float[] bandsPositions;
 
 	// Current band index
@@ -52,14 +48,8 @@ public class LeftRightMovement : Movement
 			Leap();
 		}
 
-		// Calculate speed based on health amount
-		speed = new Vector2
-		(
-			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.x, minSpeed.x, maxSpeed.x),
-			Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y)
-		);
-
-		speed *= speedMultiplier;
+		// Get the current speed
+		speed = GetCurrentSpeed();
 
 		// Move sideways
 		transform.position = Vector3.MoveTowards

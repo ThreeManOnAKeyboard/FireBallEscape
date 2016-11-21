@@ -4697,7 +4697,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 988550802}
   m_OnClick:
     m_PersistentCalls:
@@ -10244,11 +10244,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f12bb0b5352d446bcafaf422d28782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentDirection: 0
-  minSpeed: 7
-  maxSpeed: 12
-  speedXOnYRatio: 0.55
+  aditionalSpeedPercent: 0.2
+  minSpeed: {x: 6, y: 5}
+  maxSpeed: {x: 12, y: 10}
+  maxSpeedDistance: 1000
   borderOffset: 1
+  currentDirection: 0
 --- !u!114 &1990575704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10260,13 +10261,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b75d6277255904438de0b7e287b4895, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUnityRemote: 0
+  aditionalSpeedPercent: 0.2
   minSpeed: {x: 7, y: 3}
   maxSpeed: {x: 14, y: 6}
+  maxSpeedDistance: 1000
+  isUnityRemote: 0
   xAxisLerpSpeed: 7
   noTouchSpeedRate: 1.3
   yOffset: 4.5
-  yTouchLimitRatio: 0.25
+  yTouchLimitTreshold: 0.25
 --- !u!114 &1990575705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10278,9 +10281,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2a2132306d3af4984664b1ee5777ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bandsCount: 5
-  minSpeed: {x: 10, y: 5}
+  aditionalSpeedPercent: 0.2
+  minSpeed: {x: 7, y: 3}
   maxSpeed: {x: 14, y: 9}
+  maxSpeedDistance: 1000
+  bandsCount: 5
   bandsPositions: []
 --- !u!95 &1990575706
 Animator:
@@ -10822,7 +10827,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368c6826e8d06f7499d11d5d3d01f424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnableStates: []
+  spawnableStates:
+  - spawnables:
+    - spawnable: {fileID: 1000010219493002, guid: 426ed7ec32a955348b6a8aa5498167a6,
+        type: 2}
+      priority: 1
+      cooldown: 0
+    nextDistance: 0
   minSpawnInterval: 0.07
   maxSpawnInterval: 0.3
   currentState: 0

@@ -6,9 +6,7 @@ public class TouchFollowMovement : Movement
 	// For test purposes in case if a mobile device is connected to Unity via Unity Remote 5
 	public bool isUnityRemote;
 
-	private Vector2 speed;
-	public Vector2 minSpeed;
-	public Vector2 maxSpeed;
+	[Header("Aditional Speed Configuration")]
 	public float xAxisLerpSpeed;
 	[Range(0.01f, 2f)]
 	public float noTouchSpeedRate;
@@ -16,11 +14,13 @@ public class TouchFollowMovement : Movement
 	public float yOffset;
 
 	[Range(0, 1)]
-	public float yTouchLimitRatio;
+	public float yTouchLimitTreshold;
 
 	private Vector3 touchPosition;
 
 	private bool facingRight;
+
+	private Vector2 touchFollowSpeed;
 
 	private bool[] UITouchExited = { true, true };
 
@@ -38,17 +38,17 @@ public class TouchFollowMovement : Movement
 			return;
 		}
 
-		speed.y = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed.y, minSpeed.y, maxSpeed.y) * speedMultiplier;
+		speed = GetCurrentSpeed();
 
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
-		//if (isUnityRemote)
-		//{
-		//	ProcessMobileInput();
-		//}
-		//else
-		//{
-		ProcessComputerInput();
-		//}
+		if (isUnityRemote)
+		{
+			ProcessMobileInput();
+		}
+		else
+		{
+			ProcessComputerInput();
+		}
 #elif UNITY_ANDROID
 		ProcessMobileInput();
 #endif
@@ -58,11 +58,11 @@ public class TouchFollowMovement : Movement
 			(
 				Mathf.Clamp
 				(
-					Mathf.MoveTowards(transform.position.x, touchPosition.x, speed.x * speedMultiplier * Time.deltaTime),
+					Mathf.MoveTowards(transform.position.x, touchPosition.x, speed.x * Time.deltaTime),
 					CameraController.Instance.leftBorder + GameManager.Instance.bordersOffset,
 					CameraController.Instance.rightBorder - GameManager.Instance.bordersOffset
 				),
-				Mathf.Lerp(transform.position.y, touchPosition.y, speed.y * speedMultiplier * Time.deltaTime),
+				Mathf.Lerp(transform.position.y, touchPosition.y, speed.y * Time.deltaTime),
 				transform.position.z
 			);
 		}
@@ -89,26 +89,21 @@ public class TouchFollowMovement : Movement
 				new Vector3
 				(
 					Input.mousePosition.x,
-					Mathf.Clamp(Input.mousePosition.y, 0f, Screen.height * yTouchLimitRatio),
+					Mathf.Clamp(Input.mousePosition.y, 0f, Screen.height * yTouchLimitTreshold),
 					Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
 				)
 			);
 
 			if ((transform.position.x < touchPosition.x && !facingRight) || (transform.position.x > touchPosition.x && facingRight))
 			{
-				speed.x = 0f;
+				touchFollowSpeed.x = 0f;
 				facingRight = !facingRight;
 			}
 
-			speed.x = Mathf.Lerp
+			touchFollowSpeed.x = Mathf.Lerp
 			(
+				touchFollowSpeed.x,
 				speed.x,
-				Mathf.Clamp
-				(
-					PlayerController.health / PlayerController.maximumHealth * maxSpeed.x,
-					minSpeed.x,
-					maxSpeed.x
-				),
 				xAxisLerpSpeed * Time.deltaTime
 			);
 
@@ -147,26 +142,21 @@ public class TouchFollowMovement : Movement
 						new Vector3
 						(
 							Input.GetTouch(touchIndex).position.x,
-							Mathf.Clamp(Input.GetTouch(touchIndex).position.y, 0f, Screen.height * yTouchLimitRatio),
+							Mathf.Clamp(Input.GetTouch(touchIndex).position.y, 0f, Screen.height * yTouchLimitTreshold),
 							Mathf.Abs(Camera.main.transform.position.z - transform.position.z)
 						)
 					);
 
 					if ((transform.position.x < touchPosition.x && !facingRight) || (transform.position.x > touchPosition.x && facingRight))
 					{
-						speed.x = 0f;
+						touchFollowSpeed.x = 0f;
 						facingRight = !facingRight;
 					}
 
-					speed.x = Mathf.Lerp
+					touchFollowSpeed.x = Mathf.Lerp
 					(
+						touchFollowSpeed.x,
 						speed.x,
-						Mathf.Clamp
-						(
-							PlayerController.health / PlayerController.maximumHealth * maxSpeed.x,
-							minSpeed.x,
-							maxSpeed.x
-						),
 						xAxisLerpSpeed * Time.deltaTime
 					);
 
@@ -187,7 +177,7 @@ public class TouchFollowMovement : Movement
 
 	private void MoveUp()
 	{
-		speed.x = 0f;
+		touchFollowSpeed.x = 0f;
 		touchPosition = transform.position;
 		touchPosition.y += noTouchSpeedRate * speed.y * Time.deltaTime;
 		transform.position = touchPosition;

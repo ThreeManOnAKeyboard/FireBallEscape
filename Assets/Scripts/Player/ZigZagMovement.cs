@@ -3,17 +3,10 @@ using UnityEngine.EventSystems;
 
 public class ZigZagMovement : Movement
 {
+	public float borderOffset;
+
 	[HideInInspector]
 	public Enumerations.Direction currentDirection = Enumerations.Direction.Right;
-
-	private float speed;
-	public float minSpeed = 5f;
-	public float maxSpeed = 10f;
-
-	[Range(0, 1)]
-	public float speedXOnYRatio = 0.5f;
-
-	public float borderOffset;
 
 	// Update is called once per frame
 	void Update()
@@ -48,17 +41,17 @@ public class ZigZagMovement : Movement
 		}
 
 		// Calculate player base speed
-		speed = Mathf.Clamp(PlayerController.health / PlayerController.maximumHealth * maxSpeed, minSpeed, maxSpeed) * speedMultiplier;
+		speed = GetCurrentSpeed();
 
 		// Move player up
-		transform.Translate(Vector2.up * speed * Time.deltaTime * (1 - speedXOnYRatio));
+		transform.Translate(Vector2.up * speed.y * Time.deltaTime);
 
 		// Move player sideways
 		if (CameraController.Instance.rightBorder != 0f)
 		{
 			transform.Translate
 			(
-				(currentDirection == Enumerations.Direction.Right ? Vector2.right : Vector2.left) * Time.deltaTime * speed * speedXOnYRatio
+				(currentDirection == Enumerations.Direction.Right ? Vector2.right : Vector2.left) * Time.deltaTime * speed.x
 			);
 		}
 	}
