@@ -307,7 +307,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 0.85882354, b: 0.20784314, a: 0.39215687}
       minMaxState: 2
     startSize:
-      scalar: 2.78
+      scalar: 3.25
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -505,7 +505,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     type: 0
-    radius: 0.05
+    radius: 0.02
     angle: 25
     length: 5
     boxX: 1
@@ -1849,6 +1849,6 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 053fd8e259ea2e848b921a80a6a34287, type: 3}
-  m_Color: {r: 1, g: 0.83093643, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9007353, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
