@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: da64c6c6b14e9a34fbb069e20e1cb472
+guid: 15742903b121b974d9cf62695319b8f1
 timeCreated: 1473787754
 licenseType: Free
 ModelImporter:
@@ -10,7 +10,7 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Plane
-    4300002: SteamErruptor
+    4300002: LavaErruptor
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -42,7 +42,7 @@ ModelImporter:
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0

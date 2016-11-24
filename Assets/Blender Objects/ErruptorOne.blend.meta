@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 2409d75b821ea624dae256fbc1764aa1
-timeCreated: 1477769769
+guid: da64c6c6b14e9a34fbb069e20e1cb472
+timeCreated: 1473787754
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,8 +9,8 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Sphere
-    4300002: Shield
+    4300000: Plane
+    4300002: SteamErruptor
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -38,11 +38,11 @@ ModelImporter:
   meshes:
     lODScreenPercentages: []
     globalScale: 1
-    meshCompression: 0
+    meshCompression: 2
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0

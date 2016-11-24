@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: dc966acb55a6e7a4bb885217d3ebba66
-timeCreated: 1477592752
+guid: 4c81213687e060544a557017cfe7526c
+timeCreated: 1477592748
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -10,7 +10,7 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Plane
-    4300002: StonePieceOne
+    4300002: StonePieceThree
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -42,7 +42,7 @@ ModelImporter:
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
