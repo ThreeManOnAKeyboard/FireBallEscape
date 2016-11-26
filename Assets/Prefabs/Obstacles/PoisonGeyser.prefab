@@ -235,9 +235,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -3.5, y: 0.5}
+  m_Offset: {x: -3.3, y: 0.4}
   serializedVersion: 2
-  m_Size: {x: 5, y: 2}
+  m_Size: {x: 4.5, y: 2.1}
 --- !u!114 &114000011185172750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -267,7 +267,7 @@ ParticleSystem:
   serializedVersion: 5
   lengthInSec: 0.5
   speed: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 0
   autoRandomSeed: 1
@@ -313,7 +313,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -59740626
+  randomSeed: 1392834677
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -794,10 +794,10 @@ ParticleSystem:
           outSlope: 0.5430576
           tangentMode: 0
         - serializedVersion: 2
-          time: 0.8611771
-          value: 0.70242655
-          inSlope: -1.858977
-          outSlope: -1.858977
+          time: 0.7785104
+          value: 0.73141205
+          inSlope: -2.7392478
+          outSlope: -2.7392478
           tangentMode: 0
         - serializedVersion: 2
           time: 1
@@ -818,8 +818,8 @@ ParticleSystem:
           outSlope: 1.4819078
           tangentMode: 0
         - serializedVersion: 2
-          time: 0.2590981
-          value: 0.6718011
+          time: 0.26443145
+          value: 0.8118977
           inSlope: 0.17442945
           outSlope: 0.17442945
           tangentMode: 0
@@ -1021,16 +1021,16 @@ ParticleSystem:
       minMaxState: 0
     separateAxes: 1
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 1245527525
+          rgba: 4294967295
         key1:
           serializedVersion: 2
-          rgba: 1245527525
+          rgba: 4294967295
         key2:
           serializedVersion: 2
           rgba: 14648148
@@ -1058,8 +1058,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 51464
+        atime1: 45682
+        atime2: 65150
         atime3: 0
         atime4: 0
         atime5: 0
@@ -1067,7 +1067,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -1419,7 +1419,7 @@ ParticleSystem:
     enabled: 0
     multiplier: 1
   ClampVelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       scalar: 1
       maxCurve:
@@ -1538,7 +1538,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     magnitude:
-      scalar: 1
+      scalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1578,7 +1578,7 @@ ParticleSystem:
       minMaxState: 0
     separateAxis: 0
     inWorldSpace: 0
-    dampen: 0.05
+    dampen: 0.01
   NoiseModule:
     enabled: 1
     strength:
@@ -2551,7 +2551,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.5882353}
       minMaxState: 0
     widthOverTrail:
       scalar: 1
@@ -2740,7 +2740,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1608965178
+  randomSeed: 297574265
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5263,7 +5263,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 275535954
+  randomSeed: 1795669987
   InitialModule:
     serializedVersion: 3
     enabled: 1

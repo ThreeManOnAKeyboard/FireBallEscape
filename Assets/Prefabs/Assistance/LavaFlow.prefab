@@ -300,7 +300,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.2857143
+          value: 0.5714286
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -734,19 +734,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
       minMaxState: 0
-    cnt0: 100
-    cnt1: 50
+    cnt0: 15
+    cnt1: 15
     cnt2: 15
     cnt3: 30
-    cntmax0: 150
-    cntmax1: 100
+    cntmax0: 25
+    cntmax1: 35
     cntmax2: 20
     cntmax3: 30
     time0: 0
-    time1: 0.5
-    time2: 0.5
+    time1: 0.3
+    time2: 0.7
     time3: 0
-    m_BurstCount: 2
+    m_BurstCount: 3
   SizeModule:
     enabled: 1
     curve:
@@ -2404,7 +2404,7 @@ ParticleSystem:
     maxLights: 20
   TrailModule:
     enabled: 1
-    ratio: 0.25
+    ratio: 0.3
     lifetime:
       scalar: 1
       maxCurve:
