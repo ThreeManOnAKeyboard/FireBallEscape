@@ -6,7 +6,7 @@ public class CollisionEffectController : MonoBehaviour
 	{
 		ParticleSystem particleSystem = GetComponent<ParticleSystem>();
 
-		Invoke("Deactivate", particleSystem.duration + particleSystem.startLifetime);
+		Invoke("Deactivate", particleSystem.main.duration + particleSystem.main.startLifetime.constantMax);
 	}
 
 	void Deactivate()
