@@ -144,7 +144,7 @@ namespace GooglePlayServices
                 writer.WriteValue(kv.Value.explode);
                 writer.WriteEndElement();
                 writer.WriteStartElement("bundleId");
-                writer.WriteValue(PlayerSettings.bundleIdentifier);
+                writer.WriteValue(PlayerSettings.applicationIdentifier);
                 writer.WriteEndElement();
                 writer.WriteStartElement("path");
                 writer.WriteValue(kv.Value.path);
@@ -606,7 +606,7 @@ namespace GooglePlayServices
                     }
                 }
                 aarExplodeData[f].path = targetPath;
-                aarExplodeData[f].bundleId = PlayerSettings.bundleIdentifier;
+                aarExplodeData[f].bundleId = PlayerSettings.applicationIdentifier;
             }
         }
 
@@ -679,7 +679,7 @@ namespace GooglePlayServices
                 string body = sr.ReadToEnd();
                 sr.Close();
 
-                body = body.Replace("${applicationId}", PlayerSettings.bundleIdentifier);
+                body = body.Replace("${applicationId}", PlayerSettings.applicationIdentifier);
 
                 using (var wr = new StreamWriter(manifest, false))
                 {

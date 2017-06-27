@@ -1,11 +1,11 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{9800A7C5-45EE-3C83-BE0A-6FF3EBF70393}") = "FireBallEscape", "Assembly-CSharp-firstpass.csproj", "{B498A585-DAB1-1A09-B35F-731AA4F8415A}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireBallEscape", "Assembly-CSharp-firstpass.csproj", "{B498A585-DAB1-1A09-B35F-731AA4F8415A}"
 EndProject
-Project("{9800A7C5-45EE-3C83-BE0A-6FF3EBF70393}") = "FireBallEscape", "Assembly-CSharp.csproj", "{04E61FAC-C91D-D382-3549-EE7693F1E20C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireBallEscape", "Assembly-CSharp.csproj", "{04E61FAC-C91D-D382-3549-EE7693F1E20C}"
 EndProject
-Project("{9800A7C5-45EE-3C83-BE0A-6FF3EBF70393}") = "FireBallEscape", "Assembly-CSharp-Editor.csproj", "{951E3A96-08EA-B5BB-AAF5-E3A5162AEF7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireBallEscape", "Assembly-CSharp-Editor.csproj", "{951E3A96-08EA-B5BB-AAF5-E3A5162AEF7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

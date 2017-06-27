@@ -66,7 +66,7 @@ namespace GooglePlayServices
         /// <summary>
         /// Last bundle ID value.
         /// </summary>
-        private static string lastBundleId = PlayerSettings.bundleIdentifier;
+        private static string lastBundleId = PlayerSettings.applicationIdentifier;
 
         /// <summary>
         /// Last value of bundle ID since the last time OnBundleId() was called.
@@ -170,7 +170,7 @@ namespace GooglePlayServices
         /// </summary>
         private static void PollBundleId()
         {
-            string currentBundleId = PlayerSettings.bundleIdentifier;
+            string currentBundleId = PlayerSettings.applicationIdentifier;
             DateTime currentPollTime = DateTime.Now;
             if (currentBundleId != bundleId)
             {
@@ -217,7 +217,7 @@ namespace GooglePlayServices
         /// <param name="resolutionComplete">Delegate called when resolution is complete.</param>
         private static void Resolve(System.Action resolutionComplete = null)
         {
-            DeleteFiles(Resolver.OnBundleId(PlayerSettings.bundleIdentifier));
+            DeleteFiles(Resolver.OnBundleId(PlayerSettings.applicationIdentifier));
             Resolver.DoResolution(svcSupport, "Assets/Plugins/Android",
                                   HandleOverwriteConfirmation,
                                   () => {
