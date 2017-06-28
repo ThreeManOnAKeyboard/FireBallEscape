@@ -582,6 +582,11 @@
         <para>Minimal product definition, used by apps declaring products for sale.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Purchasing.ProductDefinition.enabled">
+      <summary>
+        <para>This flag indicates whether a product should be offered for sale. It is controlled through the cloud catalog dashboard.</para>
+      </summary>
+    </member>
     <member name="P:UnityEngine.Purchasing.ProductDefinition.id">
       <summary>
         <para>Unity IAP product ID. Potentially independent of store IDs.</para>
@@ -732,6 +737,11 @@
     <member name="T:UnityEngine.Purchasing.PurchaseFailureReason">
       <summary>
         <para>The various reasons a purchase can fail.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Purchasing.PurchaseFailureReason.DuplicateTransaction">
+      <summary>
+        <para>A duplicate transaction error when the transaction has already been completed successfully.</para>
       </summary>
     </member>
     <member name="F:UnityEngine.Purchasing.PurchaseFailureReason.ExistingPurchasePending">
