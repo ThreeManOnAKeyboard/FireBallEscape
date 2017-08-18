@@ -69,6 +69,10 @@
      <Compile Include="Assets\Scripts\Abilities\StrikeController.cs" />
      <Compile Include="Assets\Scripts\Abilities\SuperSpeedController.cs" />
      <Compile Include="Assets\Scripts\Abilities\WaveBlastController.cs" />
+     <Compile Include="Assets\Scripts\Effects\Common\ImageEffectHelper.cs" />
+     <Compile Include="Assets\Scripts\Effects\Common\MinAttribute.cs" />
+     <Compile Include="Assets\Scripts\Effects\Common\RenderTextureUtility.cs" />
+     <Compile Include="Assets\Scripts\Effects\TonemappingColorGrading\TonemappingColorGrading.cs" />
      <Compile Include="Assets\Scripts\Level\Assistance\LavaFlowController.cs" />
      <Compile Include="Assets\Scripts\Level\Drops\Drop.cs" />
      <Compile Include="Assets\Scripts\Level\Drops\DropSpawnProperties.cs" />
@@ -131,6 +135,8 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\FisheyeShader.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\frag_ao.cginc" />
+     <None Include="Assets\Scripts\Effects\TonemappingColorGrading\Resources\HistogramRender.shader" />
+     <None Include="Assets\Scripts\Effects\TonemappingColorGrading\Resources\TonemappingColorGrading.cginc" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\DepthOfField34.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SSAOShader.shader" />
@@ -150,6 +156,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\DLAA.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\NoiseAndGrainDX11.shader" />
+     <None Include="Assets\Scripts\Effects\TonemappingColorGrading\Resources\TonemappingColorGrading.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableBlur.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\MotionBlurClear.shader" />
@@ -172,6 +179,7 @@
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\SimpleClear.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAA3Console.shader" />
+     <None Include="Assets\Scripts\Effects\TonemappingColorGrading\Resources\HistogramCompute.compute" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_Antialiasing\FXAAPreset2.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
