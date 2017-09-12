@@ -21,7 +21,7 @@ RenderSettings:
   m_LinearFogStart: 1
   m_LinearFogEnd: 50
   m_AmbientSkyColor: {r: 0, g: 0.05010138, b: 0.38235295, a: 1.5}
-  m_AmbientEquatorColor: {r: 0.21568629, g: 0, b: 0.6392157, a: 1.5}
+  m_AmbientEquatorColor: {r: 0.23073801, g: 0, b: 0.6838235, a: 1.5}
   m_AmbientGroundColor: {r: 0.30882353, g: 0, b: 0.12139964, a: 1.5}
   m_AmbientIntensity: 1.5
   m_AmbientMode: 1
@@ -558,7 +558,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 152395651}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2068624086}
@@ -672,7 +672,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 848560516
+  randomSeed: 910322076
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4625,12 +4625,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweakMode: 0
-  screenBlendMode: 1
+  screenBlendMode: 0
   hdr: 2
   sepBlurSpread: 10
   quality: 0
-  bloomIntensity: 2
-  bloomThreshold: 0.15
+  bloomIntensity: 2.5
+  bloomThreshold: 0.125
   bloomThresholdColor: {r: 1, g: 1, b: 1, a: 1}
   bloomBlurIterations: 2
   hollywoodFlareBlurIterations: 2
@@ -4662,9 +4662,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4975a6e437fc3b149a8cd508ce5bdd69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 0.15
+  threshold: 0.125
   intensity: 1.5
-  blurSize: 5
+  blurSize: 5.5
   blurIterations: 2
   blurType: 0
   fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
@@ -6374,8 +6374,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.43382353, g: 0.5701623, b: 1, a: 1}
-  m_Intensity: 2
+  m_Color: {r: 0.31790662, g: 0.720735, b: 1, a: 1}
+  m_Intensity: 2.5
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -6407,13 +6407,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 603405438}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.6883546, y: 0, z: 0, w: 0.72537434}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1828571697}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 87, y: 0, z: 0}
 --- !u!1 &625278364
 GameObject:
   m_ObjectHideFlags: 0
@@ -14006,7 +14006,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1078726710
+  randomSeed: 632070699
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -21763,9 +21763,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0.61476964, b: 0.22264276, a: 1}
-  m_Intensity: 8
-  m_Range: 25
+  m_Color: {r: 1, g: 0.6640424, b: 0.20728809, a: 1}
+  m_Intensity: 6
+  m_Range: 30
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -22963,7 +22963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2068624086
 Transform:
   m_ObjectHideFlags: 0
