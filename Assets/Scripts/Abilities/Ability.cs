@@ -1,24 +1,29 @@
-﻿using UnityEngine;
+﻿using Level.Spawner;
+using UnityEngine;
+using _3rdParty;
 
-[CreateAssetMenu(menuName = "Ability")]
-public class Ability : ScriptableObject
+namespace Abilities
 {
-	public Enumerations.DropType[] combination = new Enumerations.DropType[3];
-	public Sprite icon;
-	public AudioClip soundEffect;
-	public GameObject prefab;
-
-	public void OnValidate()
+	[CreateAssetMenu(menuName = "Ability")]
+	public class Ability : ScriptableObject
 	{
-		if (combination.Length != 3)
+		public Enumerations.DropType[] combination = new Enumerations.DropType[3];
+		public Sprite icon;
+		public AudioClip soundEffect;
+		public GameObject prefab;
+
+		public void OnValidate()
 		{
-			Debug.LogWarning("Don't resize this array!!!");
-			System.Array.Resize(ref combination, 3);
+			if (combination.Length != 3)
+			{
+				Debug.LogWarning("Don't resize this array!!!");
+				System.Array.Resize(ref combination, 3);
+			}
 		}
-	}
 
-	public void TriggerAbility()
-	{
-		ObjectPool.Instance.GetPooledObject(prefab).SetActive(true);
+		public void TriggerAbility()
+		{
+			ObjectPool.instance.GetPooledObject(prefab).SetActive(true);
+		}
 	}
 }

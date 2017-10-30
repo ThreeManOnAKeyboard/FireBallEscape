@@ -1,32 +1,35 @@
 ﻿using UnityEngine;
 
-public class FacetedWater : MonoBehaviour
+namespace Level.Other
 {
-	public Vector2 range = new Vector2(0.1f, 1);
-	public float speed = 1;
-	private float[] randomTimes;
-	private Mesh mesh;
-	private Vector3[] vertices;
-
-	void Start()
+	public class FacetedWater : MonoBehaviour
 	{
-		mesh = GetComponent<MeshFilter>().mesh;
-		vertices = mesh.vertices;
-		randomTimes = new float[mesh.vertices.Length];
+		public Vector2 range = new Vector2(0.1f, 1);
+		public float speed = 1;
+		private float[] randomTimes;
+		private Mesh mesh;
+		private Vector3[] vertices;
 
-		for (int i = 0; i < mesh.vertices.Length; i++)
+		private void Start()
 		{
-			randomTimes[i] = Random.Range(range.x, range.y);
-		}
-	}
+			mesh = GetComponent<MeshFilter>().mesh;
+			vertices = mesh.vertices;
+			randomTimes = new float[mesh.vertices.Length];
 
-	void Update()
-	{
-		for (int i = 0; i < vertices.Length; i++)
-		{
-			vertices[i].z = Mathf.PingPong(Time.time * speed, randomTimes[i]);
+			for (int i = 0; i < mesh.vertices.Length; i++)
+			{
+				randomTimes[i] = Random.Range(range.x, range.y);
+			}
 		}
 
-		mesh.vertices = vertices;
+		private void Update()
+		{
+			for (int i = 0; i < vertices.Length; i++)
+			{
+				vertices[i].z = Mathf.PingPong(Time.time * speed, randomTimes[i]);
+			}
+
+			mesh.vertices = vertices;
+		}
 	}
 }

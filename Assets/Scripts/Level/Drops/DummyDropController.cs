@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
-public class DummyDropController : MonoBehaviour
+namespace Level.Drops
 {
-	// Disable object when it is enabled, because it is used only to decrease spawn probability of other spawnable objects
-	private void OnEnable()
+	public class DummyDropController : MonoBehaviour
 	{
-		gameObject.SetActive(false);
+		// Disable object when it is enabled, because it is used only to decrease spawn probability of other spawnable objects
+		private void OnEnable()
+		{
+			gameObject.SetActive(false);
+		}
 	}
 }

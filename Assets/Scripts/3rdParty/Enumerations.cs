@@ -1,29 +1,32 @@
-﻿public class Enumerations
+﻿namespace _3rdParty
 {
-	public enum DropType : byte
+	public class Enumerations
 	{
-		Empty,
-		Fuel,
-		Water,
-		Poison
-	}
+		public enum DropType : byte
+		{
+			Empty,
+			Fuel,
+			Water,
+			Poison
+		}
 
-	public enum ControlType : byte
-	{
-		Free,
-		Sideways,
-		ZigZag
-	}
+		public enum ControlType : byte
+		{
+			Free,
+			Sideways,
+			ZigZag
+		}
 
-	public enum DestroyerType : byte
-	{
-		DropsDestroyer,
-		BackgroundDestroyer
-	}
+		public enum DestroyerType : byte
+		{
+			DropsDestroyer,
+			BackgroundDestroyer
+		}
 
-	public enum Direction : byte
-	{
-		Right,
-		Left
+		public enum Direction : byte
+		{
+			Right,
+			Left
+		}
 	}
 }

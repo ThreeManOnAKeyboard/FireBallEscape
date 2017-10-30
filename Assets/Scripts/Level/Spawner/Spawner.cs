@@ -1,168 +1,173 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Level.Drops;
+using UnityEngine;
+using _3rdParty;
 
-[System.Serializable]
-public class SpawnableState
+namespace Level.Spawner
 {
-	public List<DropSpawnProperties> spawnables;
-	public float nextDistance;
-}
-
-public class Spawner : MonoBehaviour
-{
-	public List<SpawnableState> spawnableStates;
-
-	public float minSpawnInterval;
-	public float maxSpawnInterval;
-	public int currentState;
-	public GameObject newSpawnable;
-
-	protected List<DropSpawnProperties> currentSpawnables;
-	protected GameObject objectToSpawn;
-	protected float priorityTotal;
-	public static bool canChangeSpawnables;
-	protected bool isCooldownDone = true;
-	protected Transform playerTransform;
-
-	// Use this for initialization
-	protected void Start()
+	[System.Serializable]
+	public class SpawnableState
 	{
-		canChangeSpawnables = true;
-		playerTransform = GameObject.FindWithTag(Tags.PLAYER).transform;
-		currentSpawnables = spawnableStates[currentState].spawnables;
-		OrderByPriority();
-		StartCoroutine(GoThroughSpawnableStates());
+		public List<DropSpawnProperties> spawnables;
+		public float nextDistance;
 	}
+
+	public class Spawner : MonoBehaviour
+	{
+		public List<SpawnableState> spawnableStates;
+
+		public float minSpawnInterval;
+		public float maxSpawnInterval;
+		public int currentState;
+		public GameObject newSpawnable;
+
+		protected List<DropSpawnProperties> currentSpawnables;
+		protected GameObject objectToSpawn;
+		protected float priorityTotal;
+		public static bool canChangeSpawnables;
+		protected bool isCooldownDone = true;
+		protected Transform playerTransform;
+
+		// Use this for initialization
+		protected void Start()
+		{
+			canChangeSpawnables = true;
+			playerTransform = GameObject.FindWithTag(Tags.Player).transform;
+			currentSpawnables = spawnableStates[currentState].spawnables;
+			OrderByPriority();
+			StartCoroutine(GoThroughSpawnableStates());
+		}
 
 #if UNITY_EDITOR
-	public void AddNewSpawnable(int startFrom)
-	{
-		if (newSpawnable == null)
+		public void AddNewSpawnable(int startFrom)
 		{
-			Debug.LogError("Select the prefab to add in New Spawnable field");
-			return;
-		}
-
-		for (int i = startFrom; i < spawnableStates.Count; i++)
-		{
-			if (!spawnableStates[i].spawnables.Exists(s => s.spawnable == newSpawnable))
+			if (newSpawnable == null)
 			{
-				spawnableStates[i].spawnables.Add(new DropSpawnProperties() { spawnable = newSpawnable });
+				Debug.LogError("Select the prefab to add in New Spawnable field");
+				return;
 			}
+
+			for (int i = startFrom; i < spawnableStates.Count; i++)
+			{
+				if (!spawnableStates[i].spawnables.Exists(s => s.spawnable == newSpawnable))
+				{
+					spawnableStates[i].spawnables.Add(new DropSpawnProperties() { spawnable = newSpawnable });
+				}
+			}
+
+			newSpawnable = null;
 		}
 
-		newSpawnable = null;
-	}
-
-	public void OnValidate()
-	{
-		for (int i = 0; i < spawnableStates.Count; i++)
+		public void OnValidate()
 		{
-			if (spawnableStates[i].spawnables.Count == 0)
+			for (int i = 0; i < spawnableStates.Count; i++)
 			{
-				for (int j = 0; j < i; j++)
+				if (spawnableStates[i].spawnables.Count == 0)
 				{
-					for (int k = 0; k < spawnableStates[i].spawnables.Count; k++)
+					for (int j = 0; j < i; j++)
 					{
-						newSpawnable = spawnableStates[i].spawnables[k].spawnable;
-						AddNewSpawnable(i);
+						for (int k = 0; k < spawnableStates[i].spawnables.Count; k++)
+						{
+							newSpawnable = spawnableStates[i].spawnables[k].spawnable;
+							AddNewSpawnable(i);
+						}
 					}
 				}
 			}
 		}
-	}
 
-	public void OrderByPriorityEditor()
-	{
-		for (int i = 0; i < spawnableStates.Count; i++)
+		public void OrderByPriorityEditor()
 		{
-			currentSpawnables = spawnableStates[i].spawnables;
-			OrderByPriority();
-			spawnableStates[i].spawnables = currentSpawnables;
+			for (int i = 0; i < spawnableStates.Count; i++)
+			{
+				currentSpawnables = spawnableStates[i].spawnables;
+				OrderByPriority();
+				spawnableStates[i].spawnables = currentSpawnables;
+			}
 		}
-	}
 #endif
 
-	public void ChangeSpawnables(List<DropSpawnProperties> newSpawnables)
-	{
-		currentSpawnables = newSpawnables;
-		OrderByPriority();
-	}
-
-	public void ResetSpawnables()
-	{
-		currentSpawnables = spawnableStates[currentState].spawnables;
-		OrderByPriority();
-	}
-
-	public void OrderByPriority()
-	{
-		// Order drops by priority
-		currentSpawnables = currentSpawnables.OrderBy(spawnable => spawnable.priority).ToList();
-
-		priorityTotal = currentSpawnables.Sum(spawnable => spawnable.priority);
-	}
-
-	protected GameObject GetRandomSpawnable()
-	{
-		float randomResult = Random.Range(0f, priorityTotal);
-		float prioritySubTotal = 0f;
-
-		for (int i = 0; i < currentSpawnables.Count; i++)
+		public void ChangeSpawnables(List<DropSpawnProperties> newSpawnables)
 		{
-			prioritySubTotal += currentSpawnables[i].priority;
-			if (randomResult <= prioritySubTotal)
+			currentSpawnables = newSpawnables;
+			OrderByPriority();
+		}
+
+		public void ResetSpawnables()
+		{
+			currentSpawnables = spawnableStates[currentState].spawnables;
+			OrderByPriority();
+		}
+
+		public void OrderByPriority()
+		{
+			// Order drops by priority
+			currentSpawnables = currentSpawnables.OrderBy(spawnable => spawnable.priority).ToList();
+
+			priorityTotal = currentSpawnables.Sum(spawnable => spawnable.priority);
+		}
+
+		protected GameObject GetRandomSpawnable()
+		{
+			float randomResult = Random.Range(0f, priorityTotal);
+			float prioritySubTotal = 0f;
+
+			for (int i = 0; i < currentSpawnables.Count; i++)
 			{
-				if (currentSpawnables[i].cooldown != 0f)
+				prioritySubTotal += currentSpawnables[i].priority;
+				if (randomResult <= prioritySubTotal)
 				{
-					if (isCooldownDone)
+					if (currentSpawnables[i].cooldown != 0f)
 					{
-						StartCoroutine(StartCooldown(currentSpawnables[i].cooldown));
-						return currentSpawnables[i].spawnable;
+						if (isCooldownDone)
+						{
+							StartCoroutine(StartCooldown(currentSpawnables[i].cooldown));
+							return currentSpawnables[i].spawnable;
+						}
+						else
+						{
+							// Retry until it will return an available spawnable
+							return GetRandomSpawnable();
+						}
 					}
 					else
 					{
-						// Retry until it will return an available spawnable
-						return GetRandomSpawnable();
+						return currentSpawnables[i].spawnable;
 					}
 				}
-				else
-				{
-					return currentSpawnables[i].spawnable;
-				}
 			}
+
+			return null;
 		}
 
-		return null;
-	}
-
-	private IEnumerator StartCooldown(float cooldown)
-	{
-		isCooldownDone = false;
-		yield return new WaitForSeconds(cooldown);
-		isCooldownDone = true;
-	}
-
-	private IEnumerator GoThroughSpawnableStates()
-	{
-		float targetDistance = 0;
-
-		while (currentState < spawnableStates.Count - 1)
+		private IEnumerator StartCooldown(float cooldown)
 		{
-			targetDistance += spawnableStates[currentState + 1].nextDistance;
-			while (playerTransform.position.y < targetDistance)
-			{
-				yield return null;
-			}
+			isCooldownDone = false;
+			yield return new WaitForSeconds(cooldown);
+			isCooldownDone = true;
+		}
 
-			currentState++;
+		private IEnumerator GoThroughSpawnableStates()
+		{
+			float targetDistance = 0;
 
-			// In case spawner have to wait for some external spawn factors to end
-			if (canChangeSpawnables)
+			while (currentState < spawnableStates.Count - 1)
 			{
-				ChangeSpawnables(spawnableStates[currentState].spawnables);
+				targetDistance += spawnableStates[currentState + 1].nextDistance;
+				while (playerTransform.position.y < targetDistance)
+				{
+					yield return null;
+				}
+
+				currentState++;
+
+				// In case spawner have to wait for some external spawn factors to end
+				if (canChangeSpawnables)
+				{
+					ChangeSpawnables(spawnableStates[currentState].spawnables);
+				}
 			}
 		}
 	}

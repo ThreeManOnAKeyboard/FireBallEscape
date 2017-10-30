@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
-public class AbilityController : MonoBehaviour
+namespace Abilities
 {
+	public class AbilityController : MonoBehaviour
+	{
 
+	}
 }

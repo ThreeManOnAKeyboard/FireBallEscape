@@ -1,42 +1,47 @@
-﻿using UnityEngine;
+﻿using Abilities;
+using UnityEngine;
+using _3rdParty;
 
-public class WaterDrop : Drop
+namespace Level.Drops
 {
-	public override void OnTriggerEnter2D(Collider2D col)
+	public class WaterDrop : Drop
 	{
-		switch (col.tag)
+		public override void OnTriggerEnter2D(Collider2D col)
 		{
-			case Tags.PLAYER:
-				playerController.Damage(healthMultiplier);
-				AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Water);
-				break;
+			switch (col.tag)
+			{
+				case Tags.Player:
+					playerController.Damage(healthMultiplier);
+					AbilitiesController.instance.UpdateCombination(Enumerations.DropType.Water);
+					break;
 
-			case Tags.FIREBALL:
-				if (dropBooker != null)
-				{
-					if (dropBooker != col.gameObject)
+				case Tags.Fireball:
+					if (dropBooker != null)
+					{
+						if (dropBooker != col.gameObject)
+						{
+							return;
+						}
+					}
+					else
 					{
 						return;
 					}
-				}
-				else
-				{
-					return;
-				}
-				break;
-		}
+					break;
+			}
 
-		dropBooker = null;
+			dropBooker = null;
 
-		// Remove this drop from targets list if Strike ability is activated
-		if (StrikeController.targets != null)
-		{
-			StrikeController.targets.Remove(gameObject);
-		}
+			// Remove this drop from targets list if Strike ability is activated
+			if (StrikeController.targets != null)
+			{
+				StrikeController.targets.Remove(gameObject);
+			}
 
-		if (col.tag != Tags.FIRESPIRITS)
-		{
-			DoCollisionEffect(col.tag);
+			if (!col.CompareTag(Tags.Firespirits))
+			{
+				DoCollisionEffect(col.tag);
+			}
 		}
 	}
 }

@@ -1,20 +1,24 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using Managers;
+using UnityEngine;
 
-public class ScoreMultiplierController : AbilityController
+namespace Abilities
 {
-	public float duration;
-
-	private void OnEnable()
+	public class ScoreMultiplierController : AbilityController
 	{
-		ScoreManager.Instance.AddMultiplier();
-		StartCoroutine(SubstractMultiplier());
-	}
+		public float duration;
 
-	private IEnumerator SubstractMultiplier()
-	{
-		yield return new WaitForSeconds(duration);
-		ScoreManager.Instance.SubstractMultiplier();
-		gameObject.SetActive(false);
+		private void OnEnable()
+		{
+			ScoreManager.instance.AddMultiplier();
+			StartCoroutine(SubstractMultiplier());
+		}
+
+		private IEnumerator SubstractMultiplier()
+		{
+			yield return new WaitForSeconds(duration);
+			ScoreManager.instance.SubstractMultiplier();
+			gameObject.SetActive(false);
+		}
 	}
 }

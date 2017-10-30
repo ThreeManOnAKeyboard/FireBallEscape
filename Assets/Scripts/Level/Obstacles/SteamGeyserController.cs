@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
+using _3rdParty;
 
-public class SteamGeyserController : GeyserController
+namespace Level.Obstacles
 {
-	[Header("Damage parameters")]
-	public float damageMultiplier = 1f;
-
-	public void OnTriggerEnter2D(Collider2D col)
+	public class SteamGeyserController : GeyserController
 	{
-		if (col.gameObject.tag == Tags.PLAYER)
+		[Header("Damage parameters")]
+		public float damageMultiplier = 1f;
+
+		public void OnTriggerEnter2D(Collider2D col)
 		{
-			playerController.Damage(damageMultiplier);
+			if (col.gameObject.tag == Tags.Player)
+			{
+				playerController.Damage(damageMultiplier);
+			}
 		}
 	}
 }

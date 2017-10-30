@@ -1,26 +1,30 @@
 ﻿using UnityEngine;
+using _3rdParty;
 
-public class Destroyer : MonoBehaviour
+namespace Level.Other
 {
-	public Enumerations.DestroyerType type;
-
-	public void OnTriggerEnter2D(Collider2D col)
+	public class Destroyer : MonoBehaviour
 	{
-		switch (type)
-		{
-			case Enumerations.DestroyerType.DropsDestroyer:
-				if (col.tag == Tags.DROP)
-				{
-					col.gameObject.SetActive(false);
-				}
-				break;
+		public Enumerations.DestroyerType type;
 
-			case Enumerations.DestroyerType.BackgroundDestroyer:
-				if (col.tag == Tags.BACKGROUND)
-				{
-					col.gameObject.SetActive(false);
-				}
-				break;
+		public void OnTriggerEnter2D(Collider2D col)
+		{
+			switch (type)
+			{
+				case Enumerations.DestroyerType.DropsDestroyer:
+					if (col.tag == Tags.Drop)
+					{
+						col.gameObject.SetActive(false);
+					}
+					break;
+
+				case Enumerations.DestroyerType.BackgroundDestroyer:
+					if (col.tag == Tags.Background)
+					{
+						col.gameObject.SetActive(false);
+					}
+					break;
+			}
 		}
 	}
 }

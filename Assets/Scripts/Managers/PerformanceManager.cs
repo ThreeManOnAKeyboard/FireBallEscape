@@ -1,64 +1,67 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityStandardAssets.ImageEffects;
 
-public class PerformanceManager : MonoBehaviour
+namespace Managers
 {
-	[Header("Minimum performance index")]
-	public float performanceFirstTestDelay;
-	public float performanceTestDelay;
-
-	private Bloom bloom;
-	private BloomOptimized bloomOptimized;
-
-	private static int lastFrameCount = 0;
-	private static float lastUnscaledTime = 0f;
-
-	// Use this for initialization
-	private void Awake()
+	public class PerformanceManager : MonoBehaviour
 	{
-		// Get the bloom references
-		bloom = Camera.main.GetComponent<Bloom>();
-		bloomOptimized = Camera.main.GetComponent<BloomOptimized>();
+		[Header("Minimum performance index")]
+		public float performanceFirstTestDelay;
+		public float performanceTestDelay;
 
-		// Enable the supported bloom
-		if (bloom.enabled && !bloom.CheckResources())
+		private Bloom bloom;
+		private BloomOptimized bloomOptimized;
+
+		private static int lastFrameCount = 0;
+		private static float lastUnscaledTime = 0f;
+
+		// Use this for initialization
+		private void Awake()
 		{
-			bloom.enabled = false;
-			bloomOptimized.enabled = true;
+			// Get the bloom references
+			bloom = Camera.main.GetComponent<Bloom>();
+			bloomOptimized = Camera.main.GetComponent<BloomOptimized>();
+
+			// Enable the supported bloom
+			if (bloom.enabled && !bloom.CheckResources())
+			{
+				bloom.enabled = false;
+				bloomOptimized.enabled = true;
+			}
+
+			QualitySettings.vSyncCount = 0;
+			Application.targetFrameRate = 60;
 		}
 
-		QualitySettings.vSyncCount = 0;
-		Application.targetFrameRate = 60;
-	}
+		private void Start()
+		{
+			//StartCoroutine(StartAutoFrameRate());
+		}
 
-	private void Start()
-	{
-		StartCoroutine(StartAutoFrameRate());
-	}
+		private IEnumerator StartAutoFrameRate()
+		{
+			yield return new WaitForSeconds(performanceFirstTestDelay);
 
-	private IEnumerator StartAutoFrameRate()
-	{
-		yield return new WaitForSeconds(performanceFirstTestDelay);
+			SetTargetFrameRate();
+		}
 
-		SetTargetFrameRate();
-	}
+		private void SetTargetFrameRate()
+		{
+			int averageFPS = (int)((Time.frameCount - lastFrameCount) / (Time.unscaledTime - lastUnscaledTime));
+			Application.targetFrameRate = averageFPS > 45 ? 60 : 30;
 
-	private void SetTargetFrameRate()
-	{
-		int averageFPS = (int)((Time.frameCount - lastFrameCount) / (Time.unscaledTime - lastUnscaledTime));
-		Application.targetFrameRate = averageFPS > 45 ? 60 : 30;
+			//int targetFPS;
 
-		//int targetFPS;
+			//targetFPS = (averageFPS / 10 + 1) * 10;
+			//targetFPS = (averageFPS % 10 > 5) ? ((averageFPS / 10 + 1) * 10) : ((averageFPS / 10) * 10);
 
-		//targetFPS = (averageFPS / 10 + 1) * 10;
-		//targetFPS = (averageFPS % 10 > 5) ? ((averageFPS / 10 + 1) * 10) : ((averageFPS / 10) * 10);
-
-		//Application.targetFrameRate = Mathf.Clamp
-		//(
-		//	targetFPS,
-		//	30,
-		//	60
-		//);
+			//Application.targetFrameRate = Mathf.Clamp
+			//(
+			//	targetFPS,
+			//	30,
+			//	60
+			//);
+		}
 	}
 }

@@ -1,25 +1,29 @@
-﻿using UnityEngine;
+﻿using Level.Spawner;
 using UnityEditor;
+using UnityEngine;
 
-[CustomEditor(typeof(Spawner), editorForChildClasses: true)]
-public class SpawnerEditor : Editor
+namespace Editor
 {
-	private Spawner spawner;
-
-	public override void OnInspectorGUI()
+	[CustomEditor(typeof(Spawner), true)]
+	public class SpawnerEditor : UnityEditor.Editor
 	{
-		base.OnInspectorGUI();
+		private Spawner spawner;
 
-		spawner = (Spawner)target;
-
-		if (GUILayout.Button("Add New Spawnable"))
+		public override void OnInspectorGUI()
 		{
-			spawner.AddNewSpawnable(0);
-		}
+			base.OnInspectorGUI();
 
-		if (GUILayout.Button("Order By Priority"))
-		{
-			spawner.OrderByPriorityEditor();
+			spawner = (Spawner)target;
+
+			if (GUILayout.Button("Add New Spawnable"))
+			{
+				spawner.AddNewSpawnable(0);
+			}
+
+			if (GUILayout.Button("Order By Priority"))
+			{
+				spawner.OrderByPriorityEditor();
+			}
 		}
 	}
 }

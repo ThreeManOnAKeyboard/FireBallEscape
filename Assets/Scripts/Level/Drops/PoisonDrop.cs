@@ -1,21 +1,26 @@
-﻿using UnityEngine;
+﻿using Abilities;
+using UnityEngine;
+using _3rdParty;
 
-public class PoisonDrop : Drop
+namespace Level.Drops
 {
-	public float healthDrainSpeed;
-	public float amount;
-
-	public override void OnTriggerEnter2D(Collider2D col)
+	public class PoisonDrop : Drop
 	{
-		if (col.tag == Tags.PLAYER)
-		{
-			playerController.StartHealthDrain(amount, healthDrainSpeed);
-			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Poison);
-		}
+		public float healthDrainSpeed;
+		public float amount;
 
-		if (col.tag != Tags.FIRESPIRITS)
+		public override void OnTriggerEnter2D(Collider2D col)
 		{
-			DoCollisionEffect(col.tag);
+			if (col.tag == Tags.Player)
+			{
+				playerController.StartHealthDrain(amount, healthDrainSpeed);
+				AbilitiesController.instance.UpdateCombination(Enumerations.DropType.Poison);
+			}
+
+			if (col.tag != Tags.Firespirits)
+			{
+				DoCollisionEffect(col.tag);
+			}
 		}
 	}
 }

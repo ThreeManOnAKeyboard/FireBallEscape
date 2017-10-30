@@ -1,48 +1,53 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using Level.Spawner;
+using Player;
+using UnityEngine;
 
-public class ElementConverter : AbilityController
+namespace Abilities
 {
-	public float duration;
-	public GameObject fuelDropPrefab;
-
-	private Transform playerTransform;
-
-	// Use this for initialization
-	private void Awake()
+	public class ElementConverter : AbilityController
 	{
-		playerTransform = FindObjectOfType<PlayerController>().transform;
-	}
+		public float duration;
+		public GameObject fuelDropPrefab;
 
-	private void OnEnable()
-	{
-		StartCoroutine(DisableAfterDelay());
-	}
+		private Transform playerTransform;
 
-	// Update is called once per frame
-	private void Update()
-	{
-		if (playerTransform != null)
+		// Use this for initialization
+		private void Awake()
 		{
-			transform.position = playerTransform.position;
+			playerTransform = FindObjectOfType<PlayerController>().transform;
 		}
-		else
+
+		private void OnEnable()
 		{
-			Destroy(gameObject);
+			StartCoroutine(DisableAfterDelay());
 		}
-	}
 
-	public void OnTriggerEnter2D(Collider2D col)
-	{
-		GameObject fuelDrop = ObjectPool.Instance.GetPooledObject(fuelDropPrefab);
-		fuelDrop.transform.position = col.transform.position;
-		fuelDrop.SetActive(true);
-	}
+		// Update is called once per frame
+		private void Update()
+		{
+			if (playerTransform != null)
+			{
+				transform.position = playerTransform.position;
+			}
+			else
+			{
+				Destroy(gameObject);
+			}
+		}
 
-	private IEnumerator DisableAfterDelay()
-	{
-		yield return new WaitForSeconds(duration);
+		public void OnTriggerEnter2D(Collider2D col)
+		{
+			GameObject fuelDrop = ObjectPool.instance.GetPooledObject(fuelDropPrefab);
+			fuelDrop.transform.position = col.transform.position;
+			fuelDrop.SetActive(true);
+		}
 
-		gameObject.SetActive(false);
+		private IEnumerator DisableAfterDelay()
+		{
+			yield return new WaitForSeconds(duration);
+
+			gameObject.SetActive(false);
+		}
 	}
 }

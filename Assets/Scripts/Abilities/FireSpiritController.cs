@@ -1,67 +1,71 @@
-﻿using UnityEngine;
+﻿using Level.Drops;
+using UnityEngine;
 
-public class FireSpiritController : MonoBehaviour
+namespace Abilities
 {
-	public float speed;
-
-	public bool isAvailable { get; private set; }
-
-	private Transform target;
-
-	private void OnEnable()
+	public class FireSpiritController : MonoBehaviour
 	{
-		// Reset fire spirit
-		target = null;
-		isAvailable = true;
-	}
+		public float speed;
 
-	// Update is called once per frame
-	private void Update()
-	{
-		if (target != null && target.gameObject.activeInHierarchy)
+		public bool IsAvailable { get; private set; }
+
+		private Transform target;
+
+		private void OnEnable()
 		{
-			// Move towards a terget
-			transform.position = Vector3.Lerp
-			(
-				transform.position,
-				target.position,
-				speed * Time.unscaledDeltaTime
-			);
+			// Reset fire spirit
+			target = null;
+			IsAvailable = true;
 		}
-		else if (!isAvailable)
+
+		// Update is called once per frame
+		private void Update()
 		{
-			// target was destroyed before fire spirit reached it
-			gameObject.SetActive(false);
+			if (target != null && target.gameObject.activeInHierarchy)
+			{
+				// Move towards a terget
+				transform.position = Vector3.Lerp
+				(
+					transform.position,
+					target.position,
+					speed * Time.unscaledDeltaTime
+				);
+			}
+			else if (!IsAvailable)
+			{
+				// target was destroyed before fire spirit reached it
+				gameObject.SetActive(false);
+			}
+			else
+			{
+				//timer += Time.deltaTime;
+				//angle = timer;
+				//transform.position = new Vector3
+				//(
+				//	(centerx + Mathf.Sin(angle) * rad),
+				//	centery,
+				//	((centerz + Mathf.Cos(angle) * rad))
+				//);
+			}
 		}
-		else
+
+		public void SetTarget(Transform _target)
 		{
-			//timer += Time.deltaTime;
-			//angle = timer;
-			//transform.position = new Vector3
-			//(
-			//	(centerx + Mathf.Sin(angle) * rad),
-			//	centery,
-			//	((centerz + Mathf.Cos(angle) * rad))
-			//);
+			IsAvailable = false;
+			target = _target;
 		}
-	}
 
-	public void SetTarget(Transform _target)
-	{
-		isAvailable = false;
-		target = _target;
-	}
-
-	public void OnTriggerEnter2D(Collider2D col)
-	{
-		if (!isAvailable && col.transform == target)
+		public void OnTriggerEnter2D(Collider2D col)
 		{
-			// Destroy target
-			Debug.Log("Boom dat target!");
+			if (!IsAvailable && col.transform == target)
+			{
+				// Destroy target
+				Debug.Log("Boom dat target!");
 
-			// Disable fire spirit
-			col.gameObject.GetComponent<Drop>().DoCollisionEffect(col.tag);
-			gameObject.SetActive(false);
+				// Disable fire spirit
+				col.gameObject.GetComponent<Drop>().DoCollisionEffect(col.tag);
+				gameObject.SetActive(false);
+			}
 		}
 	}
 }

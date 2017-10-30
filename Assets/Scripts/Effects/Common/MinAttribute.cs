@@ -1,8 +1,8 @@
-namespace UnityStandardAssets.CinematicEffects
-{
-    using UnityEngine;
+using UnityEngine;
 
-    public sealed class MinAttribute : PropertyAttribute
+namespace Effects.Common
+{
+	public sealed class MinAttribute : PropertyAttribute
     {
         public readonly float min;
 

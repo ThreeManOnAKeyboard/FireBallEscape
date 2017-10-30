@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
+using _3rdParty;
 
-public class PoisonGeyserController : GeyserController
+namespace Level.Obstacles
 {
-	[Header("Damage parameters")]
-	public float drainSpeed;
-	public float drainAmount;
-
-	public void OnTriggerEnter2D(Collider2D col)
+	public class PoisonGeyserController : GeyserController
 	{
-		if (col.gameObject.tag == Tags.PLAYER)
+		[Header("Damage parameters")]
+		public float drainSpeed;
+		public float drainAmount;
+
+		public void OnTriggerEnter2D(Collider2D col)
 		{
-			playerController.StartHealthDrain(drainAmount, drainSpeed);
+			if (col.gameObject.CompareTag(Tags.Player))
+			{
+				playerController.StartHealthDrain(drainAmount, drainSpeed);
+			}
 		}
 	}
 }

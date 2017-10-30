@@ -1,73 +1,78 @@
 ﻿using System.Collections;
+using Level.Other;
 using UnityEngine;
+using _3rdParty;
 
-public class WaveBlastController : AbilityController
+namespace Abilities
 {
-	[Header("Ability Parameters")]
-	public float speed;
-	public float finalRadiusDeltaTime;
-
-	[Header("Shake Parameters")]
-	public float duration;
-	public float shakeSpeed;
-	public float magnitude;
-	public float zoomDistance;
-
-	private float finalShapeRadius = 7f;
-	private float finalColliderRadius = 8f;
-
-	private GameObject player;
-	private ParticleSystem thisParticleSystem;
-	private ParticleSystem.ShapeModule thisShape;
-	private CircleCollider2D circleCollider2D;
-
-	private void Awake()
+	public class WaveBlastController : AbilityController
 	{
-		player = GameObject.FindWithTag(Tags.PLAYER);
-		thisShape = GetComponent<ParticleSystem>().shape;
-		circleCollider2D = GetComponent<CircleCollider2D>();
-	}
+		[Header("Ability Parameters")]
+		public float speed;
+		public float finalRadiusDeltaTime;
 
-	// Use this for initialization
-	private void OnEnable()
-	{
-		transform.position = player.transform.position;
+		[Header("Shake Parameters")]
+		public float duration;
+		public float shakeSpeed;
+		public float magnitude;
+		public float zoomDistance;
 
-		CameraShake.Instance.StartShake(duration, shakeSpeed, magnitude, zoomDistance);
+		private const float FinalShapeRadius = 7f;
+		private const float FinalColliderRadius = 8f;
 
-		StartCoroutine(SelfDestroy());
-		StartCoroutine(ChangeRadiusSmoothly());
-	}
+		private GameObject player;
+		private ParticleSystem thisParticleSystem;
+		private ParticleSystem.ShapeModule thisShape;
+		private CircleCollider2D circleCollider2D;
 
-	private IEnumerator SelfDestroy()
-	{
-		while (Camera.main.WorldToViewportPoint(transform.position).y <= 1.3f && Camera.main.WorldToViewportPoint(transform.position).y >= -0.3f)
+		private void Awake()
 		{
-			if (Time.timeScale != 0)
-			{
-				transform.Translate(Vector2.up * speed * Time.unscaledDeltaTime);
-			}
-
-			yield return null;
+			player = GameObject.FindWithTag(Tags.Player);
+			thisShape = GetComponent<ParticleSystem>().shape;
+			circleCollider2D = GetComponent<CircleCollider2D>();
 		}
 
-		gameObject.SetActive(false);
-	}
-
-	private IEnumerator ChangeRadiusSmoothly()
-	{
-		float time = 0f;
-
-		while (time <= finalRadiusDeltaTime)
+		// Use this for initialization
+		private void OnEnable()
 		{
-			thisShape.radius = time / finalRadiusDeltaTime * finalShapeRadius;
-			circleCollider2D.radius = time / finalRadiusDeltaTime * finalColliderRadius;
+			transform.position = player.transform.position;
 
-			yield return null;
+			CameraShake.instance.StartShake(duration, shakeSpeed, magnitude, zoomDistance);
 
-			if (Time.timeScale != 0)
+			StartCoroutine(SelfDestroy());
+			StartCoroutine(ChangeRadiusSmoothly());
+		}
+
+		private IEnumerator SelfDestroy()
+		{
+			while (Camera.main.WorldToViewportPoint(transform.position).y <= 1.3f && Camera.main.WorldToViewportPoint(transform.position).y >= -0.3f)
 			{
-				time += Time.unscaledDeltaTime;
+				if (Time.timeScale != 0)
+				{
+					transform.Translate(Vector2.up * speed * Time.unscaledDeltaTime);
+				}
+
+				yield return null;
+			}
+
+			gameObject.SetActive(false);
+		}
+
+		private IEnumerator ChangeRadiusSmoothly()
+		{
+			float time = 0f;
+
+			while (time <= finalRadiusDeltaTime)
+			{
+				thisShape.radius = time / finalRadiusDeltaTime * FinalShapeRadius;
+				circleCollider2D.radius = time / finalRadiusDeltaTime * FinalColliderRadius;
+
+				yield return null;
+
+				if (Time.timeScale != 0)
+				{
+					time += Time.unscaledDeltaTime;
+				}
 			}
 		}
 	}

@@ -1,19 +1,25 @@
-﻿using UnityEngine;
+﻿using Abilities;
+using Managers;
+using UnityEngine;
+using _3rdParty;
 
-public class FuelDrop : Drop
+namespace Level.Drops
 {
-	public override void OnTriggerEnter2D(Collider2D col)
+	public class FuelDrop : Drop
 	{
-		if (col.tag == Tags.PLAYER)
+		public override void OnTriggerEnter2D(Collider2D col)
 		{
-			playerController.Heal(healthMultiplier);
-			AbilitiesController.Instance.UpdateCombination(Enumerations.DropType.Fuel);
-			ScoreManager.Instance.AddScore(scoreAmount);
-		}
+			if (col.tag == Tags.Player)
+			{
+				playerController.Heal(healthMultiplier);
+				AbilitiesController.instance.UpdateCombination(Enumerations.DropType.Fuel);
+				ScoreManager.instance.AddScore(scoreAmount);
+			}
 
-		if (col.tag != Tags.ELEMENT_IGNORE)
-		{
-			DoCollisionEffect(col.tag);
+			if (col.tag != Tags.ElementIgnore)
+			{
+				DoCollisionEffect(col.tag);
+			}
 		}
 	}
 }

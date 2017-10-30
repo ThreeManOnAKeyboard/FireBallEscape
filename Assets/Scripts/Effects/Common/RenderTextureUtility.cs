@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnityStandardAssets.CinematicEffects
+namespace Effects.Common
 {
     public class RenderTextureUtility
     {
         //Temporary render texture handling
-        private List<RenderTexture> m_TemporaryRTs = new List<RenderTexture>();
+        private List<RenderTexture> mTemporaryRTs = new List<RenderTexture>();
 
         public RenderTexture GetTemporaryRenderTexture(int width, int height, int depthBuffer = 0, RenderTextureFormat format = RenderTextureFormat.ARGBHalf, FilterMode filterMode = FilterMode.Bilinear)
         {
@@ -14,7 +14,7 @@ namespace UnityStandardAssets.CinematicEffects
             rt.filterMode = filterMode;
             rt.wrapMode = TextureWrapMode.Clamp;
             rt.name = "RenderTextureUtilityTempTexture";
-            m_TemporaryRTs.Add(rt);
+            mTemporaryRTs.Add(rt);
             return rt;
         }
 
@@ -23,22 +23,22 @@ namespace UnityStandardAssets.CinematicEffects
             if (rt == null)
                 return;
 
-            if (!m_TemporaryRTs.Contains(rt))
+            if (!mTemporaryRTs.Contains(rt))
             {
                 Debug.LogErrorFormat("Attempting to remove texture that was not allocated: {0}", rt);
                 return;
             }
 
-            m_TemporaryRTs.Remove(rt);
+            mTemporaryRTs.Remove(rt);
             RenderTexture.ReleaseTemporary(rt);
         }
 
         public void ReleaseAllTemporaryRenderTextures()
         {
-            for (int i = 0; i < m_TemporaryRTs.Count; ++i)
-                RenderTexture.ReleaseTemporary(m_TemporaryRTs[i]);
+            for (int i = 0; i < mTemporaryRTs.Count; ++i)
+                RenderTexture.ReleaseTemporary(mTemporaryRTs[i]);
 
-            m_TemporaryRTs.Clear();
+            mTemporaryRTs.Clear();
         }
     }
 }

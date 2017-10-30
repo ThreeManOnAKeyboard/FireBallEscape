@@ -1,10 +1,11 @@
-namespace UnityStandardAssets.CinematicEffects
-{
-    using UnityEngine;
-    using UnityEngine.Events;
-    using System;
+using System;
+using Effects.Common;
+using UnityEngine;
+using UnityEngine.Events;
 
-    [ExecuteInEditMode]
+namespace Effects.TonemappingColorGrading
+{
+	[ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]
     [AddComponentMenu("Image Effects/Cinematic/Tonemapping and Color Grading")]
 #if UNITY_5_4_OR_NEWER
@@ -17,28 +18,28 @@ namespace UnityStandardAssets.CinematicEffects
         public UnityAction<RenderTexture> onFrameEndEditorOnly;
 
         [SerializeField]
-        private ComputeShader m_HistogramComputeShader;
-        public ComputeShader histogramComputeShader
+        private ComputeShader mHistogramComputeShader;
+        public ComputeShader HistogramComputeShader
         {
             get
             {
-                if (m_HistogramComputeShader == null)
-                    m_HistogramComputeShader = Resources.Load<ComputeShader>("HistogramCompute");
+                if (mHistogramComputeShader == null)
+                    mHistogramComputeShader = Resources.Load<ComputeShader>("HistogramCompute");
 
-                return m_HistogramComputeShader;
+                return mHistogramComputeShader;
             }
         }
 
         [SerializeField]
-        private Shader m_HistogramShader;
-        public Shader histogramShader
+        private Shader mHistogramShader;
+        public Shader HistogramShader
         {
             get
             {
-                if (m_HistogramShader == null)
-                    m_HistogramShader = Shader.Find("Hidden/TonemappingColorGradingHistogram");
+                if (mHistogramShader == null)
+                    mHistogramShader = Shader.Find("Hidden/TonemappingColorGradingHistogram");
 
-                return m_HistogramShader;
+                return mHistogramShader;
             }
         }
 
@@ -107,7 +108,7 @@ namespace UnityStandardAssets.CinematicEffects
             [Tooltip("Displays a luminosity helper in the GameView.")]
             public bool showDebug;
 
-            public static EyeAdaptationSettings defaultSettings
+            public static EyeAdaptationSettings DefaultSettings
             {
                 get
                 {
@@ -126,7 +127,7 @@ namespace UnityStandardAssets.CinematicEffects
 
         public enum Tonemapper
         {
-            ACES,
+            Aces,
             Curve,
             Hable,
             HejlDawson,
@@ -168,7 +169,7 @@ namespace UnityStandardAssets.CinematicEffects
             [Range(1f, 10f)]
             public float neutralWhiteClip;
 
-            public static TonemappingSettings defaultSettings
+            public static TonemappingSettings DefaultSettings
             {
                 get
                 {
@@ -177,7 +178,7 @@ namespace UnityStandardAssets.CinematicEffects
                         enabled = false,
                         tonemapper = Tonemapper.Neutral,
                         exposure = 1f,
-                        curve = CurvesSettings.defaultCurve,
+                        curve = CurvesSettings.DefaultCurve,
                         neutralBlackIn = 0.02f,
                         neutralWhiteIn = 10f,
                         neutralBlackOut = 0f,
@@ -190,7 +191,7 @@ namespace UnityStandardAssets.CinematicEffects
         }
 
         [Serializable]
-        public struct LUTSettings
+        public struct LutSettings
         {
             public bool enabled;
 
@@ -200,11 +201,11 @@ namespace UnityStandardAssets.CinematicEffects
             [Range(0f, 1f), Tooltip("Blending factor.")]
             public float contribution;
 
-            public static LUTSettings defaultSettings
+            public static LutSettings DefaultSettings
             {
                 get
                 {
-                    return new LUTSettings
+                    return new LutSettings
                     {
                         enabled = false,
                         texture = null,
@@ -226,7 +227,7 @@ namespace UnityStandardAssets.CinematicEffects
             [ColorUsage(false)]
             public Color highlights;
 
-            public static ColorWheelsSettings defaultSettings
+            public static ColorWheelsSettings DefaultSettings
             {
                 get
                 {
@@ -270,7 +271,7 @@ namespace UnityStandardAssets.CinematicEffects
             [Range(0.01f, 5f), Tooltip("Applies a pow function to the source.")]
             public float gamma;
 
-            public static BasicsSettings defaultSettings
+            public static BasicsSettings DefaultSettings
             {
                 get
                 {
@@ -296,7 +297,7 @@ namespace UnityStandardAssets.CinematicEffects
             public int currentChannel;
             public Vector3[] channels;
 
-            public static ChannelMixerSettings defaultSettings
+            public static ChannelMixerSettings DefaultSettings
             {
                 get
                 {
@@ -329,21 +330,21 @@ namespace UnityStandardAssets.CinematicEffects
             [Curve(0f, 1f, 1f, 1f)]
             public AnimationCurve blue;
 
-            public static CurvesSettings defaultSettings
+            public static CurvesSettings DefaultSettings
             {
                 get
                 {
                     return new CurvesSettings
                     {
-                        master = defaultCurve,
-                        red = defaultCurve,
-                        green = defaultCurve,
-                        blue = defaultCurve
+                        master = DefaultCurve,
+                        red = DefaultCurve,
+                        green = DefaultCurve,
+                        blue = DefaultCurve
                     };
                 }
             }
 
-            public static AnimationCurve defaultCurve
+            public static AnimationCurve DefaultCurve
             {
                 get { return new AnimationCurve(new Keyframe(0f, 0f, 1f, 1f), new Keyframe(1f, 1f, 1f, 1f)); }
             }
@@ -381,7 +382,7 @@ namespace UnityStandardAssets.CinematicEffects
             [Tooltip("Displays the generated LUT in the top left corner of the GameView.")]
             public bool showDebug;
 
-            public static ColorGradingSettings defaultSettings
+            public static ColorGradingSettings DefaultSettings
             {
                 get
                 {
@@ -391,89 +392,89 @@ namespace UnityStandardAssets.CinematicEffects
                         useDithering = false,
                         showDebug = false,
                         precision = ColorGradingPrecision.Normal,
-                        colorWheels = ColorWheelsSettings.defaultSettings,
-                        basics = BasicsSettings.defaultSettings,
-                        channelMixer = ChannelMixerSettings.defaultSettings,
-                        curves = CurvesSettings.defaultSettings
+                        colorWheels = ColorWheelsSettings.DefaultSettings,
+                        basics = BasicsSettings.DefaultSettings,
+                        channelMixer = ChannelMixerSettings.DefaultSettings,
+                        curves = CurvesSettings.DefaultSettings
                     };
                 }
             }
 
             internal void Reset()
             {
-                curves = CurvesSettings.defaultSettings;
+                curves = CurvesSettings.DefaultSettings;
             }
         }
 
         [SerializeField, SettingsGroup]
-        private EyeAdaptationSettings m_EyeAdaptation = EyeAdaptationSettings.defaultSettings;
-        public EyeAdaptationSettings eyeAdaptation
+        private EyeAdaptationSettings mEyeAdaptation = EyeAdaptationSettings.DefaultSettings;
+        public EyeAdaptationSettings EyeAdaptation
         {
-            get { return m_EyeAdaptation; }
-            set { m_EyeAdaptation = value; }
+            get { return mEyeAdaptation; }
+            set { mEyeAdaptation = value; }
         }
 
         [SerializeField, SettingsGroup]
-        private TonemappingSettings m_Tonemapping = TonemappingSettings.defaultSettings;
-        public TonemappingSettings tonemapping
+        private TonemappingSettings mTonemapping = TonemappingSettings.DefaultSettings;
+        public TonemappingSettings Tonemapping
         {
-            get { return m_Tonemapping; }
+            get { return mTonemapping; }
             set
             {
-                m_Tonemapping = value;
+                mTonemapping = value;
                 SetTonemapperDirty();
             }
         }
 
         [SerializeField, SettingsGroup]
-        private ColorGradingSettings m_ColorGrading = ColorGradingSettings.defaultSettings;
-        public ColorGradingSettings colorGrading
+        private ColorGradingSettings mColorGrading = ColorGradingSettings.DefaultSettings;
+        public ColorGradingSettings ColorGrading
         {
-            get { return m_ColorGrading; }
+            get { return mColorGrading; }
             set
             {
-                m_ColorGrading = value;
+                mColorGrading = value;
                 SetDirty();
             }
         }
 
         [SerializeField, SettingsGroup]
-        private LUTSettings m_Lut = LUTSettings.defaultSettings;
-        public LUTSettings lut
+        private LutSettings mLut = LutSettings.DefaultSettings;
+        public LutSettings Lut
         {
-            get { return m_Lut; }
-            set { m_Lut = value; }
+            get { return mLut; }
+            set { mLut = value; }
         }
         #endregion
 
-        private Texture2D m_IdentityLut;
-        private RenderTexture m_InternalLut;
-        private Texture2D m_CurveTexture;
-        private Texture2D m_TonemapperCurve;
-        private float m_TonemapperCurveRange;
+        private Texture2D mIdentityLut;
+        private RenderTexture mInternalLut;
+        private Texture2D mCurveTexture;
+        private Texture2D mTonemapperCurve;
+        private float mTonemapperCurveRange;
 
-        private Texture2D identityLut
+        private Texture2D IdentityLut
         {
             get
             {
-                if (m_IdentityLut == null || m_IdentityLut.height != lutSize)
+                if (mIdentityLut == null || mIdentityLut.height != LutSize)
                 {
-                    DestroyImmediate(m_IdentityLut);
-                    m_IdentityLut = GenerateIdentityLut(lutSize);
+                    DestroyImmediate(mIdentityLut);
+                    mIdentityLut = GenerateIdentityLut(LutSize);
                 }
 
-                return m_IdentityLut;
+                return mIdentityLut;
             }
         }
 
-        private RenderTexture internalLutRt
+        private RenderTexture InternalLutRt
         {
             get
             {
-                if (m_InternalLut == null || !m_InternalLut.IsCreated() || m_InternalLut.height != lutSize)
+                if (mInternalLut == null || !mInternalLut.IsCreated() || mInternalLut.height != LutSize)
                 {
-                    DestroyImmediate(m_InternalLut);
-                    m_InternalLut = new RenderTexture(lutSize * lutSize, lutSize, 0, RenderTextureFormat.ARGB32)
+                    DestroyImmediate(mInternalLut);
+                    mInternalLut = new RenderTexture(LutSize * LutSize, LutSize, 0, RenderTextureFormat.ARGB32)
                     {
                         name = "Internal LUT",
                         filterMode = FilterMode.Bilinear,
@@ -482,17 +483,17 @@ namespace UnityStandardAssets.CinematicEffects
                     };
                 }
 
-                return m_InternalLut;
+                return mInternalLut;
             }
         }
 
-        private Texture2D curveTexture
+        private Texture2D CurveTexture
         {
             get
             {
-                if (m_CurveTexture == null)
+                if (mCurveTexture == null)
                 {
-                    m_CurveTexture = new Texture2D(256, 1, TextureFormat.ARGB32, false, true)
+                    mCurveTexture = new Texture2D(256, 1, TextureFormat.ARGB32, false, true)
                     {
                         name = "Curve texture",
                         wrapMode = TextureWrapMode.Clamp,
@@ -502,15 +503,15 @@ namespace UnityStandardAssets.CinematicEffects
                     };
                 }
 
-                return m_CurveTexture;
+                return mCurveTexture;
             }
         }
 
-        private Texture2D tonemapperCurve
+        private Texture2D TonemapperCurve
         {
             get
             {
-                if (m_TonemapperCurve == null)
+                if (mTonemapperCurve == null)
                 {
                     TextureFormat format = TextureFormat.RGB24;
                     if (SystemInfo.SupportsTextureFormat(TextureFormat.RFloat))
@@ -518,7 +519,7 @@ namespace UnityStandardAssets.CinematicEffects
                     else if (SystemInfo.SupportsTextureFormat(TextureFormat.RHalf))
                         format = TextureFormat.RHalf;
 
-                    m_TonemapperCurve = new Texture2D(256, 1, format, false, true)
+                    mTonemapperCurve = new Texture2D(256, 1, format, false, true)
                     {
                         name = "Tonemapper curve texture",
                         wrapMode = TextureWrapMode.Clamp,
@@ -528,43 +529,43 @@ namespace UnityStandardAssets.CinematicEffects
                     };
                 }
 
-                return m_TonemapperCurve;
+                return mTonemapperCurve;
             }
         }
 
         [SerializeField]
-        private Shader m_Shader;
-        public Shader shader
+        private Shader mShader;
+        public Shader Shader
         {
             get
             {
-                if (m_Shader == null)
-                    m_Shader = Shader.Find("Hidden/TonemappingColorGrading");
+                if (mShader == null)
+                    mShader = Shader.Find("Hidden/TonemappingColorGrading");
 
-                return m_Shader;
+                return mShader;
             }
         }
 
-        private Material m_Material;
-        public Material material
+        private Material mMaterial;
+        public Material Material
         {
             get
             {
-                if (m_Material == null)
-                    m_Material = ImageEffectHelper.CheckShaderAndCreateMaterial(shader);
+                if (mMaterial == null)
+                    mMaterial = ImageEffectHelper.CheckShaderAndCreateMaterial(Shader);
 
-                return m_Material;
+                return mMaterial;
             }
         }
 
-        public bool isGammaColorSpace
+        public bool IsGammaColorSpace
         {
             get { return QualitySettings.activeColorSpace == ColorSpace.Gamma; }
         }
 
-        public int lutSize
+        public int LutSize
         {
-            get { return (int)colorGrading.precision; }
+            get { return (int)ColorGrading.precision; }
         }
 
         private enum Pass
@@ -574,7 +575,7 @@ namespace UnityStandardAssets.CinematicEffects
             AdaptationExpBlend,
             AdaptationExp,
             TonemappingOff,
-            TonemappingACES,
+            TonemappingAces,
             TonemappingCurve,
             TonemappingHable,
             TonemappingHejlDawson,
@@ -584,83 +585,83 @@ namespace UnityStandardAssets.CinematicEffects
             AdaptationDebug
         }
 
-        public bool validRenderTextureFormat { get; private set; }
-        public bool validUserLutSize { get; private set; }
+        public bool ValidRenderTextureFormat { get; private set; }
+        public bool ValidUserLutSize { get; private set; }
 
-        private bool m_Dirty = true;
-        private bool m_TonemapperDirty = true;
+        private bool mDirty = true;
+        private bool mTonemapperDirty = true;
 
-        private RenderTexture m_SmallAdaptiveRt;
-        private RenderTextureFormat m_AdaptiveRtFormat;
+        private RenderTexture mSmallAdaptiveRt;
+        private RenderTextureFormat mAdaptiveRtFormat;
 
-        private int m_AdaptationSpeed;
-        private int m_MiddleGrey;
-        private int m_AdaptationMin;
-        private int m_AdaptationMax;
-        private int m_LumTex;
-        private int m_ToneCurveRange;
-        private int m_ToneCurve;
-        private int m_Exposure;
-        private int m_NeutralTonemapperParams1;
-        private int m_NeutralTonemapperParams2;
-        private int m_WhiteBalance;
-        private int m_Lift;
-        private int m_Gamma;
-        private int m_Gain;
-        private int m_ContrastGainGamma;
-        private int m_Vibrance;
-        private int m_HSV;
-        private int m_ChannelMixerRed;
-        private int m_ChannelMixerGreen;
-        private int m_ChannelMixerBlue;
-        private int m_CurveTex;
-        private int m_InternalLutTex;
-        private int m_InternalLutParams;
-        private int m_UserLutTex;
-        private int m_UserLutParams;
+        private int mAdaptationSpeed;
+        private int mMiddleGrey;
+        private int mAdaptationMin;
+        private int mAdaptationMax;
+        private int mLumTex;
+        private int mToneCurveRange;
+        private int mToneCurve;
+        private int mExposure;
+        private int mNeutralTonemapperParams1;
+        private int mNeutralTonemapperParams2;
+        private int mWhiteBalance;
+        private int mLift;
+        private int mGamma;
+        private int mGain;
+        private int mContrastGainGamma;
+        private int mVibrance;
+        private int mHsv;
+        private int mChannelMixerRed;
+        private int mChannelMixerGreen;
+        private int mChannelMixerBlue;
+        private int mCurveTex;
+        private int mInternalLutTex;
+        private int mInternalLutParams;
+        private int mUserLutTex;
+        private int mUserLutParams;
 
         public void SetDirty()
         {
-            m_Dirty = true;
+            mDirty = true;
         }
 
         public void SetTonemapperDirty()
         {
-            m_TonemapperDirty = true;
+            mTonemapperDirty = true;
         }
 
         private void Awake()
         {
-            m_AdaptationSpeed = Shader.PropertyToID("_AdaptationSpeed");
-            m_MiddleGrey = Shader.PropertyToID("_MiddleGrey");
-            m_AdaptationMin = Shader.PropertyToID("_AdaptationMin");
-            m_AdaptationMax = Shader.PropertyToID("_AdaptationMax");
-            m_LumTex = Shader.PropertyToID("_LumTex");
-            m_ToneCurveRange = Shader.PropertyToID("_ToneCurveRange");
-            m_ToneCurve = Shader.PropertyToID("_ToneCurve");
-            m_Exposure = Shader.PropertyToID("_Exposure");
-            m_NeutralTonemapperParams1 = Shader.PropertyToID("_NeutralTonemapperParams1");
-            m_NeutralTonemapperParams2 = Shader.PropertyToID("_NeutralTonemapperParams2");
-            m_WhiteBalance = Shader.PropertyToID("_WhiteBalance");
-            m_Lift = Shader.PropertyToID("_Lift");
-            m_Gamma = Shader.PropertyToID("_Gamma");
-            m_Gain = Shader.PropertyToID("_Gain");
-            m_ContrastGainGamma = Shader.PropertyToID("_ContrastGainGamma");
-            m_Vibrance = Shader.PropertyToID("_Vibrance");
-            m_HSV = Shader.PropertyToID("_HSV");
-            m_ChannelMixerRed = Shader.PropertyToID("_ChannelMixerRed");
-            m_ChannelMixerGreen = Shader.PropertyToID("_ChannelMixerGreen");
-            m_ChannelMixerBlue = Shader.PropertyToID("_ChannelMixerBlue");
-            m_CurveTex = Shader.PropertyToID("_CurveTex");
-            m_InternalLutTex = Shader.PropertyToID("_InternalLutTex");
-            m_InternalLutParams = Shader.PropertyToID("_InternalLutParams");
-            m_UserLutTex = Shader.PropertyToID("_UserLutTex");
-            m_UserLutParams = Shader.PropertyToID("_UserLutParams");
+            mAdaptationSpeed = Shader.PropertyToID("_AdaptationSpeed");
+            mMiddleGrey = Shader.PropertyToID("_MiddleGrey");
+            mAdaptationMin = Shader.PropertyToID("_AdaptationMin");
+            mAdaptationMax = Shader.PropertyToID("_AdaptationMax");
+            mLumTex = Shader.PropertyToID("_LumTex");
+            mToneCurveRange = Shader.PropertyToID("_ToneCurveRange");
+            mToneCurve = Shader.PropertyToID("_ToneCurve");
+            mExposure = Shader.PropertyToID("_Exposure");
+            mNeutralTonemapperParams1 = Shader.PropertyToID("_NeutralTonemapperParams1");
+            mNeutralTonemapperParams2 = Shader.PropertyToID("_NeutralTonemapperParams2");
+            mWhiteBalance = Shader.PropertyToID("_WhiteBalance");
+            mLift = Shader.PropertyToID("_Lift");
+            mGamma = Shader.PropertyToID("_Gamma");
+            mGain = Shader.PropertyToID("_Gain");
+            mContrastGainGamma = Shader.PropertyToID("_ContrastGainGamma");
+            mVibrance = Shader.PropertyToID("_Vibrance");
+            mHsv = Shader.PropertyToID("_HSV");
+            mChannelMixerRed = Shader.PropertyToID("_ChannelMixerRed");
+            mChannelMixerGreen = Shader.PropertyToID("_ChannelMixerGreen");
+            mChannelMixerBlue = Shader.PropertyToID("_ChannelMixerBlue");
+            mCurveTex = Shader.PropertyToID("_CurveTex");
+            mInternalLutTex = Shader.PropertyToID("_InternalLutTex");
+            mInternalLutParams = Shader.PropertyToID("_InternalLutParams");
+            mUserLutTex = Shader.PropertyToID("_UserLutTex");
+            mUserLutParams = Shader.PropertyToID("_UserLutParams");
         }
 
         private void OnEnable()
         {
-            if (!ImageEffectHelper.IsSupported(shader, false, true, this))
+            if (!ImageEffectHelper.IsSupported(Shader, false, true, this))
             {
                 enabled = false;
                 return;
@@ -672,30 +673,30 @@ namespace UnityStandardAssets.CinematicEffects
 
         private void OnDisable()
         {
-            if (m_Material != null)
-                DestroyImmediate(m_Material);
+            if (mMaterial != null)
+                DestroyImmediate(mMaterial);
 
-            if (m_IdentityLut != null)
-                DestroyImmediate(m_IdentityLut);
+            if (mIdentityLut != null)
+                DestroyImmediate(mIdentityLut);
 
-            if (m_InternalLut != null)
-                DestroyImmediate(internalLutRt);
+            if (mInternalLut != null)
+                DestroyImmediate(InternalLutRt);
 
-            if (m_SmallAdaptiveRt != null)
-                DestroyImmediate(m_SmallAdaptiveRt);
+            if (mSmallAdaptiveRt != null)
+                DestroyImmediate(mSmallAdaptiveRt);
 
-            if (m_CurveTexture != null)
-                DestroyImmediate(m_CurveTexture);
+            if (mCurveTexture != null)
+                DestroyImmediate(mCurveTexture);
 
-            if (m_TonemapperCurve != null)
-                DestroyImmediate(m_TonemapperCurve);
+            if (mTonemapperCurve != null)
+                DestroyImmediate(mTonemapperCurve);
 
-            m_Material = null;
-            m_IdentityLut = null;
-            m_InternalLut = null;
-            m_SmallAdaptiveRt = null;
-            m_CurveTexture = null;
-            m_TonemapperCurve = null;
+            mMaterial = null;
+            mIdentityLut = null;
+            mInternalLut = null;
+            mSmallAdaptiveRt = null;
+            mCurveTexture = null;
+            mTonemapperCurve = null;
         }
 
         private void OnValidate()
@@ -737,23 +738,23 @@ namespace UnityStandardAssets.CinematicEffects
 
         // CIE xy chromaticity to CAT02 LMS.
         // http://en.wikipedia.org/wiki/LMS_color_space#CAT02
-        private Vector3 CIExyToLMS(float x, float y)
+        private Vector3 CiExyToLms(float x, float y)
         {
             float Y = 1f;
             float X = Y * x / y;
-            float Z = Y * (1f - x - y) / y;
+            float z = Y * (1f - x - y) / y;
 
-            float L =  0.7328f * X + 0.4296f * Y - 0.1624f * Z;
-            float M = -0.7036f * X + 1.6975f * Y + 0.0061f * Z;
-            float S =  0.0030f * X + 0.0136f * Y + 0.9834f * Z;
+            float l =  0.7328f * X + 0.4296f * Y - 0.1624f * z;
+            float m = -0.7036f * X + 1.6975f * Y + 0.0061f * z;
+            float s =  0.0030f * X + 0.0136f * Y + 0.9834f * z;
 
-            return new Vector3(L, M, S);
+            return new Vector3(l, m, s);
         }
 
         private Vector3 GetWhiteBalance()
         {
-            float t1 = colorGrading.basics.temperatureShift;
-            float t2 = colorGrading.basics.tint;
+            float t1 = ColorGrading.basics.temperatureShift;
+            float t2 = ColorGrading.basics.tint;
 
             // Get the CIE xy chromaticity of the reference white point.
             // Note: 0.31271 = x value on the D65 white point
@@ -762,7 +763,7 @@ namespace UnityStandardAssets.CinematicEffects
 
             // Calculate the coefficients in the LMS space.
             Vector3 w1 = new Vector3(0.949237f, 1.03542f, 1.08728f); // D65 white point
-            Vector3 w2 = CIExyToLMS(x, y);
+            Vector3 w2 = CiExyToLms(x, y);
             return new Vector3(w1.x / w2.x, w1.y / w2.y, w1.z / w2.z);
         }
 
@@ -784,9 +785,9 @@ namespace UnityStandardAssets.CinematicEffects
 
         private void GenerateLiftGammaGain(out Color lift, out Color gamma, out Color gain)
         {
-            Color nLift = NormalizeColor(colorGrading.colorWheels.shadows);
-            Color nGamma = NormalizeColor(colorGrading.colorWheels.midtones);
-            Color nGain = NormalizeColor(colorGrading.colorWheels.highlights);
+            Color nLift = NormalizeColor(ColorGrading.colorWheels.shadows);
+            Color nGamma = NormalizeColor(ColorGrading.colorWheels.midtones);
+            Color nGain = NormalizeColor(ColorGrading.colorWheels.highlights);
 
             float avgLift = (nLift.r + nLift.g + nLift.b) / 3f;
             float avgGamma = (nGamma.r + nGamma.g + nGamma.b) / 3f;
@@ -821,10 +822,10 @@ namespace UnityStandardAssets.CinematicEffects
 
         private void GenCurveTexture()
         {
-            AnimationCurve master = colorGrading.curves.master;
-            AnimationCurve red = colorGrading.curves.red;
-            AnimationCurve green = colorGrading.curves.green;
-            AnimationCurve blue = colorGrading.curves.blue;
+            AnimationCurve master = ColorGrading.curves.master;
+            AnimationCurve red = ColorGrading.curves.red;
+            AnimationCurve green = ColorGrading.curves.green;
+            AnimationCurve blue = ColorGrading.curves.blue;
 
             Color[] pixels = new Color[256];
 
@@ -837,28 +838,28 @@ namespace UnityStandardAssets.CinematicEffects
                 pixels[(int)Mathf.Floor(i * 255f)] = new Color(r, g, b, m);
             }
 
-            curveTexture.SetPixels(pixels);
-            curveTexture.Apply();
+            CurveTexture.SetPixels(pixels);
+            CurveTexture.Apply();
         }
 
         private bool CheckUserLut()
         {
-            validUserLutSize = (lut.texture.height == (int)Mathf.Sqrt(lut.texture.width));
-            return validUserLutSize;
+            ValidUserLutSize = (Lut.texture.height == (int)Mathf.Sqrt(Lut.texture.width));
+            return ValidUserLutSize;
         }
 
         private bool CheckSmallAdaptiveRt()
         {
-            if (m_SmallAdaptiveRt != null)
+            if (mSmallAdaptiveRt != null)
                 return false;
 
-            m_AdaptiveRtFormat = RenderTextureFormat.ARGBHalf;
+            mAdaptiveRtFormat = RenderTextureFormat.ARGBHalf;
 
             if (SystemInfo.SupportsRenderTextureFormat(RenderTextureFormat.RGHalf))
-                m_AdaptiveRtFormat = RenderTextureFormat.RGHalf;
+                mAdaptiveRtFormat = RenderTextureFormat.RGHalf;
 
-            m_SmallAdaptiveRt = new RenderTexture(1, 1, 0, m_AdaptiveRtFormat);
-            m_SmallAdaptiveRt.hideFlags = HideFlags.DontSave;
+            mSmallAdaptiveRt = new RenderTexture(1, 1, 0, mAdaptiveRtFormat);
+            mSmallAdaptiveRt.hideFlags = HideFlags.DontSave;
 
             return true;
         }
@@ -871,37 +872,37 @@ namespace UnityStandardAssets.CinematicEffects
             int yoffset = 0;
 
             // Color grading debug
-            if (m_InternalLut != null && colorGrading.enabled && colorGrading.showDebug)
+            if (mInternalLut != null && ColorGrading.enabled && ColorGrading.showDebug)
             {
-                Graphics.DrawTexture(new Rect(0f, yoffset, lutSize * lutSize, lutSize), internalLutRt);
-                yoffset += lutSize;
+                Graphics.DrawTexture(new Rect(0f, yoffset, LutSize * LutSize, LutSize), InternalLutRt);
+                yoffset += LutSize;
             }
 
             // Eye Adaptation debug
-            if (m_SmallAdaptiveRt != null && eyeAdaptation.enabled && eyeAdaptation.showDebug)
+            if (mSmallAdaptiveRt != null && EyeAdaptation.enabled && EyeAdaptation.showDebug)
             {
-                m_Material.SetPass((int)Pass.AdaptationDebug);
-                Graphics.DrawTexture(new Rect(0f, yoffset, 256, 16), m_SmallAdaptiveRt, m_Material);
+                mMaterial.SetPass((int)Pass.AdaptationDebug);
+                Graphics.DrawTexture(new Rect(0f, yoffset, 256, 16), mSmallAdaptiveRt, mMaterial);
             }
         }
 
-        private RenderTexture[] m_AdaptRts = null;
+        private RenderTexture[] mAdaptRts = null;
 
         [ImageEffectTransformsToLDR]
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
 #if UNITY_EDITOR
-            validRenderTextureFormat = true;
+            ValidRenderTextureFormat = true;
 
             if (source.format != RenderTextureFormat.ARGBHalf && source.format != RenderTextureFormat.ARGBFloat)
-                validRenderTextureFormat = false;
+                ValidRenderTextureFormat = false;
 #endif
 
-            material.shaderKeywords = null;
+            Material.shaderKeywords = null;
 
             RenderTexture rtSquared = null;
 
-            if (eyeAdaptation.enabled)
+            if (EyeAdaptation.enabled)
             {
                 bool freshlyBrewedSmallRt = CheckSmallAdaptiveRt();
                 int srcSize = source.width < source.height ? source.width : source.height;
@@ -915,91 +916,91 @@ namespace UnityStandardAssets.CinematicEffects
                 adaptiveSize |= (adaptiveSize >> 16);
                 adaptiveSize -= (adaptiveSize >> 1);
 
-                rtSquared = RenderTexture.GetTemporary(adaptiveSize, adaptiveSize, 0, m_AdaptiveRtFormat);
+                rtSquared = RenderTexture.GetTemporary(adaptiveSize, adaptiveSize, 0, mAdaptiveRtFormat);
                 Graphics.Blit(source, rtSquared);
 
                 int downsample = (int)Mathf.Log(rtSquared.width, 2f);
 
                 int div = 2;
 
-                if (m_AdaptRts == null || m_AdaptRts.Length != downsample)
-                    m_AdaptRts = new RenderTexture[downsample];
+                if (mAdaptRts == null || mAdaptRts.Length != downsample)
+                    mAdaptRts = new RenderTexture[downsample];
 
                 for (int i = 0; i < downsample; i++)
                 {
-                    m_AdaptRts[i] = RenderTexture.GetTemporary(rtSquared.width / div, rtSquared.width / div, 0, m_AdaptiveRtFormat);
+                    mAdaptRts[i] = RenderTexture.GetTemporary(rtSquared.width / div, rtSquared.width / div, 0, mAdaptiveRtFormat);
                     div <<= 1;
                 }
 
                 // Downsample pyramid
-                var lumRt = m_AdaptRts[downsample - 1];
-                Graphics.Blit(rtSquared, m_AdaptRts[0], material, (int)Pass.AdaptationLog);
+                var lumRt = mAdaptRts[downsample - 1];
+                Graphics.Blit(rtSquared, mAdaptRts[0], Material, (int)Pass.AdaptationLog);
                 for (int i = 0; i < downsample - 1; i++)
                 {
-                    Graphics.Blit(m_AdaptRts[i], m_AdaptRts[i + 1]);
-                    lumRt = m_AdaptRts[i + 1];
+                    Graphics.Blit(mAdaptRts[i], mAdaptRts[i + 1]);
+                    lumRt = mAdaptRts[i + 1];
                 }
 
                 // Keeping luminance values between frames, RT restore expected
-                m_SmallAdaptiveRt.MarkRestoreExpected();
+                mSmallAdaptiveRt.MarkRestoreExpected();
 
-                material.SetFloat(m_AdaptationSpeed, Mathf.Max(eyeAdaptation.speed, 0.001f));
+                Material.SetFloat(mAdaptationSpeed, Mathf.Max(EyeAdaptation.speed, 0.001f));
 
 #if UNITY_EDITOR
                 if (Application.isPlaying && !freshlyBrewedSmallRt)
-                    Graphics.Blit(lumRt, m_SmallAdaptiveRt, material, (int)Pass.AdaptationExpBlend);
+                    Graphics.Blit(lumRt, mSmallAdaptiveRt, Material, (int)Pass.AdaptationExpBlend);
                 else
-                    Graphics.Blit(lumRt, m_SmallAdaptiveRt, material, (int)Pass.AdaptationExp);
+                    Graphics.Blit(lumRt, mSmallAdaptiveRt, Material, (int)Pass.AdaptationExp);
 #else
                 Graphics.Blit(lumRt, m_SmallAdaptiveRt, material, freshlyBrewedSmallRt ? (int)Pass.AdaptationExp : (int)Pass.AdaptationExpBlend);
 #endif
 
-                material.SetFloat(m_MiddleGrey, eyeAdaptation.middleGrey);
-                material.SetFloat(m_AdaptationMin, Mathf.Pow(2f, eyeAdaptation.min));
-                material.SetFloat(m_AdaptationMax, Mathf.Pow(2f, eyeAdaptation.max));
-                material.SetTexture(m_LumTex, m_SmallAdaptiveRt);
-                material.EnableKeyword("ENABLE_EYE_ADAPTATION");
+                Material.SetFloat(mMiddleGrey, EyeAdaptation.middleGrey);
+                Material.SetFloat(mAdaptationMin, Mathf.Pow(2f, EyeAdaptation.min));
+                Material.SetFloat(mAdaptationMax, Mathf.Pow(2f, EyeAdaptation.max));
+                Material.SetTexture(mLumTex, mSmallAdaptiveRt);
+                Material.EnableKeyword("ENABLE_EYE_ADAPTATION");
             }
 
             int renderPass = (int)Pass.TonemappingOff;
 
-            if (tonemapping.enabled)
+            if (Tonemapping.enabled)
             {
-                if (tonemapping.tonemapper == Tonemapper.Curve)
+                if (Tonemapping.tonemapper == Tonemapper.Curve)
                 {
-                    if (m_TonemapperDirty)
+                    if (mTonemapperDirty)
                     {
                         float range = 1f;
 
-                        if (tonemapping.curve.length > 0)
+                        if (Tonemapping.curve.length > 0)
                         {
-                            range = tonemapping.curve[tonemapping.curve.length - 1].time;
+                            range = Tonemapping.curve[Tonemapping.curve.length - 1].time;
 
                             for (float i = 0f; i <= 1f; i += 1f / 255f)
                             {
-                                float c = tonemapping.curve.Evaluate(i * range);
-                                tonemapperCurve.SetPixel(Mathf.FloorToInt(i * 255f), 0, new Color(c, c, c));
+                                float c = Tonemapping.curve.Evaluate(i * range);
+                                TonemapperCurve.SetPixel(Mathf.FloorToInt(i * 255f), 0, new Color(c, c, c));
                             }
 
-                            tonemapperCurve.Apply();
+                            TonemapperCurve.Apply();
                         }
 
-                        m_TonemapperCurveRange = 1f / range;
-                        m_TonemapperDirty = false;
+                        mTonemapperCurveRange = 1f / range;
+                        mTonemapperDirty = false;
                     }
 
-                    material.SetFloat(m_ToneCurveRange, m_TonemapperCurveRange);
-                    material.SetTexture(m_ToneCurve, tonemapperCurve);
+                    Material.SetFloat(mToneCurveRange, mTonemapperCurveRange);
+                    Material.SetTexture(mToneCurve, TonemapperCurve);
                 }
-                else if (tonemapping.tonemapper == Tonemapper.Neutral)
+                else if (Tonemapping.tonemapper == Tonemapper.Neutral)
                 {
                     const float scaleFactor = 20f;
                     const float scaleFactorHalf = scaleFactor * 0.5f;
 
-                    float inBlack = tonemapping.neutralBlackIn * scaleFactor + 1f;
-                    float outBlack = tonemapping.neutralBlackOut * scaleFactorHalf + 1f;
-                    float inWhite = tonemapping.neutralWhiteIn / scaleFactor;
-                    float outWhite = 1f - tonemapping.neutralWhiteOut / scaleFactor;
+                    float inBlack = Tonemapping.neutralBlackIn * scaleFactor + 1f;
+                    float outBlack = Tonemapping.neutralBlackOut * scaleFactorHalf + 1f;
+                    float inWhite = Tonemapping.neutralWhiteIn / scaleFactor;
+                    float outWhite = 1f - Tonemapping.neutralWhiteOut / scaleFactor;
                     float blackRatio = inBlack / outBlack;
                     float whiteRatio = inWhite / outWhite;
 
@@ -1010,61 +1011,61 @@ namespace UnityStandardAssets.CinematicEffects
                     const float e = 0.02f;
                     const float f = 0.30f;
 
-                    material.SetVector(m_NeutralTonemapperParams1, new Vector4(a, b, c, d));
-                    material.SetVector(m_NeutralTonemapperParams2, new Vector4(e, f, tonemapping.neutralWhiteLevel, tonemapping.neutralWhiteClip / scaleFactorHalf));
+                    Material.SetVector(mNeutralTonemapperParams1, new Vector4(a, b, c, d));
+                    Material.SetVector(mNeutralTonemapperParams2, new Vector4(e, f, Tonemapping.neutralWhiteLevel, Tonemapping.neutralWhiteClip / scaleFactorHalf));
                 }
 
-                material.SetFloat(m_Exposure, tonemapping.exposure);
-                renderPass += (int)tonemapping.tonemapper + 1;
+                Material.SetFloat(mExposure, Tonemapping.exposure);
+                renderPass += (int)Tonemapping.tonemapper + 1;
             }
 
-            if (colorGrading.enabled)
+            if (ColorGrading.enabled)
             {
-                if (m_Dirty || !m_InternalLut.IsCreated())
+                if (mDirty || !mInternalLut.IsCreated())
                 {
                     Color lift, gamma, gain;
                     GenerateLiftGammaGain(out lift, out gamma, out gain);
                     GenCurveTexture();
 
-                    material.SetVector(m_WhiteBalance, GetWhiteBalance());
-                    material.SetVector(m_Lift, lift);
-                    material.SetVector(m_Gamma, gamma);
-                    material.SetVector(m_Gain, gain);
-                    material.SetVector(m_ContrastGainGamma, new Vector3(colorGrading.basics.contrast, colorGrading.basics.gain, 1f / colorGrading.basics.gamma));
-                    material.SetFloat(m_Vibrance, colorGrading.basics.vibrance);
-                    material.SetVector(m_HSV, new Vector4(colorGrading.basics.hue, colorGrading.basics.saturation, colorGrading.basics.value));
-                    material.SetVector(m_ChannelMixerRed, colorGrading.channelMixer.channels[0]);
-                    material.SetVector(m_ChannelMixerGreen, colorGrading.channelMixer.channels[1]);
-                    material.SetVector(m_ChannelMixerBlue, colorGrading.channelMixer.channels[2]);
-                    material.SetTexture(m_CurveTex, curveTexture);
-                    internalLutRt.MarkRestoreExpected();
-                    Graphics.Blit(identityLut, internalLutRt, material, (int)Pass.LutGen);
-                    m_Dirty = false;
+                    Material.SetVector(mWhiteBalance, GetWhiteBalance());
+                    Material.SetVector(mLift, lift);
+                    Material.SetVector(mGamma, gamma);
+                    Material.SetVector(mGain, gain);
+                    Material.SetVector(mContrastGainGamma, new Vector3(ColorGrading.basics.contrast, ColorGrading.basics.gain, 1f / ColorGrading.basics.gamma));
+                    Material.SetFloat(mVibrance, ColorGrading.basics.vibrance);
+                    Material.SetVector(mHsv, new Vector4(ColorGrading.basics.hue, ColorGrading.basics.saturation, ColorGrading.basics.value));
+                    Material.SetVector(mChannelMixerRed, ColorGrading.channelMixer.channels[0]);
+                    Material.SetVector(mChannelMixerGreen, ColorGrading.channelMixer.channels[1]);
+                    Material.SetVector(mChannelMixerBlue, ColorGrading.channelMixer.channels[2]);
+                    Material.SetTexture(mCurveTex, CurveTexture);
+                    InternalLutRt.MarkRestoreExpected();
+                    Graphics.Blit(IdentityLut, InternalLutRt, Material, (int)Pass.LutGen);
+                    mDirty = false;
                 }
 
-                material.EnableKeyword("ENABLE_COLOR_GRADING");
+                Material.EnableKeyword("ENABLE_COLOR_GRADING");
 
-                if (colorGrading.useDithering)
-                    material.EnableKeyword("ENABLE_DITHERING");
+                if (ColorGrading.useDithering)
+                    Material.EnableKeyword("ENABLE_DITHERING");
 
-                material.SetTexture(m_InternalLutTex, internalLutRt);
-                material.SetVector(m_InternalLutParams, new Vector3(1f / internalLutRt.width, 1f / internalLutRt.height, internalLutRt.height - 1f));
+                Material.SetTexture(mInternalLutTex, InternalLutRt);
+                Material.SetVector(mInternalLutParams, new Vector3(1f / InternalLutRt.width, 1f / InternalLutRt.height, InternalLutRt.height - 1f));
             }
 
-            if (lut.enabled && lut.texture != null && CheckUserLut())
+            if (Lut.enabled && Lut.texture != null && CheckUserLut())
             {
-                material.SetTexture(m_UserLutTex, lut.texture);
-                material.SetVector(m_UserLutParams, new Vector4(1f / lut.texture.width, 1f / lut.texture.height, lut.texture.height - 1f, lut.contribution));
-                material.EnableKeyword("ENABLE_USER_LUT");
+                Material.SetTexture(mUserLutTex, Lut.texture);
+                Material.SetVector(mUserLutParams, new Vector4(1f / Lut.texture.width, 1f / Lut.texture.height, Lut.texture.height - 1f, Lut.contribution));
+                Material.EnableKeyword("ENABLE_USER_LUT");
             }
 
-            Graphics.Blit(source, destination, material, renderPass);
+            Graphics.Blit(source, destination, Material, renderPass);
 
             // Cleanup for eye adaptation
-            if (eyeAdaptation.enabled)
+            if (EyeAdaptation.enabled)
             {
-                for (int i = 0; i < m_AdaptRts.Length; i++)
-                    RenderTexture.ReleaseTemporary(m_AdaptRts[i]);
+                for (int i = 0; i < mAdaptRts.Length; i++)
+                    RenderTexture.ReleaseTemporary(mAdaptRts[i]);
 
                 RenderTexture.ReleaseTemporary(rtSquared);
             }
@@ -1078,7 +1079,7 @@ namespace UnityStandardAssets.CinematicEffects
                 if (destination == null)
                 {
                     RenderTexture rt = RenderTexture.GetTemporary(source.width, source.height, 0);
-                    Graphics.Blit(source, rt, material, renderPass);
+                    Graphics.Blit(source, rt, Material, renderPass);
                     onFrameEndEditorOnly(rt);
                     RenderTexture.ReleaseTemporary(rt);
                     RenderTexture.active = null;
@@ -1091,10 +1092,10 @@ namespace UnityStandardAssets.CinematicEffects
 #endif
         }
 
-        public Texture2D BakeLUT()
+        public Texture2D BakeLut()
         {
-            Texture2D lut = new Texture2D(internalLutRt.width, internalLutRt.height, TextureFormat.RGB24, false, true);
-            RenderTexture.active = internalLutRt;
+            Texture2D lut = new Texture2D(InternalLutRt.width, InternalLutRt.height, TextureFormat.RGB24, false, true);
+            RenderTexture.active = InternalLutRt;
             lut.ReadPixels(new Rect(0f, 0f, lut.width, lut.height), 0, 0);
             RenderTexture.active = null;
             return lut;

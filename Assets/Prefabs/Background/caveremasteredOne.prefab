@@ -29,6 +29,38 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
+--- !u!1 &1571018101166542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4979942070994400}
+  - component: {fileID: 68090195914337344}
+  m_Layer: 15
+  m_Name: LeftCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1733898214549318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4173211299269218}
+  - component: {fileID: 68103124876246574}
+  m_Layer: 15
+  m_Name: RightCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4082211828011060
 Transform:
   m_ObjectHideFlags: 1
@@ -38,8 +70,36 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4979942070994400}
+  - {fileID: 4173211299269218}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4173211299269218
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1733898214549318}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
+  m_LocalPosition: {x: -0.9999999, y: -1, z: -9.700002}
+  m_LocalScale: {x: 2.000001, y: 2.000001, z: 2.000002}
+  m_Children: []
+  m_Father: {fileID: 4082211828011060}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4979942070994400
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571018101166542}
+  m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: -0, w: 0}
+  m_LocalPosition: {x: 0.9999999, y: 3, z: -9.700002}
+  m_LocalScale: {x: 2.000001, y: 2.000001, z: 2.000002}
+  m_Children: []
+  m_Father: {fileID: 4082211828011060}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23398039085784378
@@ -89,7 +149,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1330293887269576}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: bcf1edc4c62c18449a035c4835e98794, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -106,3 +166,108 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 25.521547, y: 48.13208}
   m_EdgeRadius: 0
+--- !u!68 &68090195914337344
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1571018101166542}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: bcf1edc4c62c18449a035c4835e98794, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -11.638255, y: -2.8753557}
+  - {x: -9.006294, y: -3.527279}
+  - {x: -8.118536, y: -3.2477856}
+  - {x: -6.4928865, y: -3.280167}
+  - {x: -5.962988, y: -4.0177875}
+  - {x: -5.376939, y: -3.3497357}
+  - {x: -4.681579, y: -3.059297}
+  - {x: -3.936103, y: -2.989563}
+  - {x: -2.902097, y: -3.2113202}
+  - {x: -1.7047274, y: -2.9912305}
+  - {x: -1.1621373, y: -2.7507367}
+  - {x: -0.683315, y: -2.647674}
+  - {x: 0.6204259, y: -3.036938}
+  - {x: 1.3177544, y: -2.9412603}
+  - {x: 2.6827235, y: -2.5800738}
+  - {x: 3.2409844, y: -2.3126}
+  - {x: 3.7067487, y: -2.3444347}
+  - {x: 4.0310516, y: -2.1998382}
+  - {x: 4.3989744, y: -2.3057406}
+  - {x: 4.355665, y: -2.4798343}
+  - {x: 4.5307035, y: -2.6108868}
+  - {x: 4.5128775, y: -2.725475}
+  - {x: 5.484727, y: -2.8613281}
+  - {x: 5.9579306, y: -2.8038013}
+  - {x: 6.180049, y: -2.703575}
+  - {x: 6.333905, y: -2.482055}
+  - {x: 6.470333, y: -2.3716683}
+  - {x: 6.7666645, y: -2.3792286}
+  - {x: 7.0569715, y: -2.2652245}
+  - {x: 7.9247913, y: -2.3812933}
+  - {x: 7.9791718, y: -2.6504984}
+  - {x: 8.263401, y: -2.6362343}
+  - {x: 8.787027, y: -2.5392318}
+  - {x: 9.413674, y: -2.5984764}
+  - {x: 9.940859, y: -2.3106651}
+  - {x: 10.655838, y: -2.5906534}
+  - {x: 11.305995, y: -2.1689053}
+  - {x: 11.593486, y: -2.1987963}
+  - {x: 11.744355, y: -2.3427086}
+  - {x: 12.008321, y: -2.2138224}
+  - {x: 12.359579, y: -2.4869156}
+  - {x: 12.330222, y: -2.6003609}
+  - {x: 12.690923, y: -2.8048172}
+  - {x: 12.829212, y: -3.2877836}
+  - {x: 13.420662, y: -3.6096134}
+  - {x: 14.274941, y: -2.8869371}
+--- !u!68 &68103124876246574
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1733898214549318}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: bcf1edc4c62c18449a035c4835e98794, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -8.61957, y: 3.0034823}
+  - {x: -7.977743, y: 2.654399}
+  - {x: -7.5562353, y: 2.3101678}
+  - {x: -6.746478, y: 2.2626429}
+  - {x: -6.61806, y: 2.422307}
+  - {x: -5.6690445, y: 2.7519922}
+  - {x: -5.4499893, y: 2.5797236}
+  - {x: -4.570133, y: 2.7048855}
+  - {x: -4.06653, y: 2.501067}
+  - {x: -3.444129, y: 2.7687235}
+  - {x: 0.50677663, y: 2.326191}
+  - {x: 0.9047892, y: 2.560184}
+  - {x: 0.8062583, y: 2.8636289}
+  - {x: 2.4528902, y: 3.072892}
+  - {x: 3.2174437, y: 2.7447004}
+  - {x: 4.422469, y: 2.702496}
+  - {x: 5.3291636, y: 2.4572167}
+  - {x: 6.56032, y: 2.7375607}
+  - {x: 7.228161, y: 2.5408854}
+  - {x: 8.683941, y: 3.1825438}
+  - {x: 10.605039, y: 2.9681911}
+  - {x: 11.002502, y: 3.6523018}
+  - {x: 11.891003, y: 3.234888}
+  - {x: 12.556618, y: 3.46875}
+  - {x: 14.116472, y: 2.4673119}
+  - {x: 14.299406, y: 2.7568893}
+  - {x: 15.48435, y: 3.2844744}
+  - {x: 17.019663, y: 3.392868}
+  - {x: 17.379293, y: 3.3150005}

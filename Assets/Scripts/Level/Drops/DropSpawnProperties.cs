@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-[System.Serializable]
-public class DropSpawnProperties
+namespace Level.Drops
 {
-	public GameObject spawnable;
-	public float priority;
-	public float cooldown;
+	[System.Serializable]
+	public class DropSpawnProperties
+	{
+		public GameObject spawnable;
+		public float priority;
+		public float cooldown;
+	}
 }

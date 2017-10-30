@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 
-public class Disabler : MonoBehaviour
+namespace _3rdParty
 {
-	public float delay;
-
-	private void OnEnable()
+	public class Disabler : MonoBehaviour
 	{
-		Invoke("Disable", delay);
-	}
+		public float delay;
 
-	private void Disable()
-	{
-		gameObject.SetActive(false);
+		private void OnEnable()
+		{
+			Invoke("Disable", delay);
+		}
+
+		private void Disable()
+		{
+			gameObject.SetActive(false);
+		}
 	}
 }

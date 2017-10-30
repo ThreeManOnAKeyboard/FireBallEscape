@@ -1,44 +1,49 @@
 ﻿using System.Collections;
+using Level.Other;
+using Managers;
 using UnityEngine;
 
-public class ZigZagSpawner : Spawner
+namespace Level.Spawner
 {
-	public float additionalOffset;
-	private float totalBorderOffset;
-
-	// Use this for initialization
-	new void Start()
+	public class ZigZagSpawner : Spawner
 	{
-		base.Start();
+		public float additionalOffset;
+		private float totalBorderOffset;
 
-		totalBorderOffset = GameManager.Instance.bordersOffset + additionalOffset;
-		StartCoroutine(SpawnDrop());
-	}
-
-	private IEnumerator SpawnDrop()
-	{
-		while (true)
+		// Use this for initialization
+		private new void Start()
 		{
-			// Wait the random amount of time till next drop instantiation
-			yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
+			base.Start();
 
-			// Pool new random drop
-			do
+			totalBorderOffset = GameManager.Instance.bordersOffset + additionalOffset;
+			StartCoroutine(SpawnDrop());
+		}
+
+		private IEnumerator SpawnDrop()
+		{
+			while (true)
 			{
-				objectToSpawn = ObjectPool.Instance.GetPooledObject(GetRandomSpawnable());
-			} while (objectToSpawn == null);
+				// Wait the random amount of time till next drop instantiation
+				yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
 
-			objectToSpawn.transform.position = new Vector3
-			(
-				Random.Range
+				// Pool new random drop
+				do
+				{
+					objectToSpawn = ObjectPool.instance.GetPooledObject(GetRandomSpawnable());
+				} while (objectToSpawn == null);
+
+				objectToSpawn.transform.position = new Vector3
 				(
-					CameraController.Instance.leftBorder + totalBorderOffset,
-					CameraController.Instance.rightBorder - totalBorderOffset
-				),
-				transform.position.y,
-				transform.position.z
-			);
-			objectToSpawn.SetActive(true);
+					Random.Range
+					(
+						CameraController.instance.LeftBorder + totalBorderOffset,
+						CameraController.instance.RightBorder - totalBorderOffset
+					),
+					transform.position.y,
+					transform.position.z
+				);
+				objectToSpawn.SetActive(true);
+			}
 		}
 	}
 }

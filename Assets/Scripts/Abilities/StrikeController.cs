@@ -1,45 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Level.Spawner;
 using UnityEngine;
 
-public class StrikeController : AbilityController
+namespace Abilities
 {
-	public GameObject fireBall;
-	public int fireballsAmount = 1;
-	public float fireRate = 1f;
-
-	public static List<GameObject> targets;
-
-	// Use this for initialization
-	private void Awake()
+	public class StrikeController : AbilityController
 	{
-		targets = new List<GameObject>();
-	}
+		public GameObject fireBall;
+		public int fireballsAmount = 1;
+		public float fireRate = 1f;
 
-	private void OnEnable()
-	{
-		StartCoroutine(SpawnFireBalls());
-	}
+		public static List<GameObject> targets;
 
-	private IEnumerator SpawnFireBalls()
-	{
-		for (int i = 0; i < fireballsAmount; i++)
+		// Use this for initialization
+		private void Awake()
 		{
-			// Get instance
-			GameObject fireBallInstance = ObjectPool.Instance.GetPooledObject(fireBall);
-
-			// Activate fireball
-			fireBallInstance.SetActive(true);
-
-			yield return new WaitForSeconds(1f / fireRate);
+			targets = new List<GameObject>();
 		}
 
-		// Deactivate ability when all fireballs reached their target
-		while (FireBallController.fireballCount != 0)
+		private void OnEnable()
 		{
-			yield return new WaitForSecondsRealtime(0.2f);
+			StartCoroutine(SpawnFireBalls());
 		}
 
-		gameObject.SetActive(false);
+		private IEnumerator SpawnFireBalls()
+		{
+			for (int i = 0; i < fireballsAmount; i++)
+			{
+				// Get instance
+				GameObject fireBallInstance = ObjectPool.instance.GetPooledObject(fireBall);
+
+				// Activate fireball
+				fireBallInstance.SetActive(true);
+
+				yield return new WaitForSeconds(1f / fireRate);
+			}
+
+			// Deactivate ability when all fireballs reached their target
+			while (FireBallController.fireballCount != 0)
+			{
+				yield return new WaitForSecondsRealtime(0.2f);
+			}
+
+			gameObject.SetActive(false);
+		}
 	}
 }

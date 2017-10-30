@@ -1,6 +1,9 @@
-﻿public class PlayerPrefsKeys
+﻿namespace _3rdParty
 {
-	public const string RESTART_HAPPENED = "RestartHappened";
-	public const string HIGHSCORE = "HighScore";
-	public const string CURRENT_LEVEL = "CurrentLevel";
+	public class PlayerPrefsKeys
+	{
+		public const string RestartHappened = "RestartHappened";
+		public const string Highscore = "HighScore";
+		public const string CurrentLevel = "CurrentLevel";
+	}
 }

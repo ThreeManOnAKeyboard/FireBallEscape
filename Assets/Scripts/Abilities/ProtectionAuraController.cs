@@ -1,79 +1,83 @@
 ﻿using System.Collections;
 using UnityEngine;
+using _3rdParty;
 
-public class ProtectionAuraController : AbilityController
+namespace Abilities
 {
-	public float duration;
-	public float maxAngleRange;
-	public float angleSensivity;
-	public float angleGravity;
-
-	private float previousX;
-	private Transform playerTransform;
-
-	private void Awake()
+	public class ProtectionAuraController : AbilityController
 	{
-		playerTransform = GameObject.FindWithTag(Tags.PLAYER).transform;
-		transform.parent = playerTransform;
-		transform.localPosition = Vector3.zero;
-	}
+		public float duration;
+		public float maxAngleRange;
+		public float angleSensivity;
+		public float angleGravity;
 
-	private void OnEnable()
-	{
-		previousX = playerTransform.position.x;
-		StartCoroutine(Disable());
-	}
+		private float previousX;
+		private Transform playerTransform;
 
-	private void Update()
-	{
-		// Rotate shield acording to player movement and input parameters
-		if (playerTransform.position.x != previousX)
+		private void Awake()
 		{
-			ApplyPlayerMotion();
-		}
-		else
-		{
-			ApplyAngleGravity();
+			playerTransform = GameObject.FindWithTag(Tags.Player).transform;
+			transform.parent = playerTransform;
+			transform.localPosition = Vector3.zero;
 		}
 
-		// Save last player x position
-		previousX = playerTransform.position.x;
-	}
+		private void OnEnable()
+		{
+			previousX = playerTransform.position.x;
+			StartCoroutine(Disable());
+		}
 
-	private void ApplyPlayerMotion()
-	{
-		transform.rotation = Quaternion.Euler
-		(
-			transform.eulerAngles.x,
-			transform.eulerAngles.y,
-			Mathf.LerpAngle
+		private void Update()
+		{
+			// Rotate shield acording to player movement and input parameters
+			if (playerTransform.position.x != previousX)
+			{
+				ApplyPlayerMotion();
+			}
+			else
+			{
+				ApplyAngleGravity();
+			}
+
+			// Save last player x position
+			previousX = playerTransform.position.x;
+		}
+
+		private void ApplyPlayerMotion()
+		{
+			transform.rotation = Quaternion.Euler
 			(
-				transform.eulerAngles.z,
-				playerTransform.position.x < previousX ? maxAngleRange : 360f - maxAngleRange,
-				angleSensivity * Mathf.Abs(playerTransform.position.x - previousX) * Time.deltaTime
-			)
-		);
-	}
+				transform.eulerAngles.x,
+				transform.eulerAngles.y,
+				Mathf.LerpAngle
+				(
+					transform.eulerAngles.z,
+					playerTransform.position.x < previousX ? maxAngleRange : 360f - maxAngleRange,
+					angleSensivity * Mathf.Abs(playerTransform.position.x - previousX) * Time.deltaTime
+				)
+			);
+		}
 
-	private void ApplyAngleGravity()
-	{
-		transform.rotation = Quaternion.Euler
-		(
-			transform.eulerAngles.x,
-			transform.eulerAngles.y,
-			Mathf.LerpAngle
+		private void ApplyAngleGravity()
+		{
+			transform.rotation = Quaternion.Euler
 			(
-				transform.eulerAngles.z,
-				transform.eulerAngles.z > 180 ? 360f : 0f,
-				angleGravity * Time.deltaTime
-			)
-		);
-	}
+				transform.eulerAngles.x,
+				transform.eulerAngles.y,
+				Mathf.LerpAngle
+				(
+					transform.eulerAngles.z,
+					transform.eulerAngles.z > 180 ? 360f : 0f,
+					angleGravity * Time.deltaTime
+				)
+			);
+		}
 
-	private IEnumerator Disable()
-	{
-		yield return new WaitForSeconds(duration);
+		private IEnumerator Disable()
+		{
+			yield return new WaitForSeconds(duration);
 
-		gameObject.SetActive(false);
+			gameObject.SetActive(false);
+		}
 	}
 }

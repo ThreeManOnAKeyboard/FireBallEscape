@@ -1,100 +1,100 @@
-﻿using UnityEngine;
+﻿using Level.Other;
+using Level.Spawner;
+using Player;
+using UnityEngine;
+using _3rdParty;
 
-public class StoneController : MonoBehaviour
+namespace Level.Obstacles
 {
-	public GameObject collisionEffectPrefab;
-	public float damageMultiplier = 1f;
-
-	[Header("Shake Parameters")]
-	public float duration;
-	public float speed;
-	public float magnitude;
-	public float zoomDistance;
-
-	[Header("Instantiation Parameters")]
-	public float yOffset;
-	public Vector2 xScaleRandomRange;
-	public Vector2 yScaleRandomRange;
-	public Vector2 zScaleRandomRange;
-	public Vector2 impulseForce;
-	public float collisionEffectDuration;
-
-	private Rigidbody2D thisRigidBody;
-	private PlayerController playerController;
-	private bool onStoneRain;
-
-	// Use this for initialization
-	void Awake()
+	public class StoneController : MonoBehaviour
 	{
-		playerController = FindObjectOfType<PlayerController>();
-		thisRigidBody = GetComponent<Rigidbody2D>();
-	}
+		public GameObject collisionEffectPrefab;
+		public float damageMultiplier = 1f;
 
-	void OnEnable()
-	{
-		if (StoneRainController.isActive)
+		[Header("Shake Parameters")]
+		public float duration;
+		public float speed;
+		public float magnitude;
+		public float zoomDistance;
+
+		[Header("Instantiation Parameters")]
+		public float yOffset;
+		public Vector2 xScaleRandomRange;
+		public Vector2 yScaleRandomRange;
+		public Vector2 zScaleRandomRange;
+		public Vector2 impulseForce;
+		public float collisionEffectDuration;
+
+		private Rigidbody2D thisRigidBody;
+		private PlayerController playerController;
+		private bool onStoneRain;
+
+		// Use this for initialization
+		private void Awake()
 		{
-			onStoneRain = true;
-		}
-		else
-		{
-			onStoneRain = false;
+			playerController = FindObjectOfType<PlayerController>();
+			thisRigidBody = GetComponent<Rigidbody2D>();
 		}
 
-		// Center position
-		transform.position = new Vector3
-		(
-			0f,
-			transform.position.y + yOffset,
-			transform.position.z
-		);
-
-		transform.localScale = new Vector3
-		(
-			Random.Range(xScaleRandomRange.x, xScaleRandomRange.y),
-			Random.Range(yScaleRandomRange.x, yScaleRandomRange.y),
-			Random.Range(zScaleRandomRange.x, zScaleRandomRange.y)
-		);
-
-		thisRigidBody.AddForce(impulseForce * (Random.Range(0, 2) == 0 ? 1f : -1f), ForceMode2D.Impulse);
-	}
-
-	public void OnCollisionEnter2D(Collision2D col)
-	{
-		if (duration != 0f)
+		private void OnEnable()
 		{
-			CameraShake.Instance.StartShake(duration, speed, magnitude, zoomDistance);
+			onStoneRain = StoneRainController.isActive;
+
+			// Center position
+			transform.position = new Vector3
+			(
+				0f,
+				transform.position.y + yOffset,
+				transform.position.z
+			);
+
+			transform.localScale = new Vector3
+			(
+				Random.Range(xScaleRandomRange.x, xScaleRandomRange.y),
+				Random.Range(yScaleRandomRange.x, yScaleRandomRange.y),
+				Random.Range(zScaleRandomRange.x, zScaleRandomRange.y)
+			);
+
+			thisRigidBody.AddForce(impulseForce * (Random.Range(0, 2) == 0 ? 1f : -1f), ForceMode2D.Impulse);
 		}
-	}
 
-	public void OnTriggerEnter2D(Collider2D col)
-	{
-		if (col.gameObject.tag == Tags.PLAYER)
+		public void OnCollisionEnter2D(Collision2D col)
 		{
-			playerController.OnStoneCollisionEffect(collisionEffectDuration);
-
-			if (onStoneRain)
+			if (duration != 0f)
 			{
-				playerController.Damage(damageMultiplier);
+				CameraShake.instance.StartShake(duration, speed, magnitude, zoomDistance);
 			}
-			else
-			{
-				playerController.Kill();
-			}
+		}
 
-			// If this type of stone has an collision effect attached to then instiantiate it
-			if (collisionEffectPrefab != null)
+		public void OnTriggerEnter2D(Collider2D col)
+		{
+			if (col.gameObject.CompareTag(Tags.Player))
 			{
-				GameObject collisionEffect = ObjectPool.Instance.GetPooledObject(collisionEffectPrefab);
-				collisionEffect.transform.position = transform.position;
-				collisionEffect.transform.rotation = transform.rotation;
-				collisionEffect.transform.localScale = transform.localScale;
-				collisionEffect.SetActive(true);
-			}
+				playerController.OnStoneCollisionEffect(collisionEffectDuration);
 
-			if (onStoneRain)
-			{
-				gameObject.SetActive(false);
+				if (onStoneRain)
+				{
+					playerController.Damage(damageMultiplier);
+				}
+				else
+				{
+					playerController.Kill();
+				}
+
+				// If this type of stone has an collision effect attached to then instiantiate it
+				if (collisionEffectPrefab != null)
+				{
+					GameObject collisionEffect = ObjectPool.instance.GetPooledObject(collisionEffectPrefab);
+					collisionEffect.transform.position = transform.position;
+					collisionEffect.transform.rotation = transform.rotation;
+					collisionEffect.transform.localScale = transform.localScale;
+					collisionEffect.SetActive(true);
+				}
+
+				if (onStoneRain)
+				{
+					gameObject.SetActive(false);
+				}
 			}
 		}
 	}

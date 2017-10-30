@@ -1,40 +1,44 @@
 ﻿using System.Collections;
+using Player;
 using UnityEngine;
 
-public class LeftRightSpawner : Spawner
+namespace Level.Spawner
 {
-	// The script which contains the calculated positions of bands
-	private LeftRightMovement LRMScript;
-
-	// Use this for initialization
-	new private void Start()
+	public class LeftRightSpawner : Spawner
 	{
-		base.Start();
+		// The script which contains the calculated positions of bands
+		private LeftRightMovement lrmScript;
 
-		LRMScript = FindObjectOfType<LeftRightMovement>();
-
-		// Start for each band it's own coroutine
-		for (int i = 0; i < LRMScript.bandsPositions.Length; i++)
+		// Use this for initialization
+		private new void Start()
 		{
-			StartCoroutine(SpawnDrop(LRMScript.bandsPositions[i]));
-		}
-	}
+			base.Start();
 
-	private IEnumerator SpawnDrop(float spawnPosition)
-	{
-		while (true)
-		{
-			// Wait the random amount of time till next drop instantiation
-			yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
+			lrmScript = FindObjectOfType<LeftRightMovement>();
 
-			// Pool new random drop
-			do
+			// Start for each band it's own coroutine
+			foreach (float bandPosition in lrmScript.bandsPositions)
 			{
-				objectToSpawn = ObjectPool.Instance.GetPooledObject(GetRandomSpawnable());
-			} while (objectToSpawn == null);
+				StartCoroutine(SpawnDrop(bandPosition));
+			}
+		}
 
-			objectToSpawn.transform.position = new Vector3(spawnPosition, transform.position.y, transform.position.z);
-			objectToSpawn.SetActive(true);
+		private IEnumerator SpawnDrop(float spawnPosition)
+		{
+			while (true)
+			{
+				// Wait the random amount of time till next drop instantiation
+				yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
+
+				// Pool new random drop
+				do
+				{
+					objectToSpawn = ObjectPool.instance.GetPooledObject(GetRandomSpawnable());
+				} while (objectToSpawn == null);
+
+				objectToSpawn.transform.position = new Vector3(spawnPosition, transform.position.y, transform.position.z);
+				objectToSpawn.SetActive(true);
+			}
 		}
 	}
 }

@@ -1,3 +1,6 @@
+using Effects.Common;
+using Effects.TonemappingColorGrading;
+
 namespace UnityStandardAssets.CinematicEffects
 {
     using UnityEngine;
@@ -174,10 +177,10 @@ namespace UnityStandardAssets.CinematicEffects
         {
             get
             {
-                return concreteTarget.histogramComputeShader != null
-                       && ImageEffectHelper.supportsDX11
-                       && concreteTarget.histogramShader != null
-                       && concreteTarget.histogramShader.isSupported;
+                return concreteTarget.HistogramComputeShader != null
+                       && ImageEffectHelper.SupportsDx11
+                       && concreteTarget.HistogramShader != null
+                       && concreteTarget.HistogramShader.isSupported;
             }
         }
 
@@ -280,14 +283,14 @@ namespace UnityStandardAssets.CinematicEffects
                             // Special case for the tonemapping curve field
                             if (group.Key.FieldType == typeof(TonemappingColorGrading.TonemappingSettings) &&
                                 field.propertyType == SerializedPropertyType.AnimationCurve &&
-                                concreteTarget.tonemapping.tonemapper != TonemappingColorGrading.Tonemapper.Curve)
+                                concreteTarget.Tonemapping.tonemapper != TonemappingColorGrading.Tonemapper.Curve)
                                 continue;
 
                             // Special case for the neutral tonemapper
                             bool neutralParam = field.name.StartsWith("neutral");
 
                             if (group.Key.FieldType == typeof(TonemappingColorGrading.TonemappingSettings) &&
-                                concreteTarget.tonemapping.tonemapper != TonemappingColorGrading.Tonemapper.Neutral &&
+                                concreteTarget.Tonemapping.tonemapper != TonemappingColorGrading.Tonemapper.Neutral &&
                                 neutralParam)
                                 continue;
 
@@ -308,9 +311,9 @@ namespace UnityStandardAssets.CinematicEffects
 
                                 if (!string.IsNullOrEmpty(path))
                                 {
-                                    Texture2D lut = concreteTarget.BakeLUT();
+                                    Texture2D lut = concreteTarget.BakeLut();
 
-                                    if (!concreteTarget.isGammaColorSpace)
+                                    if (!concreteTarget.IsGammaColorSpace)
                                     {
                                         var pixels = lut.GetPixels();
 
@@ -349,26 +352,26 @@ namespace UnityStandardAssets.CinematicEffects
 
             GUILayout.Label("All following effects will use LDR color buffers.", EditorStyles.miniBoldLabel);
 
-            if (concreteTarget.tonemapping.enabled)
+            if (concreteTarget.Tonemapping.enabled)
             {
                 Camera camera = concreteTarget.GetComponent<Camera>();
 
                 if (camera != null && !camera.hdr)
                     EditorGUILayout.HelpBox("The camera is not HDR enabled. This will likely break the tonemapper.", MessageType.Warning);
-                else if (!concreteTarget.validRenderTextureFormat)
+                else if (!concreteTarget.ValidRenderTextureFormat)
                     EditorGUILayout.HelpBox("The input to tonemapper is not in HDR. Make sure that all effects prior to this are executed in HDR.", MessageType.Warning);
             }
 
-            if (concreteTarget.lut.enabled && concreteTarget.lut.texture != null)
+            if (concreteTarget.Lut.enabled && concreteTarget.Lut.texture != null)
             {
-                if (!concreteTarget.validUserLutSize)
+                if (!concreteTarget.ValidUserLutSize)
                 {
                     EditorGUILayout.HelpBox("Invalid LUT size. Should be \"height = sqrt(width)\" (e.g. 256x16).", MessageType.Error);
                 }
                 else
                 {
                     // Checks import settings on the lut, offers to fix them if invalid
-                    TextureImporter importer = (TextureImporter)AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(concreteTarget.lut.texture));
+                    TextureImporter importer = (TextureImporter)AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(concreteTarget.Lut.texture));
 
 #if UNITY_5_5_OR_NEWER
                     bool valid = importer.anisoLevel == 0
@@ -480,14 +483,14 @@ namespace UnityStandardAssets.CinematicEffects
         void UpdateHistogram(RenderTexture source, Rect rect, HistogramMode mode)
         {
             if (m_HistogramMaterial == null)
-                m_HistogramMaterial = ImageEffectHelper.CheckShaderAndCreateMaterial(concreteTarget.histogramShader);
+                m_HistogramMaterial = ImageEffectHelper.CheckShaderAndCreateMaterial(concreteTarget.HistogramShader);
 
             if (m_HistogramBuffer == null)
                 m_HistogramBuffer = new ComputeBuffer(256, sizeof(uint) << 2);
 
             m_HistogramBuffer.SetData(k_EmptyBuffer);
 
-            ComputeShader cs = concreteTarget.histogramComputeShader;
+            ComputeShader cs = concreteTarget.HistogramComputeShader;
 
             int kernel = cs.FindKernel("KHistogramGather");
             cs.SetBuffer(kernel, "_Histogram", m_HistogramBuffer);
@@ -514,7 +517,7 @@ namespace UnityStandardAssets.CinematicEffects
             }
 
             cs.SetInts("_Channels", channels);
-            cs.SetInt("_IsLinear", concreteTarget.isGammaColorSpace ? 0 : 1);
+            cs.SetInt("_IsLinear", concreteTarget.IsGammaColorSpace ? 0 : 1);
             cs.Dispatch(kernel, Mathf.CeilToInt(source.width / 32f), Mathf.CeilToInt(source.height / 32f), 1);
 
             kernel = cs.FindKernel("KHistogramScale");
