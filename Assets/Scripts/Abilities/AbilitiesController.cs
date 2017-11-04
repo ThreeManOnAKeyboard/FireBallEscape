@@ -30,7 +30,7 @@ namespace Abilities
 		public Image abilityIconHolder;
 
 		// Ability references
-		private Enumerations.DropType[] currentCombination = new Enumerations.DropType[ElementsCount];
+		//private Enumerations.DropType[] currentCombination = new Enumerations.DropType[ElementsCount];
 		private Ability currentAbility;
 		#endregion
 
@@ -125,7 +125,7 @@ namespace Abilities
 			// Find ability by combination
 			//currentAbility = abilities.Find(ability => CompareCombinations(ability.combination, currentCombination));
 			currentAbility = ability;
-			currentCombination = new Enumerations.DropType[ElementsCount];
+			//currentCombination = new Enumerations.DropType[ElementsCount];
 
 			// If ability is set then perform next changes
 			if (currentAbility != null)
@@ -167,7 +167,7 @@ namespace Abilities
 			}
 		}
 
-		private bool CompareCombinations(Enumerations.DropType[] combinationOne, Enumerations.DropType[] combinationTwo)
+		private bool CompareCombinations(IEnumerable<Enumerations.DropType> combinationOne, Enumerations.DropType[] combinationTwo)
 		{
 			Enumerations.DropType[] combo1 = combinationOne.OrderBy(drop => (byte)drop).ToArray();
 			Enumerations.DropType[] combo2 = combinationTwo.OrderBy(drop => (byte)drop).ToArray();

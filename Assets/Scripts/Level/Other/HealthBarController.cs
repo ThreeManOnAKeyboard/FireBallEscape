@@ -44,7 +44,7 @@ namespace Level.Other
 			);
 
 			//Update the Sparkle Image position
-			sparkle.rectTransform.anchoredPosition = new Vector3 (healthBar.rectTransform.sizeDelta.x * (healthBar.fillAmount - 0.01f), 20,0);
+			sparkle.rectTransform.anchoredPosition = new Vector3(healthBar.rectTransform.sizeDelta.x * (healthBar.fillAmount - 0.01f), 20, 0);
 
 		}
 	}

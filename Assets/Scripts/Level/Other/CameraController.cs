@@ -11,11 +11,8 @@ namespace Level.Other
 		public float followSpeed;
 		public float yPositionOffset;
 
-		private float _leftBorder;
-		private float _rightBorder;
-
-		public float LeftBorder { get { return _leftBorder; } }
-		public float RightBorder { get { return _rightBorder; } }
+		public float LeftBorder { get; private set; }
+		public float RightBorder { get; private set; }
 
 		private Transform target;
 
@@ -30,8 +27,8 @@ namespace Level.Other
 			// Calculate visible track borders positions in world space coordinates
 			target = GameObject.FindGameObjectWithTag(Tags.Player).transform;
 			float distance = (target.position - Camera.main.transform.position).z;
-			_leftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance)).x;
-			_rightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance)).x;
+			LeftBorder = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, distance)).x;
+			RightBorder = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, distance)).x;
 		}
 
 		// Update is called once per frame

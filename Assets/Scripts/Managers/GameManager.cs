@@ -14,6 +14,7 @@ namespace Managers
 
 		// The x axis offset for both left / right borders to limit the player
 		public float bordersOffset;
+		public GameObject pauseMenu;
 
 		private float currentTimeScale;
 
@@ -58,6 +59,7 @@ namespace Managers
 		{
 			currentTimeScale = Time.timeScale;
 			Time.timeScale = 0f;
+			pauseMenu.SetActive(true);
 		}
 
 		public void UnpauseGame()
@@ -81,7 +83,7 @@ namespace Managers
 #if UNITY_EDITOR
 			UnityEditor.EditorApplication.isPlaying = false;
 #else
-		Application.Quit();
+			Application.Quit();
 #endif
 		}
 	}

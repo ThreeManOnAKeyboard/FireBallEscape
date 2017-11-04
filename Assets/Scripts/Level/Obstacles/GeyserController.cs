@@ -9,8 +9,8 @@ namespace Level.Obstacles
 	{
 		[Header("Configuration parameters")]
 		public float firstEjectDelay;
-		public float ejectDuration;
-		public float ejectCooldown;
+		public Vector2 ejectDurationRange;
+		public Vector2 ejectCooldownRange;
 		public float angleRange = 40f;
 		public float offset;
 
@@ -70,11 +70,11 @@ namespace Level.Obstacles
 			do
 			{
 				Start();
-				yield return new WaitForSeconds(ejectDuration);
+				yield return new WaitForSeconds(Random.Range(ejectDurationRange.x, ejectDurationRange.y));
 
 				Stop();
 
-				yield return new WaitForSeconds(ejectCooldown);
+				yield return new WaitForSeconds(Random.Range(ejectCooldownRange.x, ejectCooldownRange.y));
 
 				worldToViewPortRatio = Camera.main.WorldToViewportPoint(transform.position).y;
 			} while (worldToViewPortRatio >= -0.25f);

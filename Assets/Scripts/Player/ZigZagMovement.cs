@@ -18,7 +18,7 @@ namespace Player
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 			if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0))
 #elif UNITY_ANDROID
-		if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !TouchManager.Instance.IsPointerOverUIObject(0))
+			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !TouchManager.instance.IsPointerOverUIObject(0))
 #endif
 			{
 				// Change the player movement direction on screen touch

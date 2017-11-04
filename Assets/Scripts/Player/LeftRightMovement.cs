@@ -2,6 +2,7 @@
 using Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using _3rdParty;
 
 namespace Player
 {
@@ -46,7 +47,7 @@ namespace Player
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 			if (!EventSystem.current.IsPointerOverGameObject() && Input.GetButtonDown("Horizontal"))
 #elif UNITY_ANDROID
-		if (Input.touchCount > 0 && !TouchManager.Instance.IsPointerOverUIObject(0) && Input.GetTouch(0).phase == TouchPhase.Began)
+			if (Input.touchCount > 0 && !TouchManager.instance.IsPointerOverUIObject(0) && Input.GetTouch(0).phase == TouchPhase.Began)
 #endif
 			{
 				Leap();
@@ -78,7 +79,7 @@ namespace Player
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 			if (Input.GetAxisRaw("Horizontal") > 0f)
 #elif UNITY_ANDROID
-		if (Input.GetTouch(0).position.x > Screen.width / 2)
+			if (Input.GetTouch(0).position.x > Screen.width / 2)
 #endif
 			{
 				if (bandIndex < bandsCount - 1)
